@@ -1,8 +1,23 @@
+require('dotenv').config();
+
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const mongoose     = require('mongoose');
+const session    = require("express-session");
+const MongoStore = require("connect-mongo")(session);
+
+mongoose
+  //.connect('mongodb://localhost/starter-code', {useNewUrlParser: true})
+  .connect('DATABASE', {useNewUrlParser: true})
+  .then(x => {
+    console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
+  })
+  .catch(err => {
+    console.error('Error connecting to mongo', err)
+  });
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
