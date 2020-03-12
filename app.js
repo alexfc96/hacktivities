@@ -5,13 +5,16 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const mongoose     = require('mongoose');
-const session    = require("express-session");
+const mongoose = require('mongoose');
+const flash = require('connect-flash');
+const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
+
+const dbPath = process.env.DATABASE;
 
 mongoose
   //.connect('mongodb://localhost/starter-code', {useNewUrlParser: true})
-  .connect('DATABASE', {useNewUrlParser: true})
+  .connect(dbPath, {useNewUrlParser: true})
   .then(x => {
     console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
   })
@@ -33,6 +36,24 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(
+	session({
+		store: new MongoStore({
+			mongooseConnection: mongoose.connection,
+			ttl: 24 * 60 * 60, // 1 day
+		}),
+		secret: 'ironhack',
+		resave: true,
+		saveUninitialized: true,
+		name: 'ironhack',
+		cookie: {
+			maxAge: 24 * 60 * 60 * 1000,
+		},
+	})
+);
+app.use(flash());
+
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
