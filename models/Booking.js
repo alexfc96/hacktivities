@@ -5,9 +5,10 @@ const { Schema } = mongoose;
 const bookingSchema = new Schema(
   {
     hacktivityId: { type: Schema.Types.ObjectId, ref: 'Hacktivity' },
-    //nose que mas poner la verdad
-  });
+    // nose que mas poner la verdad
+  },
+);
 
-const Booking = mongoose.model('City', bookingSchema);
+const Booking = mongoose.model('Booking', bookingSchema);
 
 module.exports = Booking;
