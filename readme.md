@@ -6,7 +6,7 @@ Hacktivities
 ​
 ## Description
 ​
-We will create a website that will allow us to subscribe to excursions or tours organized by other users (among individuals). These activities are spread throughout the cities (of Spain, Europe, world) and may be free or cost.
+We will create a website that will allow us to subscribe to hacktivities or tours organized by other users (among individuals). These activities are spread throughout the cities (of Spain, Europe, world) and may be free or cost.
 ​
 ## User Stories
 ​
@@ -37,11 +37,11 @@ List of other features outside of the MVPs scope
 User profile: - see my profile - upload my profile picture - update my profile info - list of events created by the user(en caso de que sea partner) - list events the user is attending 
 Valorar: see other users profile(en principio no)
 
-Checkout: Simulate the procces of suscribe to the excursion.
+Checkout: Simulate the procces of suscribe to the hacktivity.
+
+Homepage: - Show the best rates cities and the excursion
 ​
 Geo Location: - add geolocation to events when creating - show event in a map in event detail page - show all events in a map in the event list page
-​
-Homepage: - Show the best rates cities and the excursion
 ​
 ## ROUTES:
 ​
@@ -53,7 +53,7 @@ Homepage: - Show the best rates cities and the excursion
 /activities
 | GET  | /:cityName  |  List of all the excursions that have this city |
 | GET  | /:cityName/:IDofactivitie  |  View the info related to the excursion vinculated with the city |
-| GET  | /chechout  |  Page for complete the subscribtion to the event/excursion |
+| GET  | /checkout  |  Page for complete the subscribtion to the event/excursion |
 
 /user
 | GET  | /login  | Login page  |
@@ -74,26 +74,32 @@ User model
     	password: String
     }
 ​
-Activity model
+Hacktivity model
 ​
     { 
     	owner: ObjectId<User>
     	name: String
     	description: String
     	date: Date
-    	location: cityçid
+    	location: cityid
     	+
     
     }
 
 bookings(intermedia)
 
+	{
+		bookingID: //entendemos que se crea solo
+		hactivityID:
+		review/rating:
+	}
+
 Cities model
 
     {
     	city: String
     	country: String
-	
+		image: image
     }
     
 ​Comments model  //backlog
@@ -114,7 +120,7 @@ The url to your repository and to your deployed project
 ​
 [Repository Link](https://github.com/alexfc96/hacktivities)
 ​
-[Deploy Link](http://heroku.com/)
+[Deploy Link](https://hacktivities.herokuapp.com/)
 ​
 ### Slides
 ​

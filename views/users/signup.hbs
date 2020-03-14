@@ -1,0 +1,16 @@
+<h2>You want to be part of Hacktivitis and have multiple advantages:</h2>
+
+<p>Sign up:</p>
+
+<form id="form" action="/user/signup" method="POST">
+  <label for="username">Username</label><br>
+  <input type="text" name="username" placeholder="Your new username">
+
+  <label for="password">Password</label><br>
+  <input type="password" name="password" placeholder="********">
+
+  <button type="submit">Create account</button>
+  {{#if error}}
+  {{error}}
+  {{/if}}
+</form>
