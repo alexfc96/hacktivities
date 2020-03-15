@@ -6,6 +6,8 @@ const bookingSchema = new Schema(
   {
     hacktivityId: { type: Schema.Types.ObjectId, ref: 'Hacktivity' },
     // nose que mas poner la verdad
+    userId: { type: Schema.Types.ObjectId, ref: 'User' },
+    review: { type: String },
   },
 );
 
