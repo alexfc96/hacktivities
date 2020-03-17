@@ -31,7 +31,7 @@ router.post('/signup', (req, res, next) => {
             userpassword,
           })
             .then((userCreated) => {
-              req.session.currentUser = userCreated;
+              req.session.userLogged = userCreated;
               res.redirect('/user/login');
             })
             .catch((error) => {
@@ -63,7 +63,7 @@ router.post('/login', (req, res, next) => {
         } else {
           console.log(bcrypt.compareSync(password, user.userpassword));
           if (bcrypt.compareSync(password, user.userpassword)) {
-            req.session.currentUser = user;
+            req.session.userLogged = user;
             res.redirect('/');
           } else {
             res.render('user/login', { error: 'Incorrect username or password' });
@@ -86,19 +86,20 @@ router.get('/logout', (req, res, next) => {
 });
 
 router.get('/:id/update', (req, res, next) => { // actualizar datos del user
-  const { user_id } = req.params;
-  User.find({ user_id }) //el problema es que saca todos los users!
-    .then((user) => {
-      console.log(user); //es el mismo resultado que en index(todos los users)
-      res.render('user/update', { user });  //porque no me recoge el param que le paso
+  const user = req.session.userLogged._id;
+  //console.log(user);
+  User.findById(user) 
+    .then((currentUser) => {
+      console.log(currentUser);
+      res.render('user/update', { currentUser });
     })
     .catch(next);
 });
 
 router.post('/:id/update', (req, res, next) => {
   const {username} = req.body;
-  const { id } = req.params;
-  User.findByIdAndUpdate({ user_id: id }, {username})
+  const user = req.session.userLogged._id;
+  User.findByIdAndUpdate({ _id: user }, {username})
   .then((userUpdated) =>{
     res.redirect('/')
   })

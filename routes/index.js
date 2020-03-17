@@ -9,12 +9,11 @@ const checkuser = require('../scripts/checkuserlogued');
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-  // const user = User.find(user => user.id === req.session.userId)
-  const user = req.session.userId; //daigual userid o user_id
-  console.log(req.session);
-  User.find(user)  //si pruebo con findbyid no funciona
+  const user = req.session.userLogged;  //nos da el objeto con toda la info del user/session
+  //console.log(user)
+  User.findById(user) 
     .then((currentUser) => {
-      console.log(currentUser)  //me indica undefined
+      //console.log(currentUser);
       res.render('index', { currentUser, title: 'Express' });
     })
     .catch(() => {
