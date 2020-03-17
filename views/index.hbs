@@ -1,8 +1,5 @@
 <h1>{{title}}</h1>
 <p>Welcome to {{title}}</p>
 {{#if currentUser}}
-{{#each currentUser}}
-<a href="/user/{{this._id}}/update">{{ currentUser.username }}</a> 
-{{/each}}
-
+<a href="/user/{{currentUser._id}}/update">{{ currentUser.username }}</a> 
 {{/if}}

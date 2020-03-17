@@ -31,5 +31,14 @@ router.post('/:id/update', (req, res, next) => {
   .catch(next)
 })
 
+router.post('/:id/delete', (req, res, next) => {
+  const user = req.session.userLogged._id;
+  User.findByIdAndDelete({ _id: user })
+  .then((userDeleted) =>{
+    console.log("Usuario eliminado")
+    res.redirect('/signup')
+  })
+  .catch(next)
+})
 
 module.exports = router;

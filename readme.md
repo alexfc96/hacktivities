@@ -102,7 +102,7 @@ Cities model
 		image: image
     }
     
-​Comments model  //backlog
+Reviews model  //backlog
 
     {}
 

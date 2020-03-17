@@ -6,3 +6,8 @@
   <input type="text" name="username" id="username" placeholder="username" value="{{currentUser.username}}">
   <button type="submit">UPDATE!</button>
 </form>
+
+<h4>Delete User?</h4>
+<form action="/user/{{currentUser._id}}/delete" method="post">
+  <button type="submit">DELETE!</button>
+</form>
