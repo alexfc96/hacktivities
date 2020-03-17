@@ -124,4 +124,4 @@ The url to your repository and to your deployed project
 ​
 ### Slides
 ​
-[Slides Link](http://slides.com/)
+[Slides Link](https://slides.com/alexfernandez-1/hacktivities)

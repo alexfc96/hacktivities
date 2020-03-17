@@ -2,7 +2,7 @@
 <p>Welcome to {{title}}</p>
 {{#if currentUser}}
 {{#each currentUser}}
-<a href="/user/{{this._id}}/update">{{ this.username }}</a> 
+<a href="/user/{{this._id}}/update">{{ currentUser.username }}</a> 
 {{/each}}
 
 {{/if}}
