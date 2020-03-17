@@ -13,8 +13,7 @@ const MongoStore = require('connect-mongo')(session);
 
 const dbPath = process.env.DATABASE;
 
-const City = require('./models/City');
-const seeds = require('./bin/seeds');
+//const seeds = require('./bin/seeds');
 
 mongoose
   //.connect('mongodb://localhost/starter-code', {useNewUrlParser: true})

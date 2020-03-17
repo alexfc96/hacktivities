@@ -1,0 +1,7 @@
+<h3>Do you want to update any information about your profile?</h3>
+{{user.username}}
+<form action="/user/{{user._id}}/update" method="post">
+  <label for="username">name</label>
+  <input type="text" name="username" id="username" placeholder="username" value="{{user.username}}">
+  <button type="submit">UPDATE!</button>
+</form>
