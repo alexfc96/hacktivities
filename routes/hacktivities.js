@@ -1,6 +1,6 @@
 const express = require('express');
-const User = require('../models/User');
-const City = require('../models/City');
+// const User = require('../models/User');
+// const City = require('../models/City');
 const Hactivity = require('../models/Hacktivity');
 
 
@@ -8,20 +8,16 @@ const router = express.Router();
 
 
 /* GET /hacktivities */
-router.get('/', (req, res, next) => {
-  const { currentUser } = req.session;
-  City.find()
-    .then((cities) => {
-      res.render('hacktivities/list', {
-        cities,
-        currentUser,
-      });
+router.get('/hacktivities', (req, res, next) => {
+  Hactivity.find()
+    .then(hacktivities => {
+      res.render('hacktivities/list', { hacktivities });
     })
-    .catch(next);
+    .catch(err => console.log('Error while rendering Hacktivities: ', err));
 });
 
-// GET /hacktivities/add
-router.get('/add', (req, res) => {
+// GET /hacktivities/create
+router.get('/create', (req, res) => {
   res.render('hacktivities/create');
 });
 
