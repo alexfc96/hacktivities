@@ -1,0 +1,14 @@
+<h1>List all Hacktivities</h1>
+<p>welcome {{ currentUser.username }}</p>
+<ul>
+  {{#each hacktivities }}
+  <li>
+    <a href="/hacktivities/{{this._id}}/update">{{ this.name }}</a>
+    <form action="/hacktivities/{{this._id}}/delete" method="post">
+      <button type="submit">submit</button>
+    </form>
+  </li>
+  {{/each}}
+</ul>
+
+<a href="/logout">logout</a>
