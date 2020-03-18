@@ -16,7 +16,6 @@ router.get('/', (req, res, next) => {
   //console.log(user)
   User.findById(user) 
     .then((currentUser) => {
-      //console.log(currentUser);
       res.render('index', { currentUser, title: 'Express' });
     })
     .catch(() => {
@@ -46,7 +45,7 @@ router.post('/signup', (req, res, next) => {
           })
             .then((userCreated) => {
               req.session.userLogged = userCreated;
-              res.redirect('/login');
+              res.redirect('/');
             })
             .catch((error) => {
               next(error);
