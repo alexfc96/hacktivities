@@ -78,4 +78,15 @@ router.post('/:_id/update', (req, res, next) => {
     .catch(next);
 });
 
+// DELETE HACKTIVITIES
+router.post('/:_id/delete', (req, res, next) => {
+  const hacktivityID = req.params;
+
+  Hacktivity.findByIdAndDelete(hacktivityID) 
+    .then(() => {
+      res.redirect('/hacktivities');
+    })
+    .catch(next);
+});
+
 module.exports = router;
