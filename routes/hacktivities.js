@@ -1,6 +1,6 @@
 const express = require('express');
 // const User = require('../models/User');
-// const City = require('../models/City');
+const City = require('../models/City');
 const Hacktivity = require('../models/Hacktivity');
 
 const router = express.Router();
@@ -62,12 +62,13 @@ router.get('/:_id/update',(req, res) =>{
 
 router.post('/:_id/update', (req, res, next) => {
   const hacktivityID = req.params;
-  const { host, name, description, date, location, duration, created } = req.body;
+  const { host, name, description, date, hour, location, duration, created } = req.body;
   Hacktivity.findByIdAndUpdate(hacktivityID, {
     host,
     name,
     description,
     date,
+    hour,
     location,
     duration,
     created, // no se modifica
