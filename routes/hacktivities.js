@@ -28,6 +28,7 @@ router.get('/create', (req, res, next) => {
 // POST /hacktivities
 router.post('/create', (req, res, next) => {
   const { host, name, description, date, hour, location, duration, created } = req.body; 
+  console.log(req.body);
   Hacktivity.create({
     host,
     name,
