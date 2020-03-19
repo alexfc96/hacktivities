@@ -41,11 +41,11 @@ router.post('/create', (req, res, next) => {
 router.get('/:id', (req, res, next) => {
   const hacktivityID = req.params;
   console.log(hacktivityID);
-  Hacktivity.findById(hacktivityID)
-  .then((hacktivity) => {
-    res.render('/hacktivities/hacktivity', {hacktivity})
-  })
-  .catch(next)
-})
+  Hacktivity.find()
+    .then(hacktivity => {
+      res.render('hacktivities/hacktivity', { hacktivity });
+    })
+    .catch(next);
+});
 
 module.exports = router;
