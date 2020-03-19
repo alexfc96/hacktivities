@@ -12,10 +12,10 @@ router.get('/', (req, res, next) => {
   //console.log(user)
   User.findById(user) 
     .then((currentUser) => {
-      res.render('index', { currentUser, title: 'Express' });
+      res.render('index', { currentUser, title: 'Hacktivities' });
     })
     .catch(() => {
-      res.render('index', { title: 'Express' });
+      res.render('index', { title: 'Hacktivities' });
     });
 });
 
@@ -59,7 +59,7 @@ router.get('/login', (req, res, next) => { // darse de alta
 });
 
 router.post('/login', (req, res, next) => {
-  console.log(req.body);
+  //console.log(req.body);
   const { username, password } = req.body;
   if (username === '' || password === '') {
     res.render('user/signup', { error: 'the fields can not be empty' });
