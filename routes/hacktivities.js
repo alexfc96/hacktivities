@@ -30,20 +30,50 @@ router.post('/create', (req, res, next) => {
     date,
     location,
     duration,
-    created,
+    created ,
   })
     .then(() => {
       res.redirect('/hacktivities');
     })
     .catch(next);
 });
-
-router.get('/:id', (req, res, next) => {
+// GET HACKTIVITY BY ID
+router.get('/:_id', (req, res, next) => {
   const hacktivityID = req.params;
-  console.log(hacktivityID);
-  Hacktivity.find()
-    .then(hacktivity => {
+  // console.log(hacktivityID);
+  
+  Hacktivity.findById(hacktivityID)
+    .then((hacktivity) => {
       res.render('hacktivities/hacktivity', { hacktivity });
+    })
+    .catch(next);
+});
+// GET HACKTIVITY UPDATE
+router.get('/:_id/update',(req, res) =>{
+  const hacktivityID = req.params;
+  Hacktivity.findById(hacktivityID)
+    .then((hacktivity) => {
+      res.render('hacktivities/update', { hacktivity });
+    })
+    .catch(err => console.log('Error while rendering Hacktivities: ', err));
+});
+// POST HACKTIVITY UPDATE
+
+router.post('/:_id/update', (req, res, next) => {
+  const hacktivityID = req.params;
+  const { host, name, description, date, location, duration, created } = req.body;
+  Hacktivity.findByIdAndUpdate(hacktivityID, {
+    host,
+    name,
+    description,
+    date,
+    location,
+    duration,
+    created, // no se modifica
+  })
+    .then((hacktivityUpdated) => {
+      console.log(hacktivityID);
+      res.redirect(`/hacktivities/${hacktivityID._id}`);
     })
     .catch(next);
 });

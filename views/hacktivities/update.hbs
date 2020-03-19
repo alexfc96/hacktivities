@@ -1,4 +1,4 @@
-<form action="/hacktivities/{{hacktivity._id}}" method="post"></form>
+<form action="/hacktivities/{{hacktivity._id}}/update" method="post">
   <label for="name">name</label>
   <input type="text" name="name" id="hacktivity-name" placeholder="name" value="{{hactivity.name}}">
   <label for="descripton">description</label>
@@ -10,3 +10,4 @@
   <label for="dduration">duration</label>
   <input type="number" name="duration" id="hacktivity-duration" value="{{hactivity.duration}}">
   <button type="submit">submit</button>
+  </form>
