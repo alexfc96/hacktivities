@@ -27,6 +27,8 @@ router.post('/signup', (req, res, next) => {
   const { username, password } = req.body;
   if (username === '' || password === '') {
     res.render('user/signup', { error: 'The fields can not be empty' }); // hacer de esto una funcion de un scrpit para no repetirlo
+  } else if (password.length < 6) {
+    res.render('user/signup', { error: 'The password requires at least 6 characters' }); //comprobacion back para que no pueda cambiar desde el front
   } else {
     User.findOne({ username })
       .then((user) => {
