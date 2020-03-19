@@ -1,6 +1,6 @@
 const express = require('express');
 // const User = require('../models/User');
-// const City = require('../models/City');
+const City = require('../models/City');
 const Hacktivity = require('../models/Hacktivity');
 
 const router = express.Router();
@@ -23,6 +23,11 @@ router.get('/create', (req, res) => {
 // POST /hacktivities
 router.post('/create', (req, res, next) => {
   const { host, name, description, date, location, duration, created } = req.body; 
+  City.find(location)
+  .then((city) => {
+    console.log(city);
+  })
+  .catch(next)
   Hacktivity.create({
     host,
     name,
@@ -61,15 +66,13 @@ router.get('/:_id/update',(req, res) =>{
 
 router.post('/:_id/update', (req, res, next) => {
   const hacktivityID = req.params;
-  const { host, name, description, date, location, duration, created } = req.body;
+  const { name, description, date, location, duration,} = req.body;
   Hacktivity.findByIdAndUpdate(hacktivityID, {
-    host,
     name,
     description,
     date,
     location,
     duration,
-    created, // no se modifica
   })
     .then((hacktivityUpdated) => {
       console.log(hacktivityID);
