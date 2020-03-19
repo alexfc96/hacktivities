@@ -1,17 +1,16 @@
 const express = require('express');
 // const User = require('../models/User');
 // const City = require('../models/City');
-const Hactivity = require('../models/Hacktivity');
-
+const Hacktivity = require('../models/Hacktivity');
 
 const router = express.Router();
 
 
 /* GET /hacktivities */
-router.get('/hacktivities', (req, res, next) => {
-  Hactivity.find()
-    .then(hacktivities => {
-      res.render('hacktivities/list', { hacktivities });
+router.get('/', (req, res, next) => {
+  Hacktivity.find()
+    .then(hacktivity => {
+      res.render('hacktivities/list', { hacktivity });
     })
     .catch(err => console.log('Error while rendering Hacktivities: ', err));
 });
@@ -22,9 +21,9 @@ router.get('/create', (req, res) => {
 });
 
 // POST /hacktivities
-router.post('/', (req, res, next) => {
+router.post('/create', (req, res, next) => {
   const { host, name, description, date, location, duration, created } = req.body; 
-  Hactivity.create({
+  Hacktivity.create({
     host,
     name,
     description,
@@ -38,5 +37,15 @@ router.post('/', (req, res, next) => {
     })
     .catch(next);
 });
+
+router.get('/:id', (req, res, next) => {
+  const hacktivityID = req.params;
+  console.log(hacktivityID);
+  Hacktivity.findById(hacktivityID)
+  .then((hacktivity) => {
+    res.render('/hacktivities/hacktivity', {hacktivity})
+  })
+  .catch(next)
+})
 
 module.exports = router;
