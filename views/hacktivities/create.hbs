@@ -7,10 +7,14 @@
   <label for="date">date</label>
   <input type="date" name="date" id="hacktivity-date">
   <label for="location">location</label>
-  <select name="City" id="City-name">
-   {{#each City}}
-   <option value={{this.name}}>{{this.name}}</option>
+  <select name="location" id="hacktivity-location">
+   {{#each city}}
+   <option value="{{this._id}}">{{this.name}}</option>
    {{/each}}
+   {{!-- <option value="{{City.name}}">Barcelona</option>
+   <option value="{{City.name}}">Madrid</option>
+   <option value="{{City.name}}">Sevilla</option>
+   <option value="{{City.name}}">Bilbao</option> --}}
   </select>
   
   {{!-- <input type="text" name="location" id="hacktivity-location"> --}}

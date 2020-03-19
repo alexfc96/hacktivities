@@ -16,18 +16,18 @@ router.get('/', (req, res, next) => {
 });
 
 // GET /hacktivities/create
-router.get('/create', (req, res) => {
-  res.render('hacktivities/create');
+router.get('/create', (req, res, next) => {
+  City.find()
+  .then((city) =>{
+    console.log(city);
+    res.render('hacktivities/create', {city});
+  })
+  .catch(next)
 });
 
 // POST /hacktivities
 router.post('/create', (req, res, next) => {
   const { host, name, description, date, location, duration, created } = req.body; 
-  City.find(location)
-  .then((city) => {
-    console.log(city);
-  })
-  .catch(next)
   Hacktivity.create({
     host,
     name,
@@ -45,8 +45,6 @@ router.post('/create', (req, res, next) => {
 // GET HACKTIVITY BY ID
 router.get('/:_id', (req, res, next) => {
   const hacktivityID = req.params;
-  // console.log(hacktivityID);
-  
   Hacktivity.findById(hacktivityID)
     .then((hacktivity) => {
       res.render('hacktivities/hacktivity', { hacktivity });
@@ -56,6 +54,7 @@ router.get('/:_id', (req, res, next) => {
 // GET HACKTIVITY UPDATE
 router.get('/:_id/update',(req, res) =>{
   const hacktivityID = req.params;
+
   Hacktivity.findById(hacktivityID)
     .then((hacktivity) => {
       res.render('hacktivities/update', { hacktivity });
