@@ -8,7 +8,7 @@ const hacktivitySchema = new Schema(
     name: { type: String, required: true },
     description: { type: String },
     date: { type: Date },
-    hour: {type: Date}
+    hour: { type: Number },
     location: { type: Schema.Types.ObjectId, ref: 'City' },
     //location: String,
     duration: { type: Number, min: 0 },
