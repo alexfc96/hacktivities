@@ -12,7 +12,7 @@ router.get('/', (req, res, next) => {
   //console.log(user);
   User.findById(user) 
     .then((currentUser) => {
-      console.log(currentUser);
+      //console.log(currentUser);
       res.render('user/profile', { currentUser });
     })
     .catch(next);
@@ -32,7 +32,7 @@ router.get('/:id/update', (req, res, next) => { // actualizar datos del user
   //console.log(user);
   User.findById(user) 
     .then((currentUser) => {
-      console.log(currentUser);
+      //console.log(currentUser);
       res.render('user/update', { currentUser });
     })
     .catch(next);
