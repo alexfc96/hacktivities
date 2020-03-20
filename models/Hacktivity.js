@@ -8,10 +8,8 @@ const hacktivitySchema = new Schema(
     name: { type: String, required: true },
     description: { type: String },
     date: { type: Date },
-    hour: { type: Number },   //no existe tipo Time pero no es date y tampoco number.
     location: { type: Schema.Types.ObjectId, ref: 'City' },
-    //location: String,
-    duration: { type: Number, min: 0 },
+    duration: { type: Number, min: 0, max: 480 },
     created: { type: Date, default: Date.now },
   },
 );

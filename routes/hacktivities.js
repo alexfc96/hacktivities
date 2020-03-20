@@ -4,7 +4,7 @@ const City = require('../models/City');
 const Hacktivity = require('../models/Hacktivity');
 
 const router = express.Router();
-
+const checkuser = require('../scripts/checkuserlogged');
 
 /* GET /hacktivities */
 router.get('/', (req, res, next) => {
@@ -15,39 +15,47 @@ router.get('/', (req, res, next) => {
     .catch(err => console.log('Error while rendering Hacktivities: ', err));
 });
 
+router.use(checkuser.checkIfUserLoggedIn); //limita a visualizar las rutas a los no logueados
+
 // GET /hacktivities/create
 router.get('/create', (req, res, next) => {
   City.find()
-  .then((city) =>{
-    //console.log(city);
-    res.render('hacktivities/create', {city});
-  })
-  .catch(next)
+    .then((city) =>{
+      res.render('hacktivities/create', {city});
+    })
+    .catch(next);
 });
 
 // POST /hacktivities
 router.post('/create', (req, res, next) => {
-  const { host, name, description, date, hour, location, duration, created } = req.body; 
-  console.log(req.body);
-  Hacktivity.create({
-    host,
-    name,
-    description,
-    date,
-    hour,
-    location,
-    duration,
-    created,
-  })
-    .then(() => {
-      res.redirect('/hacktivities');
+  const { host, name, description, date, location, duration, created } = req.body;
+  checkDate = new Date(date)
+  const todayDate = new Date();
+  if (checkDate < todayDate) {
+    res.render('hacktivities/create', {error: "Fecha anterior a hoy"}) //hacer flash
+ } else{
+    Hacktivity.create({
+      host,
+      name,
+      description,
+      date,
+      location,
+      duration,
+      created,
     })
-    .catch(next);
+      .then(() => {
+        res.redirect('/hacktivities');
+      })
+      .catch(next);
+ }
+
 });
 // GET HACKTIVITY BY ID
 router.get('/:_id', (req, res, next) => {
   const hacktivityID = req.params;
   Hacktivity.findById(hacktivityID)
+    // .populate({ path: 'location', select: 'name' })
+    .populate('location')
     .then((hacktivity) => {
       res.render('hacktivities/hacktivity', { hacktivity });
     })
@@ -67,12 +75,11 @@ router.get('/:_id/update',(req, res) =>{
 
 router.post('/:_id/update', (req, res, next) => {
   const hacktivityID = req.params;
-  const { name, description, date, location, duration,} = req.body;
+  const { name, description, date, duration } = req.body;
   Hacktivity.findByIdAndUpdate(hacktivityID, {
     name,
     description,
     date,
-    location,
     duration,
   })
     .then((hacktivityUpdated) => {

@@ -2,7 +2,7 @@ const express = require('express');
 const User = require('../models/User');
 
 const router = express.Router();
-const checkuser = require('../scripts/checkuserlogued');
+const checkuser = require('../scripts/checkuserlogged');
 
 router.use(checkuser.checkIfUserLoggedIn); //limita a visualizar las rutas a los no logueados
 

@@ -1,0 +1,11 @@
+<h1>List all cities where we have hacktivities</h1>
+<ul>
+  {{#each city }}
+  <li>
+    <a href="/cities/{{this._id}}">{{ this.name }}</a>
+
+  </li>
+  {{/each}}
+</ul>
+
+{{!-- <a href="/logout">logout</a> --}} 
