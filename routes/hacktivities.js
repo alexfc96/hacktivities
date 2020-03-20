@@ -46,7 +46,8 @@ router.get('/:_id', (req, res, next) => {
   const hacktivityID = req.params;
   
   Hacktivity.findById(hacktivityID)
-    .populate()
+    // .populate({ path: 'location', select: 'name' })
+    .populate('location')
     .then((hacktivity) => {
       res.render('hacktivities/hacktivity', { hacktivity });
     })
