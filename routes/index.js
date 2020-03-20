@@ -5,6 +5,7 @@ const saltRounds = 10;
 
 const router = express.Router();
 const User = require('../models/User');
+const City = require('../models/City');
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
@@ -66,11 +67,10 @@ router.post('/login', (req, res, next) => {
   } else {
     User.findOne({ username })
       .then((user) => {
-        console.log('working');
         if (!user) {
           res.render('user/signup', { error: 'this user is not registered' });
         } else {
-          console.log(bcrypt.compareSync(password, user.userpassword));
+          //console.log(bcrypt.compareSync(password, user.userpassword));
           if (bcrypt.compareSync(password, user.userpassword)) {
             req.session.userLogged = user;
             res.redirect('/');
@@ -83,6 +83,21 @@ router.post('/login', (req, res, next) => {
         next(error);
       });
   }
+});
+
+router.get('/:id', (req, res, next) => {
+  const cityName = req.params;
+  console.log(cityName);
+  City.find()
+  .then((city) =>{
+    console.log(city);
+    if(cityName===city.name){
+      console.log("coincide");
+    }else{
+      next()
+    }
+  })
+  .catch(next)
 });
 
 module.exports = router;

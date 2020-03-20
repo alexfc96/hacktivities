@@ -4,7 +4,7 @@ const City = require('../models/City');
 const Hacktivity = require('../models/Hacktivity');
 
 const router = express.Router();
-
+const checkuser = require('../scripts/checkuserlogged');
 
 /* GET /hacktivities */
 router.get('/', (req, res, next) => {
@@ -15,13 +15,15 @@ router.get('/', (req, res, next) => {
     .catch(err => console.log('Error while rendering Hacktivities: ', err));
 });
 
+router.use(checkuser.checkIfUserLoggedIn); //limita a visualizar las rutas a los no logueados
+
 // GET /hacktivities/create
 router.get('/create', (req, res, next) => {
   City.find()
     .then((city) =>{
       res.render('hacktivities/create', {city});
     })
-    .catch(next)
+    .catch(next);
 });
 
 // POST /hacktivities

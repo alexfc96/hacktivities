@@ -69,11 +69,13 @@ app.use(flash());
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');  //js en plural
-const hacktivitiesRouter = require('./routes/hacktivities')
+const hacktivitiesRouter = require('./routes/hacktivities');
+const citiesRouter = require('./routes/cities');
 
 app.use('/', indexRouter);
 app.use('/user', usersRouter); //respuesta en singular
 app.use('/hacktivities', hacktivitiesRouter);
+app.use('/cities', citiesRouter)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
