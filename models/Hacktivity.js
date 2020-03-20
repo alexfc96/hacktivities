@@ -9,7 +9,6 @@ const hacktivitySchema = new Schema(
     description: { type: String },
     date: { type: Date },
     location: { type: Schema.Types.ObjectId, ref: 'City' },
-    // location: String,
     duration: { type: Number, min: 0 },
     created: { type: Date, default: Date.now },
   },

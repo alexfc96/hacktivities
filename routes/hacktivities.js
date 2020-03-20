@@ -18,11 +18,10 @@ router.get('/', (req, res, next) => {
 // GET /hacktivities/create
 router.get('/create', (req, res, next) => {
   City.find()
-  .then((city) =>{
-    console.log(city);
-    res.render('hacktivities/create', {city});
-  })
-  .catch(next)
+    .then((city) =>{
+      res.render('hacktivities/create', {city});
+    })
+    .catch(next)
 });
 
 // POST /hacktivities
@@ -45,7 +44,9 @@ router.post('/create', (req, res, next) => {
 // GET HACKTIVITY BY ID
 router.get('/:_id', (req, res, next) => {
   const hacktivityID = req.params;
+  
   Hacktivity.findById(hacktivityID)
+    .populate()
     .then((hacktivity) => {
       res.render('hacktivities/hacktivity', { hacktivity });
     })
@@ -54,7 +55,6 @@ router.get('/:_id', (req, res, next) => {
 // GET HACKTIVITY UPDATE
 router.get('/:_id/update',(req, res) =>{
   const hacktivityID = req.params;
-
   Hacktivity.findById(hacktivityID)
     .then((hacktivity) => {
       res.render('hacktivities/update', { hacktivity });
@@ -65,12 +65,11 @@ router.get('/:_id/update',(req, res) =>{
 
 router.post('/:_id/update', (req, res, next) => {
   const hacktivityID = req.params;
-  const { name, description, date, location, duration,} = req.body;
+  const { name, description, date, duration } = req.body;
   Hacktivity.findByIdAndUpdate(hacktivityID, {
     name,
     description,
     date,
-    location,
     duration,
   })
     .then((hacktivityUpdated) => {
