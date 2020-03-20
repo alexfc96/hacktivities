@@ -1,25 +1,19 @@
 <form action="/hacktivities/create" method="post">
 
-  <label for="name">name</label>
-  <input type="text" name="name" id="hacktivity-name" placeholder="name">
-  <label for="descripton">description</label>
-  <input type="text" name="description" id="hacktivity-description">
-  <label for="date">date</label>
+  <label for="name">Hacktivity</label>
+  <input type="text" name="name" id="hacktivity-name" placeholder="Hacktivity name">
+  <label for="descripton">Description</label>
+  <input type="text" name="description" id="hacktivity-description" placeholder="Describe your Hacktivity">
+  <label for="date">Date</label>
   <input type="date" name="date" id="hacktivity-date">
-  <label for="location">location</label>
+  <label for="location">Location</label>
   <select name="location" id="hacktivity-location">
    {{#each city}}
    <option value="{{this._id}}">{{this.name}}</option>
    {{/each}}
-   {{!-- <option value="{{City.name}}">Barcelona</option>
-   <option value="{{City.name}}">Madrid</option>
-   <option value="{{City.name}}">Sevilla</option>
-   <option value="{{City.name}}">Bilbao</option> --}}
   </select>
-  
-  {{!-- <input type="text" name="location" id="hacktivity-location"> --}}
-  <label for="duration">duration</label>
-  <input type="number" name="duration" id="hacktivity-duration">
+  <label for="duration">Duration</label>
+  <input type="number" name="duration" id="hacktivity-duration" placeholder="Minutes">
   <button type="submit">Create hacktivity</button>
 </form>
   {{#if error}}
