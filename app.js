@@ -55,7 +55,7 @@ app.use(
       mongooseConnection: mongoose.connection,
       ttl: 24 * 60 * 60, // 1 day
     }),
-    secret: 'hactivities',
+    secret: 'hacktivities',
     resave: true,
     saveUninitialized: true,
     name: 'hacktivities',

@@ -27,24 +27,33 @@ router.get('/create', (req, res, next) => {
 // POST /hacktivities
 router.post('/create', (req, res, next) => {
   const { host, name, description, date, location, duration, created } = req.body; 
-  Hacktivity.create({
-    host,
-    name,
-    description,
-    date,
-    location,
-    duration,
-    created ,
-  })
-    .then(() => {
-      res.redirect('/hacktivities');
+  console.log(date);
+  checkDate = new Date(date)
+  console.log(checkDate);
+  const todayDate = new Date();
+  console.log(todayDate);
+  if (checkDate < todayDate) {
+    res.render('hacktivities/create', {error: "Fecha anterior a hoy"}) //hacer flash
+ } else{
+    Hacktivity.create({
+      host,
+      name,
+      description,
+      date,
+      location,
+      duration,
+      created,
     })
-    .catch(next);
+      .then(() => {
+        res.redirect('/hacktivities');
+      })
+      .catch(next);
+ }
+
 });
 // GET HACKTIVITY BY ID
 router.get('/:_id', (req, res, next) => {
   const hacktivityID = req.params;
-  
   Hacktivity.findById(hacktivityID)
     // .populate({ path: 'location', select: 'name' })
     .populate('location')
