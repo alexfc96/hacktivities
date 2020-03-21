@@ -33,6 +33,8 @@ router.post('/create', (req, res, next) => {
   const todayDate = new Date();
   if (checkDate < todayDate) {
     res.render('hacktivities/create', {error: "Fecha anterior a hoy"}) //hacer flash
+ } else if (duration > 480) {
+    res.render('hacktivities/create', {error: "La duración maxima dela activadad son 480mins"}) //hacer flash
  } else{
     Hacktivity.create({
       host,

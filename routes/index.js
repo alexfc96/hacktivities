@@ -69,8 +69,9 @@ router.post('/login', (req, res, next) => {
   } else {
     User.findOne({ username })
       .then((user) => {
+        console.log(username)
         if (!user) {
-          res.render('user/signup', { error: 'this user is not registered' });
+          res.render('user/signup', { error: 'this user is not registered', username });
         } else {
           //console.log(bcrypt.compareSync(password, user.userpassword));
           if (bcrypt.compareSync(password, user.userpassword)) {
