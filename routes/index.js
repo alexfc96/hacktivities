@@ -90,10 +90,10 @@ router.post('/login', (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {
   const cityName = req.params;
-  console.log(cityName);
+  //console.log(cityName);
   City.find()
   .then((city) =>{
-    console.log(city);
+    //console.log(city);
     if(cityName===city.name){
       console.log("coincide");
     }else{
