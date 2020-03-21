@@ -15,8 +15,9 @@ router.get('/', (req, res, next) => {
 
 router.get('/:_id', (req, res, next) => {
   const cityID = req.params;
-  City.findById(cityID)
+  Hacktivity.find({ location: cityID })
     .then((city) => {
+      console.log(city);
       res.render('cities/city', {city});
       })
     .catch(next);
