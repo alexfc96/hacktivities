@@ -8,9 +8,11 @@ const checkuser = require('../scripts/checkuserlogged');
 
 /* GET /hacktivities */
 router.get('/', (req, res, next) => {
+ const user = req.session.userLogged._id;
+ 
   Hacktivity.find()
-    .then(hacktivity => {
-      res.render('hacktivities/list', { hacktivity });
+    .then(hacktivities => {
+      res.render('hacktivities/list', { hacktivities, user });
     })
     .catch(err => console.log('Error while rendering Hacktivities: ', err));
 });
@@ -28,7 +30,8 @@ router.get('/create', (req, res, next) => {
 
 // POST /hacktivities
 router.post('/create', (req, res, next) => {
-  const { host, name, description, date, location, duration, created } = req.body;
+  const host = req.session.userLogged._id;
+  const { name, description, date, location, duration, created } = req.body;
   checkDate = new Date(date)
   const todayDate = new Date();
   if (checkDate < todayDate) {
@@ -36,7 +39,7 @@ router.post('/create', (req, res, next) => {
  } else if (duration > 480) {
     res.render('hacktivities/create', {error: "La duración maxima dela activadad son 480mins"}) //hacer flash
  } else{
-    Hacktivity.create({
+    Hacktivity.create({ 
       host,
       name,
       description,
@@ -55,11 +58,12 @@ router.post('/create', (req, res, next) => {
 // GET HACKTIVITY BY ID
 router.get('/:_id', (req, res, next) => {
   const hacktivityID = req.params;
+  const user = req.session.userLogged._id;
   Hacktivity.findById(hacktivityID)
     // .populate({ path: 'location', select: 'name' })
     .populate('location')
     .then((hacktivity) => {
-      res.render('hacktivities/hacktivity', { hacktivity });
+      res.render('hacktivities/hacktivity', { hacktivity, user });
     })
     .catch(next);
 });
@@ -85,7 +89,6 @@ router.post('/:_id/update', (req, res, next) => {
     duration,
   })
     .then((hacktivityUpdated) => {
-      //console.log(hacktivityID);
       res.redirect(`/hacktivities/${hacktivityID._id}`);
     })
     .catch(next);
