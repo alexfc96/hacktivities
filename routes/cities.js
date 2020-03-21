@@ -16,9 +16,17 @@ router.get('/', (req, res, next) => {
 router.get('/:_id', (req, res, next) => {
   const cityID = req.params;
   Hacktivity.find({ location: cityID })
+    .populate('location')  //como sacar los datos de la location?
     .then((city) => {
-      console.log(city);
-      res.render('cities/city', {city});
+			// const { resort_id: resort } = reviews[0];
+			// res.render('resorts/update', { resort, reviews });
+
+      const {location: data} = city[0];
+      console.log(data);
+      res.render('cities/city', { city, data });
+
+      // console.log(city);
+      // res.render('cities/city', { city });
       })
     .catch(next);
 });
