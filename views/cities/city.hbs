@@ -1,8 +1,8 @@
 
 
-<h1>List of hacktivities in {{data.name}}</h1>
+<h1>List of hacktivities in {{city.name}}</h1>
 
 
-{{#each city}}
-  <a href="/hacktivities/{{this._id}}">{{this.name}}</a><br><br>
+{{#each hacktivities}}
+  <a href="/hacktivities/{{this._id}}">{{this.name}}</a><br>
 {{/each}}
