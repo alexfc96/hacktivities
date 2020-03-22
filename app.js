@@ -77,6 +77,11 @@ app.use('/user', usersRouter); //respuesta en singular
 app.use('/hacktivities', hacktivitiesRouter);
 app.use('/cities', citiesRouter)
 
+// app.use((req, res, next) => {
+//   app.locals.expreq = req;
+//   next();
+// });
+
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   next(createError(404));
