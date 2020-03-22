@@ -15,7 +15,12 @@
 <br>
 <b>Created: {{hacktivity.created}} </b>
 <br>
-{{#if hacktivity.host}}
+
+
 <a href="/hacktivities/{{hacktivity._id}}/update">Update hacktivity</a> <br><br>
-{{/if}}
+
+<form action="/hacktivities/{{hacktivity._id}}/delete" method="post">
+    <button type="submit">Delete hacktivity</button>
+</form>
+
 </div>

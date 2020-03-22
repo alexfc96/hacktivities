@@ -8,11 +8,11 @@ const checkuser = require('../scripts/checkuserlogged');
 
 /* GET /hacktivities */
 router.get('/', (req, res, next) => {
- const user = req.session.userLogged._id;
- 
+//  const user = req.session.userLogged._id;
+
   Hacktivity.find()
     .then(hacktivities => {
-      res.render('hacktivities/list', { hacktivities, user });
+      res.render('hacktivities/list', { hacktivities });
     })
     .catch(err => console.log('Error while rendering Hacktivities: ', err));
 });
