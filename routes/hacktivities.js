@@ -1,5 +1,7 @@
 const express = require('express');
 // const User = require('../models/User');
+
+
 const City = require('../models/City');
 const Hacktivity = require('../models/Hacktivity');
 
@@ -8,7 +10,6 @@ const checkuser = require('../scripts/checkuserlogged');
 
 /* GET /hacktivities */
 router.get('/', (req, res, next) => {
-//  const user = req.session.userLogged._id;
 
   Hacktivity.find()
     .then(hacktivities => {
@@ -55,16 +56,18 @@ router.post('/create', (req, res, next) => {
  }
 
 });
+
+
 // GET HACKTIVITY BY ID
 router.get('/:_id', (req, res, next) => {
   const hacktivityID = req.params;
-  const user = req.session.userLogged._id;
-
+  const userId = req.session.userLogged._id;
+  
   Hacktivity.findById(hacktivityID)
     // .populate({ path: 'location', select: 'name' })
     .populate('location')
     .then((hacktivity) => {
-      res.render('hacktivities/hacktivity', { hacktivity, user });
+      res.render('hacktivities/hacktivity', { hacktivity, userId});
     })
     .catch(() =>{
     res.render('hacktivities/hacktivity', { hacktivity });
