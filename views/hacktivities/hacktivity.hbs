@@ -16,11 +16,11 @@
 <b>Created: {{hacktivity.created}} </b>
 <br>
 
-
+{{#if user}}
 <a href="/hacktivities/{{hacktivity._id}}/update">Update hacktivity</a> <br><br>
 
 <form action="/hacktivities/{{hacktivity._id}}/delete" method="post">
     <button type="submit">Delete hacktivity</button>
 </form>
-
+{{/if}}
 </div>

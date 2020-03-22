@@ -59,13 +59,16 @@ router.post('/create', (req, res, next) => {
 router.get('/:_id', (req, res, next) => {
   const hacktivityID = req.params;
   const user = req.session.userLogged._id;
+
   Hacktivity.findById(hacktivityID)
     // .populate({ path: 'location', select: 'name' })
     .populate('location')
     .then((hacktivity) => {
       res.render('hacktivities/hacktivity', { hacktivity, user });
     })
-    .catch(next);
+    .catch(() =>{
+    res.render('hacktivities/hacktivity', { hacktivity });
+    });
 });
 // GET HACKTIVITY UPDATE
 router.get('/:_id/update',(req, res) =>{
