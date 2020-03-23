@@ -1,9 +1,9 @@
 const express = require('express');
-// const User = require('../models/User');
 
-
+//const User = require('../models/User');
 const City = require('../models/City');
 const Hacktivity = require('../models/Hacktivity');
+const Booking = require('../models/Booking')
 
 const router = express.Router();
 const checkuser = require('../scripts/checkuserlogged');
@@ -31,7 +31,7 @@ router.get('/create', (req, res, next) => {
 
 // POST /hacktivities
 router.post('/create', (req, res, next) => {
-  const host = req.session.userLogged._id;
+  const hostId = req.session.userLogged._id;
   const { name, description, date, location, duration, created } = req.body;
   checkDate = new Date(date)
   const todayDate = new Date();
@@ -41,7 +41,7 @@ router.post('/create', (req, res, next) => {
     res.render('hacktivities/create', {error: "La duración maxima dela activadad son 480mins"}) //hacer flash
  } else{
     Hacktivity.create({ 
-      host,
+      hostId,
       name,
       description,
       date,
@@ -50,13 +50,22 @@ router.post('/create', (req, res, next) => {
       created,
     })
       .then(() => {
+        Hacktivity.find().sort({ _id: -1 }).limit(1)
+          .then((hacktivity) =>{
+            const hacktivityId = hacktivity[0]._id;
+            //console.log(hacktivityId);
+            Booking.create({
+              hacktivityId,
+              hostId,
+            });
+          });
+
         res.redirect('/hacktivities');
       })
       .catch(next);
  }
 
 });
-
 
 // GET HACKTIVITY BY ID
 router.get('/:_id', (req, res, next) => {
@@ -94,7 +103,7 @@ router.post('/:_id/update', (req, res, next) => {
     date,
     duration,
   })
-    .then((hacktivityUpdated) => {
+    .then(() => {
       res.redirect(`/hacktivities/${hacktivityID._id}`);
     })
     .catch(next);
@@ -104,12 +113,37 @@ router.post('/:_id/update', (req, res, next) => {
 router.post('/:_id/delete', (req, res, next) => {
   const hacktivityID = req.params;
 
-  Hacktivity.findByIdAndDelete(hacktivityID) 
+  Hacktivity.findByIdAndDelete(hacktivityID)
     .then(() => {
+      Booking.find(hacktivityID)
+        .then((hacktivity) =>{
+          console.log(hacktivity);
+          console.log("Borrado con exito");
+        })
+        .catch(next);
       res.redirect('/hacktivities');
     })
     .catch(next);
 });
 
-module.exports = router;
+//BOOK HACKTIVITIES
+//hacer que cuando se cree una actividad se cree su modelo booking?
+//y luego aquí solo hacer un findandupdate pusheando el atendee?
+router.post('/:_id/book', (req, res, next) => {
+  const bookingID = req.params;
+  const user = req.session.userLogged._id;
+  const atendees = {user}; //habrá que pushear el objeto al array
+  // Booking.findByIdAndUpdate({bookingID}{//me he quedado mirando la estructura del findbyidandupdate 
+  //   $addToSet: {  //esto no se si es así
+  //     atendees  //es un objeto pero hay que pushearlo a la lista
+  //    }
+  // })
+  //   .then(()=>{
+  //     console.log('Booking realziado correctamente');
+  //     res.redirect('/user');
+  //   });
+  //   })
+  //   .catch(next);
+});
 
+module.exports = router;

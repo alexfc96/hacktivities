@@ -7,7 +7,7 @@ const bookingSchema = new Schema(
     hacktivityId: { type: Schema.Types.ObjectId, ref: 'Hacktivity' },
     hostId: { type: Schema.Types.ObjectId, ref: 'User' },
     atendees: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-    review: { type: Schema.Types.ObjectId, ref: 'Review' },
+    //review: { type: Schema.Types.ObjectId, ref: 'Review' },
     date: { type: Date },
   },
 );

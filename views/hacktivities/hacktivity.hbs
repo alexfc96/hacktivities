@@ -14,7 +14,12 @@
 <b>Created: {{hacktivity.created}} </b>
 <br>
 
-{{#eq userId  hacktivity.host}}
+
+<form action="/hacktivities/{{booking._id}}/book" method="post">
+  <button type="submit">Book hacktivity</button>
+</form>
+
+{{#eq userId  hacktivity.hostId}}
 <a href="/hacktivities/{{hacktivity._id}}/update">Update hacktivity</a> <br><br>
 
 <form action="/hacktivities/{{hacktivity._id}}/delete" method="post">

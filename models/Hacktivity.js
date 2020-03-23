@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 
 const hacktivitySchema = new Schema(
   {
-    host: { type: Schema.Types.ObjectId, ref: 'User' },
+    hostId: { type: Schema.Types.ObjectId, ref: 'User' },
     name: { type: String, required: true },
     description: { type: String },
     date: { type: Date },
