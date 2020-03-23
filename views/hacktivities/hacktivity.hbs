@@ -9,17 +9,15 @@
 <br>
 <b>Date: {{hacktivity.date}} </b>
 <br>
-<b>Host: {{}}</b>
-<br>
 <b>Duration: {{hacktivity.duration}} </b>
 <br>
 <b>Created: {{hacktivity.created}} </b>
 <br>
-{{#eq user  hacktivity.host}}
+
+{{#eq userId  hacktivity.host}}
 <a href="/hacktivities/{{hacktivity._id}}/update">Update hacktivity</a> <br><br>
 
 <form action="/hacktivities/{{hacktivity._id}}/delete" method="post">
     <button type="submit">Delete hacktivity</button>
 </form>
 {{/eq}}
-</div>
