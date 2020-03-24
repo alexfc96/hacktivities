@@ -141,6 +141,11 @@ router.post('/:_id/book', (req, res, next) => {
   //   });
   //   })
   //   .catch(next);
+
+  // 0º - Compruebo que no haya un booking para esa actividad
+  // 1º - Me devuelve un booking -> update ese booking haciendo pushen atendees de user
+  // 2º - No me devuelve nada -> findbyid de hacktivity
+  // 3º - Crear un booking para esa actividad, y añadir el user a atendees
 });
 
 module.exports = router;
