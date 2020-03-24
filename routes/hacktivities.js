@@ -131,6 +131,7 @@ router.post('/:_id/delete', (req, res, next) => {
 //y luego aquí solo hacer un findandupdate pusheando el atendee?
 router.post('/:_id/book', (req, res, next) => {
   const bookingID = req.params;
+  console.log(bookingID);
   const user = req.session.userLogged._id;
   const atendees = {user}; //habrá que pushear el objeto al array
   // Booking.findByIdAndUpdate({bookingID}{//me he quedado mirando la estructura del findbyidandupdate 
