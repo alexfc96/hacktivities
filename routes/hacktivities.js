@@ -49,20 +49,16 @@ router.post('/create', (req, res, next) => {
       duration,
       created,
     })
-      .then(() => {
-        Hacktivity.find().sort({ _id: -1 }).limit(1)
-          .then((hacktivity) =>{
-            const hacktivityId = hacktivity[0]._id;
-            //console.log(hacktivityId);
-            Booking.create({
-              hacktivityId,
-              hostId,
-            });
-          });
-
-        res.redirect('/hacktivities');
+    .then((hacktivity) => {
+        Booking.create({
+          hacktivityId: hacktivity._id,
+          hostId,
+        })
+          .then(()=>{
+            res.redirect('/hacktivities');
+          })
       })
-      .catch(next);
+    .catch(next);
  }
 
 });
