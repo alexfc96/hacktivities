@@ -127,16 +127,17 @@ router.post('/:_id/book', (req, res, next) => {
   const hacktivityID = req.params;
   console.log(hacktivityID);
   const user = req.session.userLogged._id;
-  const userobj = { user }; // habrá que pushear el objeto al array
-  console.log(userobj);
-
+  const userObj = { user }; // habrá que pushear el objeto al array
+  // console.log(userobj);
+console.log(userObj);
+console.log(user);
   Booking.find({ hacktivityId: hacktivityID })
     .then((booking) => {
       if (booking && booking.length == 0) {
         console.log('vacía');
         Hacktivity.findById(hacktivityID)
           .then((hacktivity) => {
-            console.log(hacktivity);
+            // console.log(hacktivity);
             Booking.create({
               hacktivityId: hacktivityID,
               hostId: hacktivity.hostId,
@@ -144,13 +145,10 @@ router.post('/:_id/book', (req, res, next) => {
             });
           });
       } else {
-        Booking.findByIdAndUpdate(
-          { hacktivityId: hacktivityID },
-          { $push: {atendees: userobj} },
-          { safe: true, upsert: true },
-        );
+        Booking.findOneAndUpdate({ hacktivityId: hacktivityID }, 
+          { $push: { atendees: user } },
+             });
       }
-      console.log(booking);
       res.redirect('/');
     })
     .catch(next);
