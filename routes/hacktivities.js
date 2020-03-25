@@ -127,17 +127,12 @@ router.post('/:_id/book', (req, res, next) => {
   const hacktivityID = req.params;
   console.log(hacktivityID);
   const user = req.session.userLogged._id;
-  const userObj = { user }; // habrá que pushear el objeto al array
-  // console.log(userobj);
-console.log(userObj);
-console.log(user);
+  
   Booking.find({ hacktivityId: hacktivityID })
     .then((booking) => {
       if (booking && booking.length == 0) {
-        console.log('vacía');
         Hacktivity.findById(hacktivityID)
           .then((hacktivity) => {
-            // console.log(hacktivity);
             Booking.create({
               hacktivityId: hacktivityID,
               hostId: hacktivity.hostId,
@@ -147,25 +142,18 @@ console.log(user);
       } else {
         Booking.findOneAndUpdate({ hacktivityId: hacktivityID }, 
           { $push: { atendees: user } },
-             });
+          function (error, success) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log(success);
+            }
+        }
+          );
       }
       res.redirect('/');
     })
     .catch(next);
-
-  //     Hacktivity.findById(hacktivity._id)
-
-  // Booking.findByIdAndUpdate({bookingID}{//me he quedado mirando la estructura del findbyidandupdate
-  //   $addToSet: {  //esto no se si es así
-  //     atendees  //es un objeto pero hay que pushearlo a la lista
-  //    }
-  // })
-  //   .then(()=>{
-  //     console.log('Booking realziado correctamente');
-  //     res.redirect('/user');
-  //   });
-  //   })
-  //   .catch(next);
 
   // 0º - Compruebo que no haya un booking para esa actividad
   // 1º - Me devuelve un booking -> update ese booking haciendo pushen atendees de user
