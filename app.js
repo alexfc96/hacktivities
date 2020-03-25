@@ -13,13 +13,9 @@ const MongoStore = require('connect-mongo')(session);
 
 const dbPath = process.env.DATABASE;
 
-//const seeds = require('./bin/seeds');
-
 hbs.registerHelper('eq', function (arg1, arg2, options) {
   return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
 });
-
-
 
 mongoose
   //.connect('mongodb://localhost/starter-code', {useNewUrlParser: true})
