@@ -10,7 +10,6 @@ const City = require('../models/City');
 /* GET home page. */
 router.get('/', (req, res, next) => {
   const user = req.session.userLogged;  //nos da el objeto con toda la info del user/session
-  console.log(user)
   //console.log(user)
   User.findById(user) 
     .then((currentUser) => {
