@@ -140,13 +140,13 @@ router.post('/:_id/book', (req, res, next) => {
             Booking.create({
               hacktivityId: hacktivityID,
               hostId: hacktivity.hostId,
-              // atendees:
+              atendees: user,
             });
           });
       } else {
         Booking.findByIdAndUpdate(
           { hacktivityId: hacktivityID },
-          { $push: { atendees: userobj } },
+          { $push: {atendees: userobj} },
           { safe: true, upsert: true },
         );
       }
