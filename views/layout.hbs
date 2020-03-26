@@ -3,33 +3,108 @@
   <head>
     <title>{{title}}</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
-    {{!-- <link rel="stylesheet" href='/stylesheets/navbar.css'> --}}
+    <link rel="stylesheet" href='/stylesheets/navbar.css'>
   </head>
   <link href="http://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet" type="text/css" />
-<header class="header">
-  {{!-- <a href="/" class="logo">HACKTIVITIES</a>
-  <input class="menu-btn" type="checkbox" id="menu-btn" />
-  <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
-  <ul class="menu">
-    <li><a href="/cities">Cities</a></li>
-    <li><a href="contact">Contact</a></li>
-    <li><a href="aboutus">About us</a></li>
-    {{#if currentUser}}
-      <a href="/user">{{ currentUser.username }}</a><br>
-      <a href="/user/logout">Logout</a>
-      {{else}}
-        <li><a href="/login">Login</a></li>
-        <li><a href="/signup">Signup</a></li>
-    {{/if}}
-  </ul> --}}
-</header>
+  <script type="text/javascript" src="../scripts/navbar.js"></script>
   <body>
-    {{{body}}}
-    <div class="footer">
-      <div class="info-footer">
-      <img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/cc-badges-ppmcvdam.png" alt="Buy now with PayPal" />
-      </div>
+    <nav class="navbar">
+    {{!-- <span class="navbar-toggle" id="js-navbar-toggle">
+            <i class="fas fa-bars"></i>
+    </span>
+    <a href="/" class="logo">HACKTIVITIES</a>
+    <ul class="main-nav" id="js-menu">
+      <li>
+        <a href="/cities" class="nav-links">Cities</a>
+      </li>
+      <li>
+       {{#if currentUser}}
+       <a href="/user" class="nav-links">{{ currentUser.username }}</a>
+      </li>
+      <li>
+      <a href="/user/logout" class="nav-links">Logout</a>
+      </li>
+      {{else}}
+      <li>
+        <a href="/login" class="nav-links">Login</a>
+      </li>
+      <li>
+        <a href="/signup" class="nav-links">Signup</a>
+      </li>
+      {{/if}}
+       <li>
+        <a href="/contact" class="nav-links">Contact</a>
+      </li>
+    </ul>
+  </nav>
+ --}}
+<div class="nav">
+  <input type="checkbox" id="nav-check">
+  <div class="nav-header">
+    <div class="nav-title">
+      <a class='nav-hack'  href="/">HACKTIVITIES</a>
+    </div>
+  </div>
+  <div class="nav-btn">
+    <label for="nav-check">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+  </div>
+  
+  <div class="nav-links">
+    {{#if currentUser}}
+    <a href="/user"
+    target="_blank">Stackoverflow</a>
+    <a href="/user/logout" target="_blank">Logout</a>
+    {{else}}
+    <a href="/login" target="_blank">Login</a>
+    <a href="/signup" target="_blank">Signup</a>
+    {{/if}}
+    <a href="/cities" target="_blank">Cities</a>
+    <a href="/contact" target="_blank">Contact</a>
+    <a href='/about' target="_blank">About us</a>
+  </div>
+</div>
 
-      </div>
+    {{{body}}}
+    {{!-- <section></section> --}}
+
+		<footer class="footer-distributed">
+
+			<div class="footer-right">
+          <a href=""> <img height="30" src="https://shoplineimg.com/assets/footer/card_visa.png"/>
+          </a>
+          <a href=""> 
+          <img height="30" src="https://shoplineimg.com/assets/footer/card_master.png"/>
+          </a>
+          <a href="">
+          <img height="30" src="https://shoplineimg.com/assets/footer/card_paypal.png"/>  
+          </a>
+          <a href="">
+          <img height="30" src="https://shoplineimg.com/assets/footer/card_amex.png"/>
+          </a>
+    
+			</div>
+
+			<div class="footer-left">
+
+				<p class="footer-links">
+					<a href="/">Home</a>
+
+					<a href="/signup">Signup</a>
+
+					<a href="#">About</a>
+
+					<a href="#">Faq</a>
+
+					<a href="#">Contact</a>
+				</p>
+
+				<p>Hacktivities &copy; 2020</p>
+			</div>
+
+		</footer>
   </body>
 </html>
