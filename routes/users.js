@@ -2,12 +2,11 @@ const express = require('express');
 const User = require('../models/User');
 
 const router = express.Router();
-const checkuser = require('../scripts/checkuserlogged');
-
-router.use(checkuser.checkIfUserLoggedIn); //limita a visualizar las rutas a los no logueados
+const checkuser = require('../scripts/check');
+//limita a visualizar las rutas a los no logueados
 
 /* GET users listing. */
-router.get('/', (req, res, next) => {
+router.get('/', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   const user = req.session.userLogged._id;
   //console.log(user);
   User.findById(user) 
@@ -27,7 +26,7 @@ router.get('/logout', (req, res, next) => {
   });
 });
 
-router.get('/:id/update', (req, res, next) => { // actualizar datos del user
+router.get('/:id/update', checkuser.checkIfUserLoggedIn, (req, res, next) => { // actualizar datos del user
   const user = req.session.userLogged._id;
   //console.log(user);
   User.findById(user) 
@@ -38,7 +37,7 @@ router.get('/:id/update', (req, res, next) => { // actualizar datos del user
     .catch(next);
 });
 
-router.post('/:id/update', (req, res, next) => {
+router.post('/:id/update', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   const {username} = req.body;
   const user = req.session.userLogged._id;
   User.findByIdAndUpdate({ _id: user }, {username})
@@ -48,7 +47,7 @@ router.post('/:id/update', (req, res, next) => {
   .catch(next)
 });
 
-router.post('/:id/delete', (req, res, next) => {
+router.post('/:id/delete', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   const user = req.session.userLogged._id;
   User.findByIdAndDelete({ _id: user })
   .then((userDeleted) =>{

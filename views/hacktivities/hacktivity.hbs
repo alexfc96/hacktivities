@@ -13,20 +13,9 @@
 <br>
 <b>Created: {{hacktivity.created}} </b>
 <br>
-<<<<<<< HEAD
 <p>Host: {{hacktivity.host.username}} </p>
 {{#eq userId  hacktivity.host._id}}
 <button><a href="/hacktivities/{{hacktivity._id}}/update"></a>Update hacktivity</button> <br><br>
-=======
-
-
-<form action="/hacktivities/{{hacktivity._id}}/book" method="post">
-  <button type="submit">Book hacktivity</button>
-</form>
-
-{{#eq userId  hacktivity.hostId}}
-<a href="/hacktivities/{{hacktivity._id}}/update">Update hacktivity</a> <br><br>
->>>>>>> dev
 
 <form action="/hacktivities/{{hacktivity._id}}/delete" method="post">
     <button type="submit">Delete hacktivity  </button>

@@ -8,10 +8,10 @@ const Hacktivity = require('../models/Hacktivity');
 const Booking = require('../models/Booking');
 
 const router = express.Router();
-const checkuser = require('../scripts/checkuserlogged');
+const checkuser = require('../scripts/check');
 
 /* GET /hacktivities */
-router.get('/', (req, res, next) => {
+router.get('/', checkuser.annonRoute, (req, res, next) => {
   Hacktivity.find()
     .then((hacktivities) => {
       res.render('hacktivities/list', { hacktivities });
@@ -19,10 +19,10 @@ router.get('/', (req, res, next) => {
     .catch((err) => console.log('Error while rendering Hacktivities: ', err));
 });
 
-router.use(checkuser.checkIfUserLoggedIn); // limita a visualizar las rutas a los no logueados
+// router.use(checkuser.checkIfUserLoggedIn); // limita a visualizar las rutas a los no logueados
 
 // GET /hacktivities/create
-router.get('/create', (req, res, next) => {
+router.get('/create', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   City.find()
     .then((city) => {
       res.render('hacktivities/create', { city });
@@ -60,23 +60,22 @@ router.post('/create', (req, res, next) => {
 });
 
 // GET HACKTIVITY BY ID
-router.get('/:_id', (req, res, next) => {
+router.get('/:_id', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   const hacktivityID = req.params;
   const userId = req.session.userLogged._id;
 
   Hacktivity.findById(hacktivityID)
     // .populate({ path: 'location', select: 'name' })
-    .populate('location')
-    .populate('host')
+    .populate('location  host')
     .then((hacktivity) => {
       res.render('hacktivities/hacktivity', { hacktivity, userId });
     })
-    .catch(() => {
+    .catch((hacktivity) => {
       res.render('hacktivities/hacktivity', { hacktivity });
     });
 });
 // GET HACKTIVITY UPDATE
-router.get('/:_id/update', (req, res) => {
+router.get('/:_id/update', checkuser.checkIfUserLoggedIn, (req, res) => {
   const hacktivityID = req.params;
 
   Hacktivity.findById(hacktivityID)
@@ -87,7 +86,7 @@ router.get('/:_id/update', (req, res) => {
 });
 // POST HACKTIVITY UPDATE
 
-router.post('/:_id/update', (req, res, next) => {
+router.post('/:_id/update', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   const hacktivityID = req.params;
   const {
     name, description, date, duration,
@@ -105,7 +104,7 @@ router.post('/:_id/update', (req, res, next) => {
 });
 
 // DELETE HACKTIVITIES
-router.post('/:_id/delete', (req, res, next) => {
+router.post('/:_id/delete', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   const hacktivityID = req.params;
 
   Hacktivity.findByIdAndDelete(hacktivityID)
@@ -123,7 +122,7 @@ router.post('/:_id/delete', (req, res, next) => {
 // BOOK HACKTIVITIES
 // hacer que cuando se cree una actividad se cree su modelo booking?
 // y luego aquí solo hacer un findandupdate pusheando el atendee?
-router.post('/:_id/book', (req, res, next) => {
+router.post('/:_id/book', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   const hacktivityID = req.params;
   console.log(hacktivityID);
   const user = req.session.userLogged._id;
