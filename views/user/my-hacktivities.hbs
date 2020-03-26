@@ -1,0 +1,9 @@
+<h1>List of the hacktivities that you created:</h1>
+{{#if hacktivity}}
+  {{#each hacktivity}}
+    <a href="/hacktivities/{{this._id}}">{{this.name}}</a>
+  {{/each}}
+  {{else}}
+    <p>You haven't created any hacktivity yet. For it:</p>
+    <a href="/hacktivities/create">Create hacktivities</a>
+{{/if}}

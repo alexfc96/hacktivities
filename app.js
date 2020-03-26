@@ -19,20 +19,10 @@ hbs.registerHelper('eq', function (arg1, arg2, options) {
 
 mongoose
   //.connect('mongodb://localhost/starter-code', {useNewUrlParser: true})
-  .connect(dbPath, {useNewUrlParser: true})
+  .connect(dbPath, {useNewUrlParser: true, useFindAndModify: false, useCreateIndex: true, useUnifiedTopology: true })
   .then(x => {
-    console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
+    console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`);
   })
-  //   .then(() =>{
-  //   return City.deleteMany();
-  // })
-  // .then(() => {
-  //   return City.create(seeds);
-  // })
-  // .then(() => {
-  //   console.log('succesfully added all the data');
-  //   mongoose.connection.close();
-  // })
   .catch(err => {
     console.error('Error connecting to mongo', err)
   });

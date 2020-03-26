@@ -1,0 +1,9 @@
+<h1>List of the hacktivities where you have suscribed:</h1>
+{{#if booking}}
+  {{#each booking}}
+    <a href="/hacktivities/{{this.hacktivityId._id}}">{{this.hacktivityId.name}}</a>
+  {{/each}}
+  {{else}}
+    <p>You have not yet subscribed to any hacktivity. For it:</p>
+    <a href="/hacktivities">List hacktivities</a>
+{{/if}}
