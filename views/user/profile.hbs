@@ -2,5 +2,13 @@
 
 <h1>{{currentUser.username}}:</h1>
 
+{{!-- {{ if hacktivity }} --}}
+{{!-- {{#each hacktivity}}
+  <a href="/">{{this.name}}</a>
+{{/each}} --}}
+{{!-- {{ /if }} --}}
+{{!-- {{if booking}}
+  {{booking.hacktivityId}}
+{{/if}} --}}
 <a href="/user/{{currentUser._id}}/update">Update profile</a> <br><br>
 <a href="/user/logout">Logout</a>

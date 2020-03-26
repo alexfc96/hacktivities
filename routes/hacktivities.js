@@ -139,7 +139,7 @@ router.post('/:_id/book', (req, res, next) => {
             });
           });
       } else {
-        Booking.findOneAndUpdate({ hacktivityId: hacktivityID }, 
+        Booking.findOneAndUpdate({ hacktivityId: hacktivityID },
           { $push: { atendees: user } },
           function (error, success) {
             if (error) {
