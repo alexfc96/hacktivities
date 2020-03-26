@@ -110,9 +110,8 @@ router.post('/:_id/delete', (req, res, next) => {
 
   Hacktivity.findByIdAndDelete(hacktivityID)
     .then(() => {
-      Booking.find(hacktivityID)
-        .then((hacktivity) => {
-          console.log(hacktivity);
+      Booking.findOneAndDelete({ hacktivityId: hacktivityID })
+        .then(() => {
           console.log('Borrado con exito');
         })
         .catch(next);
