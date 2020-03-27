@@ -120,8 +120,6 @@ router.post('/:_id/delete', (req, res, next) => {
 });
 
 // BOOK HACKTIVITIES
-// hacer que cuando se cree una actividad se cree su modelo booking?
-// y luego aquí solo hacer un findandupdate pusheando el atendee?
 router.post('/:_id/book', (req, res, next) => {
   const hacktivityID = req.params;
   console.log(hacktivityID);
@@ -138,15 +136,22 @@ router.post('/:_id/book', (req, res, next) => {
               atendees: user,
             });
           });
+      } else if (Booking.findOne({ atendees: user })) {
+        Booking.findOne({ atendees: user })
+          .then(() => {
+            console.log('Already registered in that hacktivity');
+            res.redirect('/user', { error: 'You are already registered in that hacktivity' });
+          })
+          .catch(next);
       } else {
         Booking.findOneAndUpdate({ hacktivityId: hacktivityID },
           { $push: { atendees: user } })
           .then(() => {
-            res.render('/user/my-bookings');
+            res.redirect('/user', { success: 'You have successfully registered for the hacktivity.' });
           })
           .catch(next);
       }
-      res.redirect('/');
+      //res.redirect('/');
     })
     .catch(next);
 });
