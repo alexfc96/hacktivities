@@ -2,7 +2,12 @@
 
 {{#if booking}}
   {{#each booking}}
-    <a href="/hacktivities/{{this.hacktivityId._id}}">{{this.hacktivityId.name}}</a>
+    {{#if this}}
+      <a href="/hacktivities/{{this.hacktivityId._id}}">{{this.hacktivityId.name}}</a>
+      <form action="/hacktivities/{{this.hacktivityId._id}}/deletebook" method="post">
+        <button type="submit">Delete hacktivity</button>
+      </form>
+    {{/if}}
   {{/each}}
   {{else}}
     <p>You have not yet subscribed to any hacktivity. For it:</p>

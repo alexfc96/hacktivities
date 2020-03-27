@@ -37,8 +37,9 @@ router.get('/my-bookings', (req, res, next) => {
   Booking.findOne({ atendees: user })
     .populate('hacktivityId')
     .then((booking) => {
-      console.log(booking.atendees.includes(user));
-      res.render('user/my-bookings', { user, booking });
+      //console.log(booking.atendees.includes(user));
+      console.log(booking);
+      res.render('user/my-bookings', { booking });
     })
     .catch((booking)=>{
       res.render('user/my-bookings');

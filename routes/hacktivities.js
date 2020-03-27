@@ -136,13 +136,13 @@ router.post('/:_id/book', (req, res, next) => {
               atendees: user,
             });
           });
-      } else if (Booking.findOne({ atendees: user })) {
-        Booking.findOne({ atendees: user })
-          .then(() => {
-            console.log('Already registered in that hacktivity');
-            res.redirect('/user', { error: 'You are already registered in that hacktivity' });
-          })
-          .catch(next);
+      // } else if (Booking.findOne({ atendees: user })) {  //aqui busco en todos. Tengo que buscar en el id en cuestion
+      //   Booking.findOne({ atendees: user })
+      //     .then(() => {
+      //       console.log('Already registered in that hacktivity');
+      //       res.redirect('/user', { error: 'You are already registered in that hacktivity' });
+      //     })
+      //     .catch(next);
       } else {
         Booking.findOneAndUpdate({ hacktivityId: hacktivityID },
           { $push: { atendees: user } })
@@ -154,6 +154,21 @@ router.post('/:_id/book', (req, res, next) => {
       res.redirect('/user');  //si no dejamos este no redirecciona (los anteriores no son capaces)
     })
     .catch(next);
+});
+
+// DELETE BOOKING HACKTIVITIES
+router.post('/:_id/deletebook', (req, res, next) => {
+  const hacktivityID = req.params;
+  console.log(hacktivityID);
+  const user = req.session.userLogged._id;
+
+  Booking.findOneAndUpdate({ atendees: user },
+    { $pull: { atendees: user } })
+    .then((booking) => {
+      console.log(booking.atendees);
+    })
+    .catch(next);
+  res.redirect('/user');
 });
 
 module.exports = router;
