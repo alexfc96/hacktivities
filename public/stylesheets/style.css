@@ -14,7 +14,7 @@
 .city-box{
   display: flex;
 	flex-direction: row;
-	flex-wrap: nowrap;
+	flex-wrap: wrap;
 	justify-content: center;
 	align-items: flex-start;
   padding-bottom: 10em;
@@ -22,7 +22,7 @@
 }
 .city-image{
   display: block;
-  max-width: 37em;
+  max-width: 40em;
   height: auto;
 }
 .city-list{
@@ -77,10 +77,11 @@
 	justify-content: center;
   align-items: baseline;
   padding-bottom: 10em;
+  margin: 0;
 }
 .city-image{
   display: block;
-  max-width: 30em;
+  max-width: 20em;
   height: auto;
 }
 .city-list{
