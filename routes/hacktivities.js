@@ -36,12 +36,14 @@ router.post('/create', (req, res, next) => {
   const {
     name, description, date, location, duration, created,
   } = req.body;
-  checkDate = new Date(date);
+  const checkDate = new Date(date);
   const todayDate = new Date();
   if (checkDate < todayDate) {
-    res.render('hacktivities/create', { error: 'Fecha anterior a hoy' }); // hacer flash
+    req.flash('dateError','Specified date prior to today.');
+    res.redirect('/hacktivities/create');
   } else if (duration > 480) {
-    res.render('hacktivities/create', { error: 'La duración maxima dela activadad son 480mins' }); // hacer flash
+    req.flash('timeError','The maximum duration of the hacktivity is 480 minutes.');
+    res.redirect('/hacktivities/create');
   } else {
     Hacktivity.create({
       hostId,
@@ -53,6 +55,7 @@ router.post('/create', (req, res, next) => {
       created,
     })
       .then(() => {
+        req.flash('info','The activity was created successfully');
         res.redirect('/hacktivities');
       })
       .catch(next);
@@ -129,7 +132,7 @@ router.post('/:_id/book', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   const hacktivityID = req.params;
   console.log(hacktivityID);
   const user = req.session.userLogged._id;
-  
+
   Booking.find({ hacktivityId: hacktivityID })
     .then((booking) => {
       if (booking && booking.length == 0) {
@@ -141,26 +144,39 @@ router.post('/:_id/book', checkuser.checkIfUserLoggedIn, (req, res, next) => {
               atendees: user,
             });
           });
+      // } else if (Booking.findOne({ atendees: user })) {  //aqui busco en todos. Tengo que buscar en el id en cuestion
+      //   Booking.findOne({ atendees: user })
+      //     .then(() => {
+      //       console.log('Already registered in that hacktivity');
+      //       res.redirect('/user', { error: 'You are already registered in that hacktivity' });
+      //     })
+      //     .catch(next);
       } else {
         Booking.findOneAndUpdate({ hacktivityId: hacktivityID },
-          { $push: { atendees: user } },
-          function (error, success) {
-            if (error) {
-                console.log(error);
-            } else {
-                console.log(success);
-            }
-        }
-          );
+          { $push: { atendees: user } })
+          .then(() => {
+            res.redirect('/user', { success: 'You have successfully registered for the hacktivity.' });
+          })
+          .catch(next);
       }
-      res.redirect('/');
+      res.redirect('/user');  //si no dejamos este no redirecciona (los anteriores no son capaces)
     })
     .catch(next);
+});
 
-  // 0º - Compruebo que no haya un booking para esa actividad
-  // 1º - Me devuelve un booking -> update ese booking haciendo pushen atendees de user
-  // 2º - No me devuelve nada -> findbyid de hacktivity
-  // 3º - Crear un booking para esa actividad, y añadir el user a atendees
+// DELETE BOOKING HACKTIVITIES
+router.post('/:_id/deletebook', (req, res, next) => {
+  const hacktivityID = req.params;
+  console.log(hacktivityID);
+  const user = req.session.userLogged._id;
+
+  Booking.findOneAndUpdate({ atendees: user },
+    { $pull: { atendees: user } })
+    .then((booking) => {
+      console.log(booking.atendees);
+    })
+    .catch(next);
+  res.redirect('/user');
 });
 
 module.exports = router;

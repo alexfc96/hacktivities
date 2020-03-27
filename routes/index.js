@@ -27,14 +27,17 @@ router.get('/signup', (req, res, next) => { // darse de alta
 router.post('/signup', (req, res, next) => {
   const { username, password } = req.body;
   if (username === '' || password === '') {
-    res.render('user/signup', { error: 'The fields can not be empty' }); // hacer de esto una funcion de un scrpit para no repetirlo
+    req.flash('error','The fields can not be empty');
+    res.redirect('/user/signup');
   } else if (password.length < 6) {
-    res.render('user/signup', { error: 'The password requires at least 6 characters' }); //comprobacion back para que no pueda cambiar desde el front
+    req.flash('error','The password requires at least 6 characters');
+    res.redirect('/user/signup'); //comprobacion back para que no pueda cambiar desde el front
   } else {
     User.findOne({ username })
       .then((user) => {
         if (user) {
-          res.render('user/signup', { error: 'This username already exists' });
+          req.flash('error','This username already exists');  //no lo muestra
+          res.redirect('/user/login');
         } else {
           const salt = bcrypt.genSaltSync(saltRounds);
           const userpassword = bcrypt.hashSync(password, salt);
@@ -44,6 +47,7 @@ router.post('/signup', (req, res, next) => {
           })
             .then((userCreated) => {
               req.session.userLogged = userCreated;
+              req.flash('welcomeMessage','Thank you for creating your account, now you are authenticated.');
               res.redirect('/');
             })
             .catch((error) => {
@@ -65,20 +69,24 @@ router.post('/login', (req, res, next) => {
   //console.log(req.body);
   const { username, password } = req.body;
   if (username === '' || password === '') {
-    res.render('user/signup', { error: 'the fields can not be empty' });
+    req.flash('error','The fields can not be empty');
+    res.redirect('/user/signup');
   } else {
     User.findOne({ username })
       .then((user) => {
         console.log(username)
         if (!user) {
-          res.render('user/signup', { error: 'this user is not registered', username });
+          res.render('user/signup', { error: 'This user is not registered', username });
         } else {
           //console.log(bcrypt.compareSync(password, user.userpassword));
+          // eslint-disable-next-line no-lonely-if
           if (bcrypt.compareSync(password, user.userpassword)) {
             req.session.userLogged = user;
+            req.flash('welcomeMessage','Thank you for creating your account, now you are authenticated.');
             res.redirect('/');
           } else {
-            res.render('user/login', { error: 'Incorrect username or password' });
+            req.flash('error','Incorrect username or password');
+            res.redirect('/user/login');
           }
         }
       })
