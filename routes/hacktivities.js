@@ -11,7 +11,7 @@ const router = express.Router();
 const checkuser = require('../scripts/check');
 
 /* GET /hacktivities */
-router.get('/', checkuser.annonRoute, (req, res, next) => {
+router.get('/', (req, res, next) => {
   Hacktivity.find()
     .then((hacktivities) => {
       res.render('hacktivities/list', { hacktivities });
@@ -66,8 +66,11 @@ router.get('/:_id', checkuser.checkIfUserLoggedIn, (req, res, next) => {
 
   Hacktivity.findById(hacktivityID)
     // .populate({ path: 'location', select: 'name' })
-    .populate('location  host')
+    .populate('location')
+    .populate('hostId')
+    
     .then((hacktivity) => {
+      console.log(hacktivity);
       res.render('hacktivities/hacktivity', { hacktivity, userId });
     })
     .catch((hacktivity) => {

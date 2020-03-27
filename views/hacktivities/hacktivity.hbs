@@ -5,7 +5,7 @@
 
 <b>Description: {{hacktivity.description}}</b>
 
-<b>Location: {{hacktivity.location.name}} <img src="{{hacktivity.location.image}}" alt=""></b>
+<b>Location: {{hacktivity.location.name}} <img class='hacktivity-img'    src="{{hacktivity.location.image}}" alt=""></b>
 
 <b>Date: {{hacktivity.date}} </b>
 
@@ -13,8 +13,9 @@
 
 <b>Created: {{hacktivity.created}} </b>
 
-<p>Host: {{hacktivity.host.username}} </p>
-{{#eq userId  hacktivity.host._id}}
+<p>Host: {{hacktivity.hostId.username}} </p>
+
+{{#eq userId  hacktivity.hostId._id}}
 <button><a href="/hacktivities/{{hacktivity._id}}/update"></a>Update hacktivity</button> <br><br>
 
 <form action="/hacktivities/{{hacktivity._id}}/delete" method="post">

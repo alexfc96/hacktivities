@@ -22,7 +22,7 @@ router.get('/logout', (req, res, next) => {
     if (err) {
       next(err);
     }
-    res.redirect('login');
+    res.redirect('/');
   });
 });
 
