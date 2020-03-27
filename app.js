@@ -16,7 +16,8 @@ const dbPath = process.env.DATABASE;
 hbs.registerHelper('eq', function (arg1, arg2, options) {
   return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
 });
-
+const City = require('./models/City');
+const seeds = require('./bin/seeds');
 mongoose
   //.connect('mongodb://localhost/starter-code', {useNewUrlParser: true})
   .connect(dbPath, {useNewUrlParser: true})

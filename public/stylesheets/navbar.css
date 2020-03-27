@@ -94,10 +94,11 @@ body {
     width: 100%;
     background-color: #B69CFF;
     height: 0px;
-    transition: all 0.3s ease-in;
+    transition: all 0.1s ease-in;
     overflow-y: hidden;
     top: 50px;
     left: 0px;
+    
   }
   .nav > .nav-links > a {
     display: block;
@@ -107,8 +108,9 @@ body {
     height: 0px;
   }
   .nav > #nav-check:checked ~ .nav-links {
-    height: calc(100vh - 50px);
-    overflow-y: hidden;
+    height: calc(100vh - 63rem);
+    z-index: 1000;
+    overflow-y: auto;
   }
 }
 
@@ -131,7 +133,6 @@ body {
   font-size: 16px;
   margin: 0;
 }
-/* Footer links */
 
 .footer-distributed p.footer-links {
   font-size: 20px;
