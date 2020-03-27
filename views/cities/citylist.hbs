@@ -1,11 +1,23 @@
-<h1>List all cities where we have hacktivities</h1>
-<ul>
-  {{#each city }}
-  <li>
-    <a href="/cities/{{this._id}}">{{ this.name }}</a>
+<div class="citylist-all">
 
-  </li>
-  {{/each}}
-</ul>
+<p class="cities-title">CITIES</p>
+  <div  class="city-box">
+    <ul>
+
+     {{#each city }}
+
+       <li class="city-list">
+  
+         <div class="city-container">
+
+             <a href="/cities/{{this._id}}"><img class= "city-image"src="{{this.image}}" alt=""></a>
+             <a class= "city-link" href="/cities/{{this._id}}">{{ this.name }}</a>
+
+          </div>
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+</div>
 
 {{!-- <a href="/logout">logout</a> --}} 

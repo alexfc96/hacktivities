@@ -2,17 +2,17 @@
 <button><a href="/hacktivities">Back</a></button>
 <h2>Your hacktivity information</h2>
 <b>Name: {{hacktivity.name}}</b>
-<br>
+
 <b>Description: {{hacktivity.description}}</b>
-<br>
+
 <b>Location: {{hacktivity.location.name}} <img src="{{hacktivity.location.image}}" alt=""></b>
-<br>
+
 <b>Date: {{hacktivity.date}} </b>
-<br>
+
 <b>Duration: {{hacktivity.duration}} </b>
-<br>
+
 <b>Created: {{hacktivity.created}} </b>
-<br>
+
 <p>Host: {{hacktivity.host.username}} </p>
 {{#eq userId  hacktivity.host._id}}
 <button><a href="/hacktivities/{{hacktivity._id}}/update"></a>Update hacktivity</button> <br><br>

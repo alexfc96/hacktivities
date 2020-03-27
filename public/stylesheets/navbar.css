@@ -79,7 +79,7 @@ body {
     padding: 13px;
   }
   .nav > .nav-btn > label:hover,.nav  #nav-check:checked ~ .nav-btn > label {
-    background-color: #5B4E80;
+    background-color: #5B4E80 solid;
     color: #B69CFF;
   }
   .nav > .nav-btn > label > span {
@@ -108,7 +108,7 @@ body {
   }
   .nav > #nav-check:checked ~ .nav-links {
     height: calc(100vh - 50px);
-    overflow-y: auto;
+    overflow-y: hidden;
   }
 }
 

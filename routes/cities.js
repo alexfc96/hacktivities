@@ -3,6 +3,8 @@ const express = require('express');
 const City = require('../models/City');
 const Hacktivity = require('../models/Hacktivity');
 
+const checkuser = require('../scripts/check');
+
 const router = express.Router();
 
 router.get('/', (req, res, next) => {
@@ -13,7 +15,7 @@ router.get('/', (req, res, next) => {
     .catch(next);
 });
 
-router.get('/:_id', (req, res, next) => {
+router.get('/:_id', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   const cityID = req.params;
   Hacktivity.find({ location: cityID })
     //.populate('location')    no hace falta!
