@@ -151,7 +151,7 @@ router.post('/:_id/book', (req, res, next) => {
           })
           .catch(next);
       }
-      //res.redirect('/');
+      res.redirect('/user');  //si no dejamos este no redirecciona (los anteriores no son capaces)
     })
     .catch(next);
 });
