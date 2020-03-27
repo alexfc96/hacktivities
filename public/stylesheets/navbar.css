@@ -108,7 +108,7 @@ body {
     height: 0px;
   }
   .nav > #nav-check:checked ~ .nav-links {
-    height: calc(100vh - 63rem);
+    height: calc(100vh - 40rem);
     z-index: 1000;
     overflow-y: auto;
   }
