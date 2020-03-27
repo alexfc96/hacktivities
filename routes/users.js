@@ -2,7 +2,7 @@ const express = require('express');
 const User = require('../models/User');
 
 const router = express.Router();
-const checkuser = require('../scripts/checkuserlogged');
+const checkuser = require('../scripts/check');
 const Hacktivity = require('../models/Hacktivity');
 const Booking = require('../models/Booking');
 
