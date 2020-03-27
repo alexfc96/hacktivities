@@ -1,7 +1,17 @@
 <h1>List of the hacktivities that you created:</h1>
 {{#if hacktivity}}
   {{#each hacktivity}}
-    <a href="/hacktivities/{{this._id}}">{{this.name}}</a>
+    {{#if this}}
+    <a href="/hacktivities/{{this.hacktivityId._id}}">{{this.hacktivityId.name}}</a><br>
+    List of users who will participate in the activity:
+      <ul>
+        {{#each this.atendees}}
+          <li>
+            <p>{{this.username}}</p>
+          </li>
+        {{/each}}
+      </ul>
+    {{/if}}
   {{/each}}
   {{else}}
     <p>You haven't created any hacktivity yet. For it:</p>

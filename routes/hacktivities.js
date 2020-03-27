@@ -36,12 +36,14 @@ router.post('/create', (req, res, next) => {
   const {
     name, description, date, location, duration, created,
   } = req.body;
-  checkDate = new Date(date);
+  const checkDate = new Date(date);
   const todayDate = new Date();
   if (checkDate < todayDate) {
-    res.render('hacktivities/create', { error: 'Fecha anterior a hoy' }); // hacer flash
+    req.flash('dateError','Specified date prior to today.');
+    res.redirect('/hacktivities/create');
   } else if (duration > 480) {
-    res.render('hacktivities/create', { error: 'La duración maxima dela activadad son 480mins' }); // hacer flash
+    req.flash('timeError','The maximum duration of the hacktivity is 480 minutes.');
+    res.redirect('/hacktivities/create');
   } else {
     Hacktivity.create({
       hostId,
@@ -53,6 +55,7 @@ router.post('/create', (req, res, next) => {
       created,
     })
       .then(() => {
+        req.flash('info','The activity was created successfully');
         res.redirect('/hacktivities');
       })
       .catch(next);

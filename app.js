@@ -18,13 +18,15 @@ hbs.registerHelper('eq', function (arg1, arg2, options) {
 });
 
 mongoose
-  //.connect('mongodb://localhost/starter-code', {useNewUrlParser: true})
-  .connect(dbPath, {useNewUrlParser: true, useFindAndModify: false, useCreateIndex: true, useUnifiedTopology: true })
-  .then(x => {
+  // .connect('mongodb://localhost/starter-code', {useNewUrlParser: true})
+  .connect(dbPath, {
+    useNewUrlParser: true, useFindAndModify: false, useCreateIndex: true, useUnifiedTopology: true,
+  })
+  .then((x) => {
     console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`);
   })
-  .catch(err => {
-    console.error('Error connecting to mongo', err)
+  .catch((err) => {
+    console.error('Error connecting to mongo', err);
   });
 
 const app = express();
@@ -54,20 +56,28 @@ app.use(
     cookie: {
       maxAge: 24 * 60 * 60 * 1000,
     },
-  })
+  }),
 );
 app.use(flash());
+app.use((req, res, next) => {
+  res.locals.welcomeMessage = req.flash('welcomeMessage');
+  next();
+});
+app.use((req, res, next) => {
+  res.locals.error = req.flash('error');
+  next();
+});
 
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');  //js en plural
+const usersRouter = require('./routes/users'); // js en plural
 const hacktivitiesRouter = require('./routes/hacktivities');
 const citiesRouter = require('./routes/cities');
 
 app.use('/', indexRouter);
-app.use('/user', usersRouter); //respuesta en singular
+app.use('/user', usersRouter); // respuesta en singular
 app.use('/hacktivities', hacktivitiesRouter);
-app.use('/cities', citiesRouter)
+app.use('/cities', citiesRouter);
 
 // app.use((req, res, next) => {
 //   app.locals.expreq = req;

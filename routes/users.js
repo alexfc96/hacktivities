@@ -21,24 +21,24 @@ router.get('/', (req, res, next) => {
 
 router.get('/my-hacktivities', (req, res, next) => {
   const user = req.session.userLogged._id;
-  Hacktivity.findOne({ hostId: user })
+  Booking.find({ atendees: { $in: [user] } })
+    .populate('hacktivityId')
     .then((hacktivity) => {
       console.log(hacktivity);
       if (hacktivity && hacktivity.length == 0) {
-        console.log('Not owner of hacktivities');
+        res.render('user/my-hacktivities');
       } else {
-        res.render('user/my-hacktivities', { user, hacktivity });
+        res.render('user/my-hacktivities', { hacktivity });
       }
     });
 });
 
 router.get('/my-bookings', (req, res, next) => {
   const user = req.session.userLogged._id;
-  Booking.findOne({ atendees: user })
-    .populate('hacktivityId')
+  Booking.find({ atendees: { $in: [user] } })
+    .populate('hacktivityId atendees')
     .then((booking) => {
-      //console.log(booking.atendees.includes(user));
-      console.log(booking);
+      //console.log(booking);
       res.render('user/my-bookings', { booking });
     })
     .catch((booking)=>{
@@ -70,8 +70,9 @@ router.post('/:id/update', (req, res, next) => {
   const { username } = req.body;
   const user = req.session.userLogged._id;
   User.findByIdAndUpdate({ _id: user }, { username })
-    .then((userUpdated) => {
-      res.redirect('/');
+    .then(() => {
+      req.flash('success','User updated');
+      res.redirect('/user');
     })
     .catch(next);
 });
@@ -79,9 +80,11 @@ router.post('/:id/update', (req, res, next) => {
 router.post('/:id/delete', (req, res, next) => {
   const user = req.session.userLogged._id;
   User.findByIdAndDelete({ _id: user })
-    .then((userDeleted) => {
-      console.log('Usuario eliminado');
+    .then(() => {
+      console.log('User deleted');
+      req.flash('info','User deleted');
       res.redirect('/signup');
+      req.session.destroy();
     })
     .catch(next);
 });
