@@ -15,6 +15,10 @@
 
 <p>Host: {{hacktivity.hostId.username}} </p>
 
+<form action="/hacktivities/{{hacktivity._id}}/book" method="post">
+  <button type="submit">Book hacktivity</button>
+</form>
+
 {{#eq userId  hacktivity.hostId._id}}
 <button><a href="/hacktivities/{{hacktivity._id}}/update"></a>Update hacktivity</button> <br><br>
 
