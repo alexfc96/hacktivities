@@ -14,22 +14,20 @@ router.get('/', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   // console.log(user);
   User.findById(user)
     .then((currentUser) => {
-      res.render('user/profile', { currentUser });
+      res.render('user/profile', { currentUser});
     })
     .catch(next);
 });
 
 router.get('/my-hacktivities', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   const user = req.session.userLogged._id;
-  Booking.find({ atendees: { $in: [user] } })
-    .populate('hacktivityId')
+  Hacktivity.find({ hostId: user })
     .then((hacktivity) => {
       console.log(hacktivity);
-      if (hacktivity && hacktivity.length === 0) {
-        res.render('user/my-hacktivities', { currentUser: req.session.userLogged });
-      } else {
-        res.render('user/my-hacktivities', { hacktivity, currentUser: req.session.userLogged });
-      }
+      res.render('user/my-hacktivities', { hacktivity, currentUser: req.session.userLogged });
+    })
+    .catch(()=>{
+      res.render('user/my-hacktivities', { currentUser: req.session.userLogged });
     });
 });
 
@@ -71,7 +69,7 @@ router.post('/:id/update', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   const user = req.session.userLogged._id;
   User.findByIdAndUpdate({ _id: user }, { username })
     .then(() => {
-      req.flash('success','User updated');
+      req.flash('info','User updated');
       res.redirect('/user');
     })
     .catch(next);

@@ -1,5 +1,10 @@
 <div class="hacktivity">
 <button><a href="/hacktivities">Back</a></button>
+
+{{#if info}}
+    {{info}}
+{{/if}}
+
 <h2>Your hacktivity information</h2>
 <b>Name: {{hacktivity.name}}</b>
 
@@ -15,6 +20,24 @@
 
 <p>Host: {{hacktivity.hostId.username}} </p>
 
+   {{!-- {{#if atendees.length > 0 }} --}}
+    {{#if atendees }}
+    List of users who will participate in the activity:
+        <ul>
+        {{#each atendees}}
+            <li>
+            <p>{{this.username}}</p>
+            </li>
+        {{/each}}
+        </ul>
+        {{else}}
+        <p>No user subscribed to the hacktivity yet.</p>
+    {{/if}}
+
+{{!-- <form action="/hacktivities/{{hacktivity._id}}/book" method="post">
+  <button type="submit">Book hacktivity</button>
+</form> --}}
+
 {{#eq userId  hacktivity.hostId._id}}
 <button><a href="/hacktivities/{{hacktivity._id}}/update"></a>Update hacktivity</button> <br><br>
 
@@ -22,6 +45,7 @@
     <button type="submit">Delete hacktivity  </button>
 </form>
 {{/eq}}
+
 <form action="/hacktivities/{{booking._id}}/book" method="post">	 
  <button type="submit">Book hacktivity</button>
 </form>

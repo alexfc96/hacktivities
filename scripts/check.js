@@ -17,6 +17,7 @@ function annonRoute(req, res, next) {
   }
 }
 
+//cargar aqui mensajes de flash y luego en la ruta
 
 module.exports = {
   checkIfUserLoggedIn,
