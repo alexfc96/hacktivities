@@ -7,8 +7,8 @@
   <input type="text" name="description" id="hacktivity-description" placeholder="Describe your Hacktivity">
   <label for="date">Date</label>
   <input type="date" name="date" id="hacktivity-date">
-  {{#if dateError}}
-    <p>{{dateError}}</p>
+  {{#if error}}
+    <p>{{error}}</p>
   {{/if}}
     {{!-- <label for="hour">Choose the hour: </label>
   <input id="hacktivity-hour" type="time" name="hour" value="17:30" min="09:00" max="20:00" require> --}}
