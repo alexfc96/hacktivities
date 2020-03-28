@@ -4,6 +4,7 @@
     <title>{{title}}</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel="stylesheet" href='/stylesheets/navbar.css'>
+     <link rel="stylesheet" href='/stylesheets/index.css'>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   </head>
   <link href="http://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet" type="text/css" />
@@ -28,14 +29,19 @@
   <div class="nav-links">
     {{#if currentUser}}
     <a href="/user">{{currentUser.username}}</a>
+    <a href="/cities" >Cities</a>
+    <a href="/hacktivities">Hacktivities</a>
+    <a href="/user/my-hacktivities">My Hacktivities</a>
+    <a href="/hacktivities/create">Create Hacktivity</a>
+    <a href="/user/my-bookings">My Bookings</a>
     <a href="/user/logout" >Logout</a>
     {{else}}
-    <a href="/login" >Login</a>
     <a href="/signup" >Signup</a>
-    {{/if}}
+    <a href="/login" >Login</a>
+    <a href="/hacktivities">Hacktivities</a>
     <a href="/cities" >Cities</a>
-    <a href="/contact" >Contact</a>
-    <a href='/about' >About us</a>
+    {{/if}}
+    
   </div>
 </div>
 <div class="content">

@@ -13,7 +13,7 @@ router.get('/', (req, res, next) => {
   //console.log(user)
   User.findById(userId) 
     .then((currentUser) => {
-      res.render('index', { currentUser, title: 'Hacktivities', userId });
+      res.render('index', { currentUser, userId, City });
     })
     .catch(() => {
       res.render('index', { title: 'Hacktivities' });

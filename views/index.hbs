@@ -1,14 +1,46 @@
+
 {{#if welcomeMessage}}
 {{welcomeMessage}}
 {{/if}}
 
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
-{{#if currentUser}}
-<a href="/user">{{ currentUser.username }}</a> 
-{{/if}}
+<div class="coronavirus-banner">
+<p>Don't travel with the Coronavirus. Sagrada Familia has been waiting 138 years, it can wait a little longer. <a href="https://www.mscbs.gob.es/en/profesionales/saludPublica/ccayes/alertasActual/nCov-China/home.htm">More Information</a>.</p>
+</div>
 
-<br><button><a href="/hacktivities">hacktivities</a></button>
-{{#if currentUser}}
-<br><button><a href="/hacktivities/create">create hacktivities</a></button>
-{{/if}}
+<div class="top-banner">
+  <a href="/hacktivities"><img class="top-banner-image" src="https://s1.1zoom.me/b5060/0/Spain_Houses_Evening_Malaga_Roof_562111_1920x1080.jpg" alt=""> </a>
+  
+   <div class="top-banner-text">
+     <a href="/hacktivities"></a>Hacktivities around the world!</a>
+   </div>
+</div>
+
+<div class="main-cities">
+    <div class="main-cities-title">
+      <p>Main destinations</p>
+    </div>
+    <div class="city-banner">
+        <img class="city-banner-image" src="https://wallpapercave.com/wp/wp4196468.jpg" alt="">
+       <div class="city-banner-text">
+        <a href="/cities/5e7e4dd61b75e44bd42252f4">Barcelona</a>
+       </div>
+    </div>
+   <div class="city-banner">
+        <img class="city-banner-image" src="https://cms.guggenheim-bilbao.eus/uploads/2019/05/el-edificio-guggenheim-bilbao-1.jpg" alt="">
+       <div class="city-banner-text">
+          <a href="/cities/5e7e4dd61b75e44bd42252f6">Bilbao</a>
+       </div> 
+           
+    </div>
+     <div class="city-banner">
+        <img class="city-banner-image" src="https://s1.1zoom.me/b5050/876/Spain_Houses_Roads_Malaga_Hill_From_above_563100_1920x1080.jpg" alt="">
+        <div class="city-banner-text">
+        <a href="/cities/5e7e4dd61b75e44bd42252f9">Malaga</a>
+       </div>
+    </div>
+    <div class="button-show-more">
+     <a href="/cities" class="button4" style="background-color:#5B4E80">Show more</a></button>
+
+    </div>
+</div>
+

@@ -7,6 +7,20 @@ body {
   margin: 0px;
   font-family: "Varela", sans-serif;
 }
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  background-color: #b69cff;
+}
+
+.footer-links a{
+  text-decoration: none;
+  color: #2F2842;
+}
+
 
 .nav {
   height: 50px;
@@ -104,26 +118,3 @@ body {
   }
 }
 
-.footer {
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  align-items: center;
-  flex-shrink: 0;
-  background-color: #b69cff;
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-  width: 100vw;
-  height: 100vh;
-}
-.footer-links a{
-  text-decoration: none;
-  color: #2F2842;
-}
-.content{
-  min-height: 100%;
-  flex: 1 0 auto;
-}
