@@ -4,11 +4,12 @@
     <title>{{title}}</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel="stylesheet" href='/stylesheets/navbar.css'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   </head>
   <link href="http://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet" type="text/css" />
   <script type="text/javascript" src="../scripts/navbar.js"></script>
   <body>
-  
+  <div class='container'>
 <div class="nav">
   <input type="checkbox" id="nav-check">
   <div class="nav-header">
@@ -37,44 +38,30 @@
     <a href='/about' >About us</a>
   </div>
 </div>
-
+<div class="content">
     {{{body}}}
-    {{!-- <section></section> --}}
-
-		<footer class="footer-distributed">
-
-			<div class="footer-right">
-          <a href=""> <img height="30" src="https://shoplineimg.com/assets/footer/card_visa.png"/>
-          </a>
-          <a href=""> 
-          <img height="30" src="https://shoplineimg.com/assets/footer/card_master.png"/>
-          </a>
-          <a href="">
-          <img height="30" src="https://shoplineimg.com/assets/footer/card_paypal.png"/>  
-          </a>
-          <a href="">
-          <img height="30" src="https://shoplineimg.com/assets/footer/card_amex.png"/>
-          </a>
-    
-			</div>
-
-			<div class="footer-left">
-
-				<p class="footer-links">
-					<a href="/">Home</a>
-
-					<a href="/signup">Signup</a>
-
-					<a href="#">About</a>
-
-					<a href="#">Faq</a>
-
-					<a href="#">Contact</a>
-				</p>
-
-				<p>Hacktivities &copy; 2020</p>
-			</div>
-
-		</footer>
+   </div>
+<footer class="footer">
+ 
+   <div class="footer-links">
+     	<a href="/">Home</a>
+			<a href="/signup">Signup</a>
+			<a href="/about">About</a>
+			<a href="/faq">FAQ</a>
+			<a href="/contact">Contact</a>
+   </div>
+       
+    <div class="footer-cards">
+      <img height="30" src="https://shoplineimg.com/assets/footer/card_visa.png"/>
+      <img height="30" src="https://shoplineimg.com/assets/footer/card_master.png"/>
+      <img height="30" src="https://shoplineimg.com/assets/footer/card_paypal.png"/>
+      <img height="30" src="https://shoplineimg.com/assets/footer/card_amex.png"/>
+    </div>
+  <div class="copyright">
+    <p>Hacktivities &copy; 2020</p>
+  </div>
+ 
+</footer>
+</div>
   </body>
 </html>

@@ -1,17 +1,17 @@
-@import url('https://fonts.googleapis.com/css?family=Varela&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Varela&display=swap");
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0px;
- font-family: 'Varela', sans-serif;
+  font-family: "Varela", sans-serif;
 }
 
 .nav {
   height: 50px;
   width: 100%;
-  background-color: #B69CFF;
+  background-color: #b69cff;
   position: relative;
 }
 
@@ -19,13 +19,13 @@ body {
   display: inline;
 }
 .nav-hack {
-  color: #2F2842;
+  color: #2f2842;
   text-decoration: none;
 }
 .nav > .nav-header > .nav-title {
   display: inline-block;
   font-size: 22px;
-  color: #2F2842;
+  color: #2f2842;
   padding: 10px 10px 10px 10px;
 }
 
@@ -43,29 +43,19 @@ body {
   display: inline-block;
   padding: 13px 10px 13px 10px;
   text-decoration: none;
-  color: #2F2842;
+  color: #2f2842;
 }
 
 .nav > .nav-links > a:hover {
-  background-color: #5B4E80;
-  color: #B69CFF;
+  background-color: #5b4e80;
+  color: #b69cff;
 }
 
 .nav > #nav-check {
   display: none;
 }
 
-@media (max-width:768px) {
-  .footer-distributed .footer-left, .footer-distributed .footer-right {
-    text-align: center;
-  }
-  .footer-distributed .footer-right {
-    float: none;
-    margin: 0 auto 20px;
-  }
-  .footer-distributed .footer-left p.footer-links {
-    line-height: 1.8;
-  }
+@media (max-width: 768px) {
   .nav > .nav-btn {
     display: inline-block;
     position: absolute;
@@ -78,27 +68,27 @@ body {
     height: 50px;
     padding: 13px;
   }
-  .nav > .nav-btn > label:hover,.nav  #nav-check:checked ~ .nav-btn > label {
-    background-color: #5B4E80 solid;
-    color: #B69CFF;
+  .nav > .nav-btn > label:hover,
+  .nav #nav-check:checked ~ .nav-btn > label {
+    background-color: #5b4e80 solid;
+    color: #b69cff;
   }
   .nav > .nav-btn > label > span {
     display: block;
     width: 25px;
     height: 10px;
-    border-top: 2px solid #2F2842;
+    border-top: 2px solid #2f2842;
   }
   .nav > .nav-links {
     position: absolute;
     display: block;
     width: 100%;
-    background-color: #B69CFF;
+    background-color: #b69cff;
     height: 0px;
     transition: all 0.1s ease-in;
     overflow-y: hidden;
     top: 50px;
     left: 0px;
-    
   }
   .nav > .nav-links > a {
     display: block;
@@ -108,81 +98,32 @@ body {
     height: 0px;
   }
   .nav > #nav-check:checked ~ .nav-links {
-    height: calc(100vh - 40rem);
+    height: auto;
     z-index: 1000;
     overflow-y: auto;
   }
 }
 
-
-.footer-distributed {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  background-color: #B69CFF;
-  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
-  box-sizing: border-box;
-  width: 100%;
-  text-align: left;
-  font: normal 16px;
-  padding: 45px 50px;
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  background-color: #b69cff;
 }
 
-.footer-distributed .footer-left p {
-  color: #5B4E80;
-  font-size: 16px;
-  margin: 0;
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
 }
-
-.footer-distributed p.footer-links {
-  font-size: 20px;
-  font-weight: bold;
-  color: #2F2842;
-  margin: 0 0 10px;
-  padding: 0;
-  transition: ease .25s;
-}
-
-.footer-distributed p.footer-links a {
-  display: inline-block;
-  line-height: 1.8;
+.footer-links a{
   text-decoration: none;
-  color: inherit;
-  transition: ease .25s;
-}
-
-.footer-distributed .footer-links a:before {
-  content: "·";
-  font-size: 20px;
-  left: 0;
   color: #2F2842;
-  display: inline-block;
-  padding-right: 5px;
 }
-
-.footer-distributed .footer-links .link-1:before {
-  content: none;
+.content{
+  min-height: 100%;
+  flex: 1 0 auto;
 }
-
-.footer-distributed .footer-right {
-  float: right;
-  margin-top: 6px;
-  max-width: 180px;
-}
-
-.footer-distributed .footer-right a {
-  display: inline-block;
-  width: 35px;
-  height: 35px;
-  border-radius: 2px;
-  font-size: 20px;
-  color: #2F2842;
-  text-align: center;
-  line-height: 35px;
-  margin-left: 3px;
-  transition:all .25s;
-}
-
-
-
-

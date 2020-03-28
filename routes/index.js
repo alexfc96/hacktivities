@@ -9,11 +9,11 @@ const City = require('../models/City');
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-  const user = req.session.userLogged;  //nos da el objeto con toda la info del user/session
+  const userId = req.session.userLogged;  //nos da el objeto con toda la info del user/session
   //console.log(user)
-  User.findById(user) 
+  User.findById(userId) 
     .then((currentUser) => {
-      res.render('index', { currentUser, title: 'Hacktivities', user });
+      res.render('index', { currentUser, title: 'Hacktivities', userId });
     })
     .catch(() => {
       res.render('index', { title: 'Hacktivities' });

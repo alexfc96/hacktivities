@@ -10,7 +10,7 @@ const router = express.Router();
 router.get('/', (req, res, next) => {
   City.find()
     .then((city) => {
-      res.render('cities/citylist', { city });
+      res.render('cities/citylist', { city, currentUser: req.session.userLogged });
     })
     .catch(next);
 });
@@ -22,7 +22,7 @@ router.get('/:_id', checkuser.checkIfUserLoggedIn, (req, res, next) => {
     .then((hacktivities) => {
       City.findById(cityID)
         .then((city)=>{
-          res.render('cities/city', { hacktivities, city });
+          res.render('cities/city', { hacktivities, city, currentUser: req.session.userLogged });
         })
         .catch(next);
     })

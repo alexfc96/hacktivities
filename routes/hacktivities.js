@@ -14,7 +14,7 @@ const checkuser = require('../scripts/check');
 router.get('/', (req, res, next) => {
   Hacktivity.find()
     .then((hacktivities) => {
-      res.render('hacktivities/list', { hacktivities });
+      res.render('hacktivities/list', { hacktivities, currentUser: req.session.userLogged });
     })
     .catch((err) => console.log('Error while rendering Hacktivities: ', err));
 });
@@ -25,7 +25,7 @@ router.get('/', (req, res, next) => {
 router.get('/create', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   City.find()
     .then((city) => {
-      res.render('hacktivities/create', { city });
+      res.render('hacktivities/create', { city, currentUser: req.session.userLogged });
     })
     .catch(next);
 });
@@ -74,10 +74,10 @@ router.get('/:_id', checkuser.checkIfUserLoggedIn, (req, res, next) => {
     
     .then((hacktivity) => {
       console.log(hacktivity);
-      res.render('hacktivities/hacktivity', { hacktivity, userId });
+      res.render('hacktivities/hacktivity', { hacktivity, userId, currentUser: req.session.userLogged });
     })
     .catch((hacktivity) => {
-      res.render('hacktivities/hacktivity', { hacktivity });
+      res.render('hacktivities/hacktivity', { hacktivity, currentUser: req.session.userLogged });
     });
 });
 // GET HACKTIVITY UPDATE
@@ -86,7 +86,7 @@ router.get('/:_id/update', checkuser.checkIfUserLoggedIn, (req, res) => {
 
   Hacktivity.findById(hacktivityID)
     .then((hacktivity) => {
-      res.render('hacktivities/update', { hacktivity });
+      res.render('hacktivities/update', { hacktivity, currentUser: req.session.userLogged });
     })
     .catch((err) => console.log('Error while rendering Hacktivities: ', err));
 });
