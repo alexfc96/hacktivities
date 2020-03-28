@@ -1,13 +1,12 @@
+{{#if error}}
+  {{error}}
+{{/if}}
+{{#if info}}
+  {{info}}
+{{/if}}
+
 <h2>Your profile information</h2>
 <h1>{{currentUser.username}}:</h1>
-
-{{#if error}}
-{{error}}
-{{/if}}
-
-{{#if success}}
-{{success}}
-{{/if}}
 
 <a href="/user/my-bookings">My-bookings</a><br>
 <a href="/user/my-hacktivities">Manage your hacktivities</a><br>

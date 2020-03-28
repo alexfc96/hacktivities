@@ -64,20 +64,32 @@ router.post('/create', (req, res, next) => {
 
 // GET HACKTIVITY BY ID
 router.get('/:_id', checkuser.checkIfUserLoggedIn, (req, res, next) => {
-  const hacktivityID = req.params;
+  const hacktivityId = req.params;
   const userId = req.session.userLogged._id;
 
-  Hacktivity.findById(hacktivityID)
-    // .populate({ path: 'location', select: 'name' })
-    .populate('location')
-    .populate('hostId')
-    
+//revisar que el user no registrado entonces solo nos diga el length de numeros de atendees 
+  Hacktivity.findById(hacktivityId)
+    .populate('location hostId')
     .then((hacktivity) => {
-      console.log(hacktivity);
-      res.render('hacktivities/hacktivity', { hacktivity, userId });
+      //console.log(hacktivity);
+      let atendees = [];
+      Booking.findOne({ hacktivityId })
+        .populate('atendees')
+        .then((booking) => {
+          //console.log(booking);
+          atendees = booking.atendees;
+          console.log(atendees);
+          res.render('hacktivities/hacktivity', { hacktivity, userId, atendees });
+        })
+        .catch(() => {
+          req.flash('info','No atendees subscribed for this hacktivity yet.');
+          res.redirect('/hacktivities/hacktivity');
+        });
+      //res.render('hacktivities/hacktivity', { hacktivity, userId, atendees });
     })
-    .catch((hacktivity) => {
-      res.render('hacktivities/hacktivity', { hacktivity });
+    .catch((error) => {
+      req.flash('info','We have not found this activity in the database.');
+      res.redirect('/hacktivities');
     });
 });
 // GET HACKTIVITY UPDATE
@@ -117,17 +129,15 @@ router.post('/:_id/delete', checkuser.checkIfUserLoggedIn, (req, res, next) => {
     .then(() => {
       Booking.findOneAndDelete({ hacktivityId: hacktivityID })
         .then(() => {
-          console.log('Borrado con exito');
+          req.flash('info','Successfully deleted.');
+          res.redirect('/hacktivities');
         })
         .catch(next);
-      res.redirect('/hacktivities');
     })
     .catch(next);
 });
 
 // BOOK HACKTIVITIES
-// hacer que cuando se cree una actividad se cree su modelo booking?
-// y luego aquí solo hacer un findandupdate pusheando el atendee?
 router.post('/:_id/book', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   const hacktivityID = req.params;
   console.log(hacktivityID);
@@ -135,31 +145,38 @@ router.post('/:_id/book', checkuser.checkIfUserLoggedIn, (req, res, next) => {
 
   Booking.find({ hacktivityId: hacktivityID })
     .then((booking) => {
-      if (booking && booking.length == 0) {
+      if (booking.length === 0) {
         Hacktivity.findById(hacktivityID)
           .then((hacktivity) => {
             Booking.create({
               hacktivityId: hacktivityID,
               hostId: hacktivity.hostId,
               atendees: user,
-            });
+            })
+              .then(() => {
+                req.flash('info','You have successfully registered for the hacktivity.');
+                res.redirect('/user');
+              });
           });
-      // } else if (Booking.findOne({ atendees: user })) {  //aqui busco en todos. Tengo que buscar en el id en cuestion
-      //   Booking.findOne({ atendees: user })
-      //     .then(() => {
-      //       console.log('Already registered in that hacktivity');
-      //       res.redirect('/user', { error: 'You are already registered in that hacktivity' });
-      //     })
-      //     .catch(next);
       } else {
-        Booking.findOneAndUpdate({ hacktivityId: hacktivityID },
-          { $push: { atendees: user } })
-          .then(() => {
-            res.redirect('/user', { success: 'You have successfully registered for the hacktivity.' });
+        Booking.findOne({ atendees: user })
+          .then((subscribed)=>{
+            console.log("Usuario ya suscrito");
+            console.log(subscribed);
+            req.flash('error','You are already subscribed in this hacktivity.');
+            res.redirect('/user');
           })
-          .catch(next);
+          .catch(()=>{
+            Booking.findOneAndUpdate({ hacktivityId: hacktivityID },
+              { $push: { atendees: user } })
+              .then(() => {
+                req.flash('info','You have successfully registered for the hacktivity.');
+                res.redirect('/user');
+              })
+              .catch(next);
+          });
       }
-      res.redirect('/user');  //si no dejamos este no redirecciona (los anteriores no son capaces)
+      //res.redirect('/user');  //no poner porque si no salta el primero(asincrono)
     })
     .catch(next);
 });
@@ -174,9 +191,10 @@ router.post('/:_id/deletebook', (req, res, next) => {
     { $pull: { atendees: user } })
     .then((booking) => {
       console.log(booking.atendees);
+      req.flash('info','You have successfully unsubscribed from the hacktivity.');
+      res.redirect('/user');
     })
     .catch(next);
-  res.redirect('/user');
 });
 
 module.exports = router;

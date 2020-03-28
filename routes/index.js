@@ -9,9 +9,9 @@ const City = require('../models/City');
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-  const user = req.session.userLogged;  //nos da el objeto con toda la info del user/session
-  //console.log(user)
-  User.findById(user) 
+  const user = req.session.userLogged; // nos da el objeto con toda la info del user/session
+  // console.log(user)
+  User.findById(user)
     .then((currentUser) => {
       res.render('index', { currentUser, title: 'Hacktivities', user });
     })
@@ -27,16 +27,16 @@ router.get('/signup', (req, res, next) => { // darse de alta
 router.post('/signup', (req, res, next) => {
   const { username, password } = req.body;
   if (username === '' || password === '') {
-    req.flash('error','The fields can not be empty');
+    req.flash('error', 'The fields can not be empty');
     res.redirect('/user/signup');
   } else if (password.length < 6) {
-    req.flash('error','The password requires at least 6 characters');
-    res.redirect('/user/signup'); //comprobacion back para que no pueda cambiar desde el front
+    req.flash('error', 'The password requires at least 6 characters');
+    res.redirect('/user/signup'); // comprobacion back para que no pueda cambiar desde el front
   } else {
     User.findOne({ username })
       .then((user) => {
         if (user) {
-          req.flash('error','This username already exists');  //no lo muestra
+          req.flash('error', 'This username already exists'); // no lo muestra
           res.redirect('/user/login');
         } else {
           const salt = bcrypt.genSaltSync(saltRounds);
@@ -47,7 +47,7 @@ router.post('/signup', (req, res, next) => {
           })
             .then((userCreated) => {
               req.session.userLogged = userCreated;
-              req.flash('welcomeMessage','Thank you for creating your account, now you are authenticated.');
+              req.flash('info', 'Thank you for creating your account, now you are authenticated.');
               res.redirect('/');
             })
             .catch((error) => {
@@ -66,26 +66,26 @@ router.get('/login', (req, res, next) => { // darse de alta
 });
 
 router.post('/login', (req, res, next) => {
-  //console.log(req.body);
+  // console.log(req.body);
   const { username, password } = req.body;
   if (username === '' || password === '') {
-    req.flash('error','The fields can not be empty');
+    req.flash('error', 'The fields can not be empty');
     res.redirect('/user/signup');
   } else {
     User.findOne({ username })
       .then((user) => {
-        console.log(username)
+        console.log(username);
         if (!user) {
           res.render('user/signup', { error: 'This user is not registered', username });
         } else {
-          //console.log(bcrypt.compareSync(password, user.userpassword));
+          // console.log(bcrypt.compareSync(password, user.userpassword));
           // eslint-disable-next-line no-lonely-if
           if (bcrypt.compareSync(password, user.userpassword)) {
             req.session.userLogged = user;
-            req.flash('welcomeMessage','Thank you for creating your account, now you are authenticated.');
+            req.flash('welcomeMessage', 'Thank you for creating your account, now you are authenticated.');
             res.redirect('/');
           } else {
-            req.flash('error','Incorrect username or password');
+            req.flash('error', 'Incorrect username or password');
             res.redirect('/user/login');
           }
         }
@@ -98,17 +98,17 @@ router.post('/login', (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {
   const cityName = req.params;
-  //console.log(cityName);
+  // console.log(cityName);
   City.find()
-  .then((city) =>{
-    //console.log(city);
-    if(cityName===city.name){
-      console.log("coincide");
-    }else{
-      next()
-    }
-  })
-  .catch(next)
+    .then((city) => {
+    // console.log(city);
+      if (cityName === city.name) {
+        console.log('coincide');
+      } else {
+        next();
+      }
+    })
+    .catch(next);
 });
 
 module.exports = router;
