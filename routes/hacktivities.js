@@ -84,11 +84,11 @@ router.get('/:_id', checkuser.checkIfUserLoggedIn, (req, res, next) => {
             console.log(atendees);
             res.render('hacktivities/hacktivity', { hacktivity, userId, atendees });
           }
-        })
+        });
       // res.render('hacktivities/hacktivity', { hacktivity, userId, atendees });
     })
     .catch((error) => {
-      req.flash('info','We have not found this activity in the database.');
+      req.flash('info', 'We have not found this activity in the database.');
       res.redirect('/hacktivities');
     });
 });
@@ -160,20 +160,24 @@ router.post('/:_id/book', checkuser.checkIfUserLoggedIn, (req, res, next) => {
           });
       } else {
         Booking.findOne({ atendees: user })
-          .then((subscribed)=>{
-            console.log("Usuario ya suscrito");
-            console.log(subscribed);
-            req.flash('error','You are already subscribed in this hacktivity.');
-            res.redirect('/user');
+          .then((subscribed) => {
+            if (subscribed === null) {
+              Booking.findOneAndUpdate({ hacktivityId: hacktivityID },
+                { $push: { atendees: user } })
+                .then(() => {
+                  req.flash('info', 'You have successfully registered for the hacktivity.');
+                  res.redirect('/user');
+                })
+                .catch(next);
+            } else {
+              console.log('Usuario ya suscrito');
+              console.log(subscribed);
+              req.flash('error', 'You are already subscribed in this hacktivity.');
+              res.redirect('/user');
+            }
           })
-          .catch(()=>{
-            Booking.findOneAndUpdate({ hacktivityId: hacktivityID },
-              { $push: { atendees: user } })
-              .then(() => {
-                req.flash('info','You have successfully registered for the hacktivity.');
-                res.redirect('/user');
-              })
-              .catch(next);
+          .catch(() => {
+
           });
       }
       //res.redirect('/user');  //no poner porque si no salta el primero(asincrono)
