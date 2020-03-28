@@ -6,7 +6,7 @@ const checkuser = require('../scripts/check');
 const Hacktivity = require('../models/Hacktivity');
 const Booking = require('../models/Booking');
 
-router.use(checkuser.checkIfUserLoggedIn); // limita a visualizar las rutas a los no logueados
+// router.use(checkuser.checkIfUserLoggedIn); // limita a visualizar las rutas a los no logueados
 
 /* GET users listing. */
 router.get('/', checkuser.checkIfUserLoggedIn, (req, res, next) => {
@@ -19,30 +19,30 @@ router.get('/', checkuser.checkIfUserLoggedIn, (req, res, next) => {
     .catch(next);
 });
 
-router.get('/my-hacktivities', (req, res, next) => {
+router.get('/my-hacktivities', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   const user = req.session.userLogged._id;
   Booking.find({ atendees: { $in: [user] } })
     .populate('hacktivityId')
     .then((hacktivity) => {
       console.log(hacktivity);
-      if (hacktivity && hacktivity.length == 0) {
-        res.render('user/my-hacktivities');
+      if (hacktivity && hacktivity.length === 0) {
+        res.render('user/my-hacktivities', { currentUser: req.session.userLogged });
       } else {
-        res.render('user/my-hacktivities', { hacktivity });
+        res.render('user/my-hacktivities', { hacktivity, currentUser: req.session.userLogged });
       }
     });
 });
 
-router.get('/my-bookings', (req, res, next) => {
+router.get('/my-bookings', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   const user = req.session.userLogged._id;
   Booking.find({ atendees: { $in: [user] } })
     .populate('hacktivityId atendees')
     .then((booking) => {
       //console.log(booking);
-      res.render('user/my-bookings', { booking });
+      res.render('user/my-bookings', { booking, currentUser: req.session.userLogged  });
     })
     .catch((booking)=>{
-      res.render('user/my-bookings');
+      res.render('user/my-bookings', { currentUser: req.session.userLogged });
     });
 });
 
