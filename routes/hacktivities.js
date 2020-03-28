@@ -77,12 +77,12 @@ router.get('/:_id', checkuser.checkIfUserLoggedIn, (req, res, next) => {
         .populate('atendees')
         .then((booking) => {
           if (booking == null) {
-            res.render('hacktivities/hacktivity', { hacktivity, userId, atendees });
+            res.render('hacktivities/hacktivity', { hacktivity, userId, atendees, currentUser: req.session.userLogged });
           } else {
           // console.log(booking);
             atendees = booking.atendees;
             console.log(atendees);
-            res.render('hacktivities/hacktivity', { hacktivity, userId, atendees });
+            res.render('hacktivities/hacktivity', { hacktivity, userId, atendees, currentUser: req.session.userLogged });
           }
         });
       // res.render('hacktivities/hacktivity', { hacktivity, userId, atendees });
