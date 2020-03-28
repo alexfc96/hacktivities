@@ -34,9 +34,9 @@
         <p>No user subscribed to the hacktivity yet.</p>
     {{/if}}
 
-{{!-- <form action="/hacktivities/{{hacktivity._id}}/book" method="post">
+ <form action="/hacktivities/{{hacktivity._id}}/book" method="post">
   <button type="submit">Book hacktivity</button>
-</form> --}}
+</form> 
 
 {{#eq userId  hacktivity.hostId._id}}
 <button><a href="/hacktivities/{{hacktivity._id}}/update"></a>Update hacktivity</button> <br><br>
