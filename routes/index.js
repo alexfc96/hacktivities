@@ -47,7 +47,7 @@ router.post('/signup', (req, res, next) => {
           })
             .then((userCreated) => {
               req.session.userLogged = userCreated;
-              req.flash('welcomeMessage', 'Thank you for creating your account, now you are authenticated.');
+              req.flash('info', 'Thank you for creating your account, now you are authenticated.');
               res.redirect('/');
             })
             .catch((error) => {

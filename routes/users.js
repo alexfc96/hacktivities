@@ -14,7 +14,7 @@ router.get('/', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   // console.log(user);
   User.findById(user)
     .then((currentUser) => {
-      res.render('user/profile', { currentUser, error: req.flash('error'), info: req.flash('info') });
+      res.render('user/profile', { currentUser});
     })
     .catch(next);
 });
@@ -69,7 +69,7 @@ router.post('/:id/update', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   const user = req.session.userLogged._id;
   User.findByIdAndUpdate({ _id: user }, { username })
     .then(() => {
-      req.flash('success','User updated');
+      req.flash('info','User updated');
       res.redirect('/user');
     })
     .catch(next);

@@ -70,6 +70,14 @@ app.use(
   }),
 );
 app.use(flash());
+app.use((req, res, next) => {
+  res.locals.info = req.flash('info');
+  next();
+});
+app.use((req, res, next) => {
+  res.locals.error = req.flash('error');
+  next();
+});
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');

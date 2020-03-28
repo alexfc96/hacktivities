@@ -129,10 +129,10 @@ router.post('/:_id/delete', checkuser.checkIfUserLoggedIn, (req, res, next) => {
     .then(() => {
       Booking.findOneAndDelete({ hacktivityId: hacktivityID })
         .then(() => {
-          console.log('Borrado con exito');
+          req.flash('info','Successfully deleted.');
+          res.redirect('/hacktivities');
         })
         .catch(next);
-      res.redirect('/hacktivities');
     })
     .catch(next);
 });
@@ -152,7 +152,11 @@ router.post('/:_id/book', checkuser.checkIfUserLoggedIn, (req, res, next) => {
               hacktivityId: hacktivityID,
               hostId: hacktivity.hostId,
               atendees: user,
-            });
+            })
+              .then(() => {
+                req.flash('info','You have successfully registered for the hacktivity.');
+                res.redirect('/user');
+              });
           });
       } else {
         Booking.findOne({ atendees: user })
@@ -172,7 +176,7 @@ router.post('/:_id/book', checkuser.checkIfUserLoggedIn, (req, res, next) => {
               .catch(next);
           });
       }
-      res.redirect('/user');  //si no dejamos este no redirecciona (los anteriores no son capaces)
+      //res.redirect('/user');  //no poner porque si no salta el primero(asincrono)
     })
     .catch(next);
 });
@@ -187,9 +191,10 @@ router.post('/:_id/deletebook', (req, res, next) => {
     { $pull: { atendees: user } })
     .then((booking) => {
       console.log(booking.atendees);
+      req.flash('info','You have successfully unsubscribed from the hacktivity.');
+      res.redirect('/user');
     })
     .catch(next);
-  res.redirect('/user');
 });
 
 module.exports = router;
