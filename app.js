@@ -70,30 +70,16 @@ app.use(
   }),
 );
 app.use(flash());
-app.use((req, res, next) => {
-  res.locals.welcomeMessage = req.flash('welcomeMessage');
-  next();
-});
-app.use((req, res, next) => {
-  res.locals.error = req.flash('error');
-  next();
-});
-
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users'); // js en plural
+const usersRouter = require('./routes/users');
 const hacktivitiesRouter = require('./routes/hacktivities');
 const citiesRouter = require('./routes/cities');
 
 app.use('/', indexRouter);
-app.use('/user', usersRouter); // respuesta en singular
+app.use('/user', usersRouter); 
 app.use('/hacktivities', hacktivitiesRouter);
 app.use('/cities', citiesRouter);
-
-// app.use((req, res, next) => {
-//   app.locals.expreq = req;
-//   next();
-// });
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

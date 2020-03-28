@@ -14,22 +14,20 @@ router.get('/', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   // console.log(user);
   User.findById(user)
     .then((currentUser) => {
-      res.render('user/profile', { currentUser });
+      res.render('user/profile', { currentUser, error: req.flash('error'), info: req.flash('info') });
     })
     .catch(next);
 });
 
 router.get('/my-hacktivities', (req, res, next) => {
   const user = req.session.userLogged._id;
-  Booking.find({ atendees: { $in: [user] } })
-    .populate('hacktivityId')
+  Hacktivity.find({ hostId: user })
     .then((hacktivity) => {
       console.log(hacktivity);
-      if (hacktivity && hacktivity.length == 0) {
-        res.render('user/my-hacktivities');
-      } else {
-        res.render('user/my-hacktivities', { hacktivity });
-      }
+      res.render('user/my-hacktivities', { hacktivity });
+    })
+    .catch(()=>{
+      res.render('user/my-hacktivities');
     });
 });
 
