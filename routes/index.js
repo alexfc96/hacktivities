@@ -12,7 +12,6 @@ const checkuser = require('../scripts/check');
 /* GET home page. */
 router.get('/', (req, res, next) => {
   const userId = req.session.userLogged;  //nos da el objeto con toda la info del user/session
-  //console.log(user)
   User.findById(userId) 
     .then((currentUser) => {
       res.render('index', { currentUser, userId, City });
@@ -100,7 +99,6 @@ router.post('/login', (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {
   const cityName = req.params;
-  // console.log(cityName);
   City.find()
     .then((city) => {
     // console.log(city);
