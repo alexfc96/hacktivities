@@ -6,11 +6,11 @@
 {{user.username}}
 <form action="/user/{{currentUser._id}}/update" method="post">
   <label for="username">Username</label>
-  <input type="text" name="username" id="username" placeholder="username" value="{{currentUser.username}}">
+  <input type="text" name="username" id="username" placeholder="username" value="{{currentUser.username}}" minlength="4">
   <label for="currentpassword">Type your current password</label>
   <input type="password" name="currentpassword" id="currentpassword" placeholder="******">
   <label for="newuserpassword">Your new password</label>
-  <input type="password" name="newuserpassword" id="newuserpassword" placeholder="******">
+  <input type="password" name="newuserpassword" id="newuserpassword" placeholder="******" minlength="6">
   <button type="submit">UPDATE!</button>
 </form>
 

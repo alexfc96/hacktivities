@@ -38,8 +38,8 @@ router.post('/signup', (req, res, next) => {
     User.findOne({ username })
       .then((user) => {
         if (user) {
-          req.flash('error', 'This username already exists'); // no lo muestra
-          res.redirect('/user/login');
+          req.flash('error', 'This username already exists');
+          res.redirect('/login');
         } else {
           const salt = bcrypt.genSaltSync(saltRounds);
           const userpassword = bcrypt.hashSync(password, salt);
