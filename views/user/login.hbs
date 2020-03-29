@@ -1,10 +1,10 @@
-<h1>Login</h1>
-<h2>Acces to your account:</h2>
+{{!-- <h1>Login</h1>
+<h2>Acces to your account:</h2> --}}
 
 {{#if error}}
 {{error}}
 {{/if}}
-
+{{!-- 
 <form id="form" action="/login" method="POST">
   <label for="username">Username</label><br>
   <input type="text" name="username" placeholder="Your username">
@@ -18,4 +18,27 @@
 <h2>Not registered yet?</h2>
 <form action="/signup">
     <input type="submit" value="REGISTER" />
-</form>
+</form> --}}
+<div class="log-sign">
+
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+    <h2 class="active"> Sign In </h2>
+   <a href="/signup"><h2 class="inactive underlineHover">Sign Up </h2></a> 
+
+    <!-- Icon -->
+    <div class="fadeIn first">
+      {{!-- <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" /> --}}
+    </div>
+
+    <!-- Login Form -->
+    <form id="form" action="/login" method="POST">
+      <input type="text" id="login" class="fadeIn second" name="username" placeholder="Username">
+      <input type="password" id="password" class="fadeIn third" name="password" placeholder="******">
+      <input type="submit" class="fadeIn fourth" value="Log In">
+    </form>
+  </div>
+</div>
+
+</div>

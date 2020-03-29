@@ -1,11 +1,28 @@
 
+<div class="cities">
+      <div class="city-banner2">
+       <a> <img class="city-banner-image2" src="{{city.image}}" alt=""> </a>
+        <div class="city-banner-text2">
+        <a href="">{{city.name}}</a>
+       </div>
+    </div>
+ <div class="city-hacktivity-title">
+
+  <p>Hacktivities</p>
+
+ </div>
 <div class="city-page">
-<img class="city-image" src="{{city.image}}" alt="">
-  <p>Hacktivities in {{city.name}}</p>
 
 {{#each hacktivities}}
-
-  <a href="/hacktivities/{{this._id}}">{{this.name}}</a><br>
-  
+ 
+  <div class="city-hacktivity">
+     
+       <a class="city-hacktivity-link" href="/hacktivities/{{this._id}}">{{this.name}}</a>
+       <div class="city-hacktivity-description">    
+         <p> {{this.description}}</p>
+         <p>Duration: {{this.duration}}'</p>
+       </div>
+  </div>
 {{/each}}
+</div>
 </div>
