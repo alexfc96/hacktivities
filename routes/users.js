@@ -1,5 +1,8 @@
 const express = require('express');
+const bcrypt = require('bcrypt');
 const User = require('../models/User');
+
+const saltRounds = 10;
 
 const router = express.Router();
 const checkuser = require('../scripts/check');
@@ -14,7 +17,7 @@ router.get('/', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   // console.log(user);
   User.findById(user)
     .then((currentUser) => {
-      res.render('user/profile', { currentUser});
+      res.render('user/profile', { currentUser });
     })
     .catch(next);
 });
@@ -26,7 +29,7 @@ router.get('/my-hacktivities', checkuser.checkIfUserLoggedIn, (req, res, next) =
       console.log(hacktivity);
       res.render('user/my-hacktivities', { hacktivity, currentUser: req.session.userLogged });
     })
-    .catch(()=>{
+    .catch(() => {
       res.render('user/my-hacktivities', { currentUser: req.session.userLogged });
     });
 });
@@ -36,10 +39,10 @@ router.get('/my-bookings', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   Booking.find({ atendees: { $in: [user] } })
     .populate('hacktivityId atendees')
     .then((booking) => {
-      //console.log(booking);
-      res.render('user/my-bookings', { booking, currentUser: req.session.userLogged  });
+      // console.log(booking);
+      res.render('user/my-bookings', { booking, currentUser: req.session.userLogged });
     })
-    .catch((booking)=>{
+    .catch((booking) => {
       res.render('user/my-bookings', { currentUser: req.session.userLogged });
     });
 });
@@ -49,7 +52,7 @@ router.get('/logout', (req, res, next) => {
     if (err) {
       next(err);
     }
-    res.redirect('/');
+    res.redirect('/login');
   });
 });
 
@@ -65,12 +68,28 @@ router.get('/:id/update', checkuser.checkIfUserLoggedIn, (req, res, next) => { /
 });
 
 router.post('/:id/update', checkuser.checkIfUserLoggedIn, (req, res, next) => {
-  const {username} = req.body;
+  const { username, currentpassword, newuserpassword } = req.body;
   const user = req.session.userLogged._id;
   User.findByIdAndUpdate({ _id: user }, { username })
-    .then(() => {
-      req.flash('info','User updated');
-      res.redirect('/user');
+    .then((userInfo) => {
+      if (checkuser.isValueInvalid(currentpassword) || checkuser.isValueInvalid(newuserpassword)) {
+        req.flash('info', 'User updated');
+        res.redirect('/user/logout');
+      } else if (bcrypt.compareSync(currentpassword, userInfo.userpassword)) {
+        console.log('La contraseña es la correcta');
+        const salt = bcrypt.genSaltSync(saltRounds);
+        const userpassword = bcrypt.hashSync(newuserpassword, salt);
+        console.log(userpassword);
+        User.findByIdAndUpdate({ _id: user }, { userpassword })
+          .then(() => {
+            console.log('Contraseña cambiada');
+            req.flash('info', 'Password updated');
+            res.redirect('/user/logout');
+          });
+      } else {
+        req.flash('error', 'Incorrect password');
+        res.redirect('/user/update');
+      }
     })
     .catch(next);
 });
@@ -80,12 +99,12 @@ router.post('/:id/delete', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   User.findByIdAndDelete({ _id: user })
     .then(() => {
       console.log('User deleted');
-      req.flash('info','User deleted');
+      req.flash('info', 'User deleted');
       res.redirect('/signup');
       req.session.destroy();
     })
     .catch(next);
 });
-//done
+// done
 
 module.exports = router;

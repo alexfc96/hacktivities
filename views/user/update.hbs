@@ -1,9 +1,16 @@
+{{#if error}}
+  {{error}}
+{{/if}}
 
 <h3>Do you want to update any information about your profile?</h3>
 {{user.username}}
 <form action="/user/{{currentUser._id}}/update" method="post">
-  <label for="username">name</label>
+  <label for="username">Username</label>
   <input type="text" name="username" id="username" placeholder="username" value="{{currentUser.username}}">
+  <label for="currentpassword">Type your current password</label>
+  <input type="password" name="currentpassword" id="currentpassword" placeholder="******">
+  <label for="newuserpassword">Your new password</label>
+  <input type="password" name="newuserpassword" id="newuserpassword" placeholder="******">
   <button type="submit">UPDATE!</button>
 </form>
 

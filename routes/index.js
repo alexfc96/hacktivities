@@ -7,6 +7,8 @@ const router = express.Router();
 const User = require('../models/User');
 const City = require('../models/City');
 
+const checkuser = require('../scripts/check');
+
 /* GET home page. */
 router.get('/', (req, res, next) => {
   const userId = req.session.userLogged;  //nos da el objeto con toda la info del user/session
@@ -86,7 +88,7 @@ router.post('/login', (req, res, next) => {
             res.redirect('/');
           } else {
             req.flash('error', 'Incorrect username or password');
-            res.redirect('/user/login');
+            res.redirect('/login');
           }
         }
       })
