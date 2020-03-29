@@ -5,7 +5,7 @@
   {{info}}
   {{/if}}
 
-<h2>You want to be part of Hacktivitis and have multiple advantages:</h2>
+{{!-- <h2>You want to be part of Hacktivitis and have multiple advantages:</h2>
 <p>Sign up:</p>
 
 <form id="form" action="/signup" method="POST">
@@ -21,4 +21,26 @@
 <h2>Are you already registered?</h2>
 <form action="/login">
     <input type="submit" value="LOGIN" />
-</form>
+</form> --}}
+<div class="log-sign"> 
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+    <a href="/login"><h2 class="inactive underlineHover"> Sign In </h2></a>
+    <h2 class="active">Sign Up </h2>
+
+    <!-- Icon -->
+    <div class="fadeIn first">
+      {{!-- <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" /> --}}
+    </div>
+
+    <!-- Login Form -->
+    <form id="form" action="/signup" method="POST">
+      <input type="text" id="login" class="fadeIn second" name="username" placeholder="Your Username" value="{{username}}">
+      <input type="password" id="password" class="fadeIn third" name="password" placeholder="******" minlength="6" required>
+      <input type="submit" class="fadeIn fourth" value="Sign up">
+    </form>
+  </div>
+</div>
+</div>
+

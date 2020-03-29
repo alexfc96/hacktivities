@@ -59,6 +59,7 @@ font-size: 1.7rem;
     margin: 0;
 }
 .main-cities{
+    display: flex;
     flex-direction: column;
 	flex-wrap: nowrap;
 	justify-content: center;
@@ -67,10 +68,12 @@ font-size: 1.7rem;
     padding-right: 1.5rem;
     padding-bottom: 1.5rem;
 }
+
 .city-banner{
     width: 100%;
     position: relative;
     display: inline-block;
+    margin-bottom: 0.5rem;
 
 }
 .city-banner-text{
@@ -95,13 +98,13 @@ a.button4{
     box-sizing: border-box;
     text-decoration:none;
     font-weight:300;
-    color:#FFFFFF;
+    color:#2F2842;
     text-shadow: 0 0.04em 0.04em rgba(0,0,0,0.35);
     text-align:center;
     transition: all 0.2s;
 }
 a.button4:hover{
-    border-color: rgba(255,255,255,1);
+    border-color: #2F2842;
     }
     @media all and (max-width:30em){
      a.button4{
@@ -112,10 +115,7 @@ a.button4:hover{
 .button-show-more{
    padding-top: 1.4rem;
     display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 40%;
-    
+    align-items: center;  
 }
 
 

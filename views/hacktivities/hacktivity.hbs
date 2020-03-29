@@ -1,27 +1,35 @@
-
-<button><a href="/hacktivities">Back</a></button>
-
 {{#if info}}
     {{info}}
 {{/if}}
+{{#eq userId  hacktivity.hostId._id}}
+<div class="buttons-host">
+<div class="button-h" id="update-btn">
+<a href="/hacktivities/{{hacktivity._id}}/update" style="background-color:#b69cff">Update hacktivity</a>
+</div>
+<div class="delete-btn">
+<form action="/hacktivities/{{hacktivity._id}}/delete" method="post">
+    <button type="submit">Delete hacktivity  </button>
+</form>
+</div>
 
-<h2>Your hacktivity information</h2>
-<b>Name: {{hacktivity.name}}</b>
+</div>
+{{/eq}}
 
-<b>Description: {{hacktivity.description}}</b>
+{{#eq userId  hacktivity.hostId._id}}
+<h2>Your Hacktivity information</h2>
+{{else}}
+<h2>Hacktivity information</h2>
+{{/eq}}
 
-<b>Location: {{hacktivity.location.name}} <img class='hacktivity-img'    src="{{hacktivity.location.image}}" alt=""></b>
-
-<b>Date: {{hacktivity.date}} </b>
-
-<b>Duration: {{hacktivity.duration}} </b>
-
-<b>Created: {{hacktivity.created}} </b>
-
+<img class='city-banner'    src="{{hacktivity.location.image}}" alt="">
+<p>{{hacktivity.location.name}} </p>
+<h2>Hacktivity information</h2>
+<p>{{hacktivity.name}}</p>
+<p>{{hacktivity.description}}</p>
 <p>Host: {{hacktivity.hostId.username}} </p>
-
-   {{!-- {{#if atendees.length > 0 }} --}}
-    {{#if atendees }}
+<p>Duration: {{hacktivity.duration}}' </p>
+<p>Date: {{hacktivity.date}} </p>
+  {{#if atendees }}
     List of users who will participate in the activity:
         <ul>
         {{#each atendees}}
@@ -34,15 +42,8 @@
         <p>No user subscribed to the hacktivity yet.</p>
     {{/if}}
 
-{{!-- <form action="/hacktivities/{{hacktivity._id}}/book" method="post">
+<form action="/hacktivities/{{hacktivity._id}}/book" method="post">
   <button type="submit">Book hacktivity</button>
-</form> --}}
-
-{{#eq userId  hacktivity.hostId._id}}
-<button><a href="/hacktivities/{{hacktivity._id}}/update"></a>Update hacktivity</button> <br><br>
-
-<form action="/hacktivities/{{hacktivity._id}}/delete" method="post">
-    <button type="submit">Delete hacktivity  </button>
 </form>
-{{/eq}}
+
 
