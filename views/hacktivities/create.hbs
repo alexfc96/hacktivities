@@ -21,11 +21,13 @@
   {{#if timeError}}  
     {{timeError}}
   {{/if}}
-  <label for="duration">duration</label>
+  <label for="duration">Duration</label>
   {{#if timeError}}  
     <input type="number" name="duration" id="hacktivity-duration" placeholder="Specify in minutes" pattern="[0-9]{2}" minlength="2" maxlength="3" value="{{timeError}}">
     {{else}}
     <input type="number" name="duration" id="hacktivity-duration" placeholder="Specify in minutes" pattern="[0-9]{2}" minlength="2" maxlength="3">
   {{/if}}
+  <label for="img">Select image:</label>
+  <input type="file" id="img" name="img" accept="image/*">
   <button type="submit">Create hacktivity</button>
 </form>
