@@ -1,8 +1,8 @@
 .log-sign{
-    background-image: url(https://images.unsplash.com/photo-1562883676-8c7feb83f09b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60) ;
+    background-image: url(https://cutewallpaper.org/21/barcelona-iphone-wallpaper/New-Barcelona-City-iPhone-Wallpaper-Soccer-Wallpaper.jpg) ;
     height:100vh;
     background-repeat: no-repeat;
-    background-size: 40rem;
+   background-size: cover ;
 }
 
 .wrapper a {
@@ -19,7 +19,7 @@
     text-transform: uppercase;
     display:inline-block;
     margin: 40px 8px 10px 8px; 
-    color: #cccccc;
+    color: white;
   }
   
   
@@ -39,14 +39,14 @@
   #formContent {
     -webkit-border-radius: 10px 10px 10px 10px;
     border-radius: 10px 10px 10px 10px;
-    background: #5B4E80;
+    background: transparent;
     padding: 30px;
     width: 90%;
     max-width: 450px;
     position: relative;
     padding: 0px;
-    -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
-    box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+    /* -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+    box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3); */
     text-align: center;
   }
   
@@ -133,7 +133,7 @@
   
   input[type=text]:focus {
     background-color: #fff;
-    border-bottom: 2px solid #B69CFF;
+    border-bottom: 2px solid white;
   }
   
   input[type=text]:placeholder {
@@ -162,12 +162,12 @@
   }
   
   input[type=password]:focus {
-    background-color: #B69CFF;
-    border-bottom: 2px solid #B69CFF ;
+    background-color: white;
+    border-bottom: 2px solid white;
   }
   
   input[type=password]:placeholder {
-    color: #B69CFF;
+    color: white;
   }
   
   
@@ -239,7 +239,9 @@
     -webkit-animation-delay: 0.6s;
     -moz-animation-delay: 0.6s;
     animation-delay: 0.6s;
+    
   }
+
   
   .fadeIn.third {
     -webkit-animation-delay: 0.8s;
