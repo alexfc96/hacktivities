@@ -42,8 +42,8 @@ The number of participants who have currently booked the activity are: {{atendee
   <button type="submit">Book hacktivity</button>
 </form> 
 
-{{#if userId}}
-    {{#eq userId  hacktivity.hostId._id}}
+{{#if currentUser}}
+    {{#eq currentUser._id  hacktivity.hostId._id}}
     <button><a href="/hacktivities/{{hacktivity._id}}/update"></a>Update hacktivity</button> <br><br>
     <form action="/hacktivities/{{hacktivity._id}}/delete" method="post">
         <button type="submit">Delete hacktivity  </button>

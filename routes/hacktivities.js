@@ -63,7 +63,7 @@ router.post('/create', (req, res, next) => {
 });
 
 // GET HACKTIVITY BY ID
-router.get('/:_id', checkuser.checkIfUserLoggedIn, (req, res, next) => {  //hacerla publica y habrá que tener en cuenta el _id del user
+router.get('/:_id', (req, res, next) => {  //hacerla publica y habrá que tener en cuenta el _id del user
   const hacktivityId = req.params;
   //const userId = req.session.userLogged._id;
 
@@ -77,12 +77,12 @@ router.get('/:_id', checkuser.checkIfUserLoggedIn, (req, res, next) => {  //hace
         .populate('atendees')
         .then((booking) => {
           if (booking == null) {
-            res.render('hacktivities/hacktivity', { hacktivity, userId: req.session.userLogged._id, atendees, currentUser: req.session.userLogged });
+            res.render('hacktivities/hacktivity', { hacktivity, atendees, currentUser: req.session.userLogged });
           } else {
           // console.log(booking);
             atendees = booking.atendees;
             console.log(atendees);
-            res.render('hacktivities/hacktivity', { hacktivity, userId: req.session.userLogged._id, atendees, currentUser: req.session.userLogged });
+            res.render('hacktivities/hacktivity', { hacktivity, atendees, currentUser: req.session.userLogged });
           }
         });
       // res.render('hacktivities/hacktivity', { hacktivity, userId, atendees });
