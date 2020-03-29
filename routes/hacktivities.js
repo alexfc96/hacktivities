@@ -34,8 +34,9 @@ router.get('/create', checkuser.checkIfUserLoggedIn, (req, res, next) => {
 router.post('/create', (req, res, next) => {
   const hostId = req.session.userLogged._id;
   const {
-    name, description, date, location, duration, created,
+    name, description, date, starthour, location, duration, created,
   } = req.body;
+  console.log(typeof starthour);
   const checkDate = new Date(date);
   const todayDate = new Date();
   if (checkDate < todayDate) {
@@ -50,6 +51,7 @@ router.post('/create', (req, res, next) => {
       name,
       description,
       date,
+      starthour,
       location,
       duration,
       created,
