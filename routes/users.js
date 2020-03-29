@@ -70,34 +70,43 @@ router.get('/:id/update', checkuser.checkIfUserLoggedIn, (req, res, next) => { /
 router.post('/:id/update', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   const { username, currentpassword, newuserpassword } = req.body;
   const user = req.session.userLogged._id;
-  User.findByIdAndUpdate({ _id: user }, { username })
-    .then((userInfo) => {
-      if (checkuser.isValueInvalid(currentpassword) || checkuser.isValueInvalid(newuserpassword)) {
-        req.flash('info', 'User updated');
-        res.redirect('/user/logout');
-      } else{
-        // eslint-disable-next-line no-lonely-if
-        if (newuserpassword.length < 6) {
-          req.flash('error', 'The password requires at least 6 characters');
-          res.redirect(`/user/${user}/update`); // comprobacion back para que no pueda cambiar desde el front
-        }
-        if (bcrypt.compareSync(currentpassword, userInfo.userpassword)) {
-          console.log('La contraseña es la correcta');
-          const salt = bcrypt.genSaltSync(saltRounds);
-          const userpassword = bcrypt.hashSync(newuserpassword, salt);
-          User.findByIdAndUpdate({ _id: user }, { userpassword })
-            .then(() => {
-              console.log('Contraseña cambiada');
-              req.flash('info', 'Password updated');   //Falta saber indicar al usuario que se ha cambiado correctamente ya que pasa por 2 rutas diferentes(tmb username)
+  User.findOne({ _id: user })
+    .then((exist) => {
+      console.log(exist);
+      if (exist) {
+        req.flash('error', 'That user already exists');
+        res.redirect(`/user/${user}/update`);
+      } else {
+        User.findByIdAndUpdate({ _id: user }, { username })
+          .then((userInfo) => {
+            if (checkuser.isValueInvalid(currentpassword) || checkuser.isValueInvalid(newuserpassword)) {
+              req.flash('info', 'User updated');
               res.redirect('/user/logout');
-            });
-        } else {
-          req.flash('error', 'Incorrect password');
-          res.redirect(`/user/${user}/update`);
-        }
-      };
-    })
-    .catch(next);
+            } else {
+              // eslint-disable-next-line no-lonely-if
+              if (newuserpassword.length < 6) {
+                req.flash('error', 'The password requires at least 6 characters');
+                res.redirect(`/user/${user}/update`); // comprobacion back para que no pueda cambiar desde el front
+              }
+              if (bcrypt.compareSync(currentpassword, userInfo.userpassword)) {
+                console.log('La contraseña es la correcta');
+                const salt = bcrypt.genSaltSync(saltRounds);
+                const userpassword = bcrypt.hashSync(newuserpassword, salt);
+                User.findByIdAndUpdate({ _id: user }, { userpassword })
+                  .then(() => {
+                    console.log('Contraseña cambiada');
+                    req.flash('info', 'Password updated'); // Falta saber indicar al usuario que se ha cambiado correctamente ya que pasa por 2 rutas diferentes(tmb username)
+                    res.redirect('/user/logout');
+                  });
+              } else {
+                req.flash('error', 'Incorrect password');
+                res.redirect(`/user/${user}/update`);
+              }
+            }
+          })
+          .catch(next);
+      }
+    });
 });
 
 router.post('/:id/delete', checkuser.checkIfUserLoggedIn, (req, res, next) => {
