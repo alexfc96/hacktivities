@@ -12,14 +12,13 @@ const checkuser = require('../scripts/check');
 
 /* GET /hacktivities */
 router.get('/', (req, res, next) => {
-  Hacktivity.find()
+  const yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
+  Hacktivity.find({ date: { $gte: yesterday } })
     .then((hacktivities) => {
       res.render('hacktivities/list', { hacktivities, currentUser: req.session.userLogged });
     })
     .catch((err) => console.log('Error while rendering Hacktivities: ', err));
 });
-
-// router.use(checkuser.checkIfUserLoggedIn); // limita a visualizar las rutas a los no logueados
 
 // GET /hacktivities/create
 router.get('/create', checkuser.checkIfUserLoggedIn, (req, res, next) => {
@@ -39,7 +38,7 @@ router.post('/create', (req, res, next) => {
   const checkDate = new Date(date);
   const todayDate = new Date();
   if (checkDate < todayDate) {
-    req.flash('dateError','Specified date prior to today.');
+    req.flash('dateError','Specified date prior to today.');  //al no estar dentro de una promise no funcionan?
     res.redirect('/hacktivities/create');
   } else if (duration > 480) {
     req.flash('timeError','The maximum duration of the hacktivity is 480 minutes.');
@@ -63,9 +62,9 @@ router.post('/create', (req, res, next) => {
 });
 
 // GET HACKTIVITY BY ID
-router.get('/:_id', checkuser.checkIfUserLoggedIn, (req, res, next) => {
+router.get('/:_id', (req, res, next) => {  //hacerla publica y habrá que tener en cuenta el _id del user
   const hacktivityId = req.params;
-  const userId = req.session.userLogged._id;
+  //const userId = req.session.userLogged._id;
 
   // revisar que el user no registrado entonces solo nos diga el length de numeros de atendees
   Hacktivity.findById(hacktivityId)
@@ -77,12 +76,12 @@ router.get('/:_id', checkuser.checkIfUserLoggedIn, (req, res, next) => {
         .populate('atendees')
         .then((booking) => {
           if (booking == null) {
-            res.render('hacktivities/hacktivity', { hacktivity, userId, atendees, currentUser: req.session.userLogged });
+            res.render('hacktivities/hacktivity', { hacktivity, atendees, currentUser: req.session.userLogged });
           } else {
           // console.log(booking);
             atendees = booking.atendees;
             console.log(atendees);
-            res.render('hacktivities/hacktivity', { hacktivity, userId, atendees, currentUser: req.session.userLogged });
+            res.render('hacktivities/hacktivity', { hacktivity, atendees, currentUser: req.session.userLogged });
           }
         });
       // res.render('hacktivities/hacktivity', { hacktivity, userId, atendees });

@@ -7,6 +7,8 @@ const router = express.Router();
 const User = require('../models/User');
 const City = require('../models/City');
 
+const checkuser = require('../scripts/check');
+
 /* GET home page. */
 router.get('/', (req, res, next) => {
   const userId = req.session.userLogged;  //nos da el objeto con toda la info del user/session
@@ -36,8 +38,8 @@ router.post('/signup', (req, res, next) => {
     User.findOne({ username })
       .then((user) => {
         if (user) {
-          req.flash('error', 'This username already exists'); // no lo muestra
-          res.redirect('/user/login');
+          req.flash('error', 'This username already exists');
+          res.redirect('/login');
         } else {
           const salt = bcrypt.genSaltSync(saltRounds);
           const userpassword = bcrypt.hashSync(password, salt);
@@ -86,7 +88,7 @@ router.post('/login', (req, res, next) => {
             res.redirect('/');
           } else {
             req.flash('error', 'Incorrect username or password');
-            res.redirect('/user/login');
+            res.redirect('/login');
           }
         }
       })
