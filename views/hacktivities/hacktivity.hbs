@@ -21,6 +21,8 @@
 <p>Host: {{hacktivity.hostId.username}} </p>
 
    {{!-- {{#if atendees.length > 0 }} --}}
+The number of participants who have currently booked the activity are: {{atendees.length}} <br>
+{{#if currentUser}}
     {{#if atendees }}
     List of users who will participate in the activity:
         <ul>
@@ -33,16 +35,19 @@
         {{else}}
         <p>No user subscribed to the hacktivity yet.</p>
     {{/if}}
+{{/if}}
+
 
  <form action="/hacktivities/{{hacktivity._id}}/book" method="post">
   <button type="submit">Book hacktivity</button>
 </form> 
 
-{{#eq userId  hacktivity.hostId._id}}
-<button><a href="/hacktivities/{{hacktivity._id}}/update"></a>Update hacktivity</button> <br><br>
-
-<form action="/hacktivities/{{hacktivity._id}}/delete" method="post">
-    <button type="submit">Delete hacktivity  </button>
-</form>
-{{/eq}}
+{{#if userId}}
+    {{#eq userId  hacktivity.hostId._id}}
+    <button><a href="/hacktivities/{{hacktivity._id}}/update"></a>Update hacktivity</button> <br><br>
+    <form action="/hacktivities/{{hacktivity._id}}/delete" method="post">
+        <button type="submit">Delete hacktivity  </button>
+    </form>
+    {{/eq}}
+{{/if}}
 

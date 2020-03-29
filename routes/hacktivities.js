@@ -39,7 +39,7 @@ router.post('/create', (req, res, next) => {
   const checkDate = new Date(date);
   const todayDate = new Date();
   if (checkDate < todayDate) {
-    req.flash('dateError','Specified date prior to today.');
+    req.flash('dateError','Specified date prior to today.');  //al no estar dentro de una promise no funcionan?
     res.redirect('/hacktivities/create');
   } else if (duration > 480) {
     req.flash('timeError','The maximum duration of the hacktivity is 480 minutes.');
@@ -63,9 +63,9 @@ router.post('/create', (req, res, next) => {
 });
 
 // GET HACKTIVITY BY ID
-router.get('/:_id', checkuser.checkIfUserLoggedIn, (req, res, next) => {
+router.get('/:_id', checkuser.checkIfUserLoggedIn, (req, res, next) => {  //hacerla publica y habrá que tener en cuenta el _id del user
   const hacktivityId = req.params;
-  const userId = req.session.userLogged._id;
+  //const userId = req.session.userLogged._id;
 
   // revisar que el user no registrado entonces solo nos diga el length de numeros de atendees
   Hacktivity.findById(hacktivityId)
@@ -77,12 +77,12 @@ router.get('/:_id', checkuser.checkIfUserLoggedIn, (req, res, next) => {
         .populate('atendees')
         .then((booking) => {
           if (booking == null) {
-            res.render('hacktivities/hacktivity', { hacktivity, userId, atendees, currentUser: req.session.userLogged });
+            res.render('hacktivities/hacktivity', { hacktivity, userId: req.session.userLogged._id, atendees, currentUser: req.session.userLogged });
           } else {
           // console.log(booking);
             atendees = booking.atendees;
             console.log(atendees);
-            res.render('hacktivities/hacktivity', { hacktivity, userId, atendees, currentUser: req.session.userLogged });
+            res.render('hacktivities/hacktivity', { hacktivity, userId: req.session.userLogged._id, atendees, currentUser: req.session.userLogged });
           }
         });
       // res.render('hacktivities/hacktivity', { hacktivity, userId, atendees });
