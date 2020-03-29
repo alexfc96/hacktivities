@@ -12,14 +12,13 @@ const checkuser = require('../scripts/check');
 
 /* GET /hacktivities */
 router.get('/', (req, res, next) => {
-  Hacktivity.find()
+  const yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
+  Hacktivity.find({ date: { $gte: yesterday } })
     .then((hacktivities) => {
       res.render('hacktivities/list', { hacktivities, currentUser: req.session.userLogged });
     })
     .catch((err) => console.log('Error while rendering Hacktivities: ', err));
 });
-
-// router.use(checkuser.checkIfUserLoggedIn); // limita a visualizar las rutas a los no logueados
 
 // GET /hacktivities/create
 router.get('/create', checkuser.checkIfUserLoggedIn, (req, res, next) => {
