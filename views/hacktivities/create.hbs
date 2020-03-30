@@ -1,15 +1,17 @@
+  {{#if error}}  
+    {{error}}
+  {{/if}}
+
 <form action="/hacktivities/create" method="post">
  
-  {{!-- <input type="text" name="location" id="hacktivity-location"> --}}
   <label for="name">Hacktivity</label>
   <input type="text" name="name" id="hacktivity-name" placeholder="Hacktivity name">
+
   <label for="descripton">Description</label>
   <input type="text" name="description" id="hacktivity-description" placeholder="Describe your Hacktivity">
+
   <label for="date">Date</label>
   <input type="date" name="date" id="hacktivity-date">
-  {{#if dateError}}
-    <p>{{dateError}}</p>
-  {{/if}}
 
   <label for="hour">Choose the hour: </label>
   <input id="starthour" type="time" name="starthour" value="17:30" min="08:00" max="22:00" require>
@@ -20,15 +22,10 @@
    <option value="{{this._id}}">{{this.name}}</option>
    {{/each}}
   </select>
-  {{#if timeError}}  
-    {{timeError}}
-  {{/if}}
-  <label for="duration">Duration</label>
-  {{#if timeError}}  
-    <input type="number" name="duration" id="hacktivity-duration" placeholder="Specify in minutes" pattern="[0-9]{2}" minlength="2" maxlength="3" value="{{timeError}}">
-    {{else}}
-    <input type="number" name="duration" id="hacktivity-duration" placeholder="Specify in minutes" pattern="[0-9]{2}" minlength="2" maxlength="3">
-  {{/if}}
+  
+  <label for="duration">Duration</label> 
+  <input type="number" name="duration" id="hacktivity-duration" placeholder="Specify in minutes" pattern="[0-9]{2}" minlength="2" maxlength="3" min="10" max="480">
+
   {{!-- <label for="img">Select image:</label>
   <input type="file" id="img" name="img" accept="image/*"> --}}
   <button type="submit">Create hacktivity</button>

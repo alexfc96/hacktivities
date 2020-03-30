@@ -7,7 +7,7 @@ const hacktivitySchema = new Schema(
     hostId: { type: Schema.Types.ObjectId, ref: 'User' },
     name: { type: String, required: true },
     description: { type: String },
-    date: { type: Date },
+    date: { type: Date, min: '2020-01-01', max: '2025-01-01' },
     starthour: { type: String },
     location: { type: Schema.Types.ObjectId, ref: 'City' },
     duration: { type: Number, min: 0 },

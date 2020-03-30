@@ -1,7 +1,5 @@
 /* eslint-disable no-underscore-dangle */
 const express = require('express');
-const mongoose = require('mongoose');
-const ObjectId = require('mongodb').ObjectID;
 
 // const User = require('../models/User');
 const City = require('../models/City');
@@ -10,6 +8,10 @@ const Booking = require('../models/Booking');
 
 const router = express.Router();
 const checkuser = require('../scripts/check');
+
+const moment = require('moment');
+// const today = moment();
+// console.log(today.format("MMM Do YY"));
 
 /* GET /hacktivities */
 router.get('/', (req, res, next) => {
@@ -36,21 +38,26 @@ router.post('/create', (req, res, next) => {
   const {
     name, description, date, starthour, location, duration, created,
   } = req.body;
-  console.log(typeof starthour);
-  const checkDate = new Date(date);
-  const todayDate = new Date();
+  const today = moment();
+  const todayDate = today.format("YYYY-MM-DD");
+  console.log(todayDate);
+  const checkDate = moment(date).format('YYYY-MM-DD');
+  console.log(checkDate);
+
   if (checkDate < todayDate) {
-    req.flash('dateError','Specified date prior to today.');  //al no estar dentro de una promise no funcionan?
+    req.flash('error','Specified date prior to today.');
     res.redirect('/hacktivities/create');
-  } else if (duration > 480) {
-    req.flash('timeError','The maximum duration of the hacktivity is 480 minutes.');
+  } else if (duration > 10 && duration > 480) {
+    req.flash('error','The maximum duration of the hacktivity is 480 minutes.');
     res.redirect('/hacktivities/create');
   } else {
+    // const hactivityDate = new Date(checkDate);
+    // console.log(hactivityDate);
     Hacktivity.create({
       hostId,
       name,
       description,
-      date,
+      date: checkDate, //se pasa con toooooooooodos los demas 0 en vez de conservar el moment format
       starthour,
       location,
       duration,
