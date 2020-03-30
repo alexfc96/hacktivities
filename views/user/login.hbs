@@ -1,32 +1,13 @@
+<link rel="stylesheet" href='/stylesheets/login.css'>
+<div class="log-sign">
 {{#if error}}
 {{error}}
 {{/if}}
-
-
-<h1>Login</h1>
-<h2>Acces to your account:</h2>
-
-<form id="form" action="/login" method="POST">
-  <label for="username">Username</label><br>
-  <input type="text" name="username" placeholder="Your username">
-
-  <label for="password">Password</label><br>
-  <input type="password" name="password" placeholder="********">
-
-  <button type="submit">login</button>
-</form>
-
-<h2>Not registered yet?</h2>
-<form action="/signup">
-    <input type="submit" value="REGISTER" />
-</form> --}}
-{{!-- <div class="log-sign">
-
-<div class="wrapper fadeInDown">
-  <div id="formContent">
+  <div class="wrapper fadeInDown">
+    <div id="formContent">
     <!-- Tabs Titles -->
-    <h2 class="active"> Sign In </h2>
-   <a href="/signup"><h2 class="inactive underlineHover">Sign Up </h2></a> 
+    <h2 class="active" id="log"> Sign In </h2>
+   <a href="/signup"><h2 class="inactive underlineHover" id="sign">Sign Up </h2></a> 
 
     <!-- Icon -->
     <div class="fadeIn first">
@@ -39,7 +20,6 @@
       <input type="password" id="password" class="fadeIn third" name="password" placeholder="******">
       <input type="submit" class="fadeIn fourth" value="Log In">
     </form>
+     </div>
   </div>
 </div>
-
-</div> --}}

@@ -71,7 +71,7 @@ router.post('/login', (req, res, next) => {
   const { username, password } = req.body;
   if (username === '' || password === '') {
     req.flash('error', 'The fields can not be empty');
-    res.redirect('/user/signup');
+    res.redirect('/login');
   } else {
     User.findOne({ username })
       .then((user) => {

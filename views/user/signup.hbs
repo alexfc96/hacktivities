@@ -1,33 +1,16 @@
-  {{#if error}}
+<link rel="stylesheet" href='/stylesheets/login.css'>
+<div class="log-sign"> 
+   {{#if error}}
   {{error}}
   {{/if}}
   {{#if info}}
   {{info}}
   {{/if}}
-
-{{!-- <h2>You want to be part of Hacktivitis and have multiple advantages:</h2>
-<p>Sign up:</p>
-
-<form id="form" action="/signup" method="POST">
-  <label for="username">Username</label><br>
-  <input type="text" name="username" placeholder="Your new username" value="{{username}}">
-
-  <label for="password">Password</label><br>
-  <input type="password" name="password" placeholder="******" minlength="6" required><br>
-
-  <button type="submit">Create account</button>
-</form>
-
-<h2>Are you already registered?</h2>
-<form action="/login">
-    <input type="submit" value="LOGIN" />
-</form> --}}
-<div class="log-sign"> 
 <div class="wrapper fadeInDown">
   <div id="formContent">
     <!-- Tabs Titles -->
-    <a href="/login"><h2 class="inactive underlineHover"> Sign In </h2></a>
-    <h2 class="active">Sign Up </h2>
+    <a href="/login"><h2 class="inactive underlineHover" id="log"> Sign In </h2></a>
+    <h2 class="active" id="sign">Sign Up </h2>
 
     <!-- Icon -->
     <div class="fadeIn first">
