@@ -1,22 +1,25 @@
+<link rel="stylesheet" href='/stylesheets/login.css'>
+<div class="log-sign">
 {{#if error}}
 {{error}}
 {{/if}}
+  <div class="wrapper fadeInDown">
+    <div id="formContent">
+    <!-- Tabs Titles -->
+    <h2 class="active" id="log"> Sign In </h2>
+   <a href="/signup"><h2 class="inactive underlineHover" id="sign">Sign Up </h2></a> 
 
+    <!-- Icon -->
+    <div class="fadeIn first">
+      {{!-- <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" /> --}}
+    </div>
 
-<h1>Login</h1>
-<h2>Acces to your account:</h2>
-
-<form id="form" action="/login" method="POST">
-  <label for="username">Username</label><br>
-  <input type="text" name="username" placeholder="Your username">
-
-  <label for="password">Password</label><br>
-  <input type="password" name="password" placeholder="********">
-
-  <button type="submit">login</button>
-</form>
-
-<h2>Not registered yet?</h2>
-<form action="/signup">
-    <input type="submit" value="REGISTER" />
-</form>
+    <!-- Login Form -->
+    <form id="form" action="/login" method="POST">
+      <input type="text" id="login" class="fadeIn second" name="username" placeholder="Username">
+      <input type="password" id="password" class="fadeIn third" name="password" placeholder="******">
+      <input type="submit" class="fadeIn fourth" value="Log In">
+    </form>
+     </div>
+  </div>
+</div>

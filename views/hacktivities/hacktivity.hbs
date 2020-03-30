@@ -1,61 +1,72 @@
 
-<button><a href="/hacktivities">Back</a></button>
 
-{{#if info}}
-    {{info}}
-{{/if}}
-
-<h2>Your hacktivity information</h2>
-<b>Name: {{hacktivity.name}}</b>
-
-<b>Description: {{hacktivity.description}}</b>
-
-<b>Activity start time: {{hacktivity.starthour}}</b>
-
-<b>Location: {{hacktivity.location.name}} <img class='hacktivity-img'    src="{{hacktivity.location.image}}" alt=""></b>
-
-<b>Date: {{hacktivity.date}} </b>
-<script>
-    //const today = moment();
-    //console.log(today.format());
-    const checkDate = moment(hacktivity.date).format('YYYY-MM-DD');
-    console.log(checkDate)
-</script>
-
-<b>Duration: {{hacktivity.duration}} </b>
-
-<b>Created: {{hacktivity.created}} </b>
-
-<p>Host: {{hacktivity.hostId.username}} </p>
-
-   {{!-- {{#if atendees.length > 0 }} --}}
-The number of participants who have currently booked the activity are: {{atendees.length}} <br>
-{{#if currentUser}}
-    {{#if atendees }}
-    List of users who will participate in the activity:
-        <ul>
-        {{#each atendees}}
-            <li>
-            <p>{{this.username}}</p>
-            </li>
-        {{/each}}
-        </ul>
-        {{else}}
-        <p>No user subscribed to the hacktivity yet.</p>
+    {{#if info}}
+        {{info}}
     {{/if}}
-{{/if}}
 
+    <div class="city-banner3">
+         <img class="city-banner-image3" src="{{hacktivity.location.image}}" alt=""> 
+            <div class="city-banner-text3">
+            <a href="">{{hacktivity.location.name}}</a>
+        </div>
+    </div>
 
- <form action="/hacktivities/{{hacktivity._id}}/book" method="post">
-  <button type="submit">Book hacktivity</button>
-</form> 
+    <div class="hack-main">
 
-{{#if currentUser}}
-    {{#eq currentUser._id  hacktivity.hostId._id}}
-    <button><a href="/hacktivities/{{hacktivity._id}}/update"></a>Update hacktivity</button> <br><br>
-    <form action="/hacktivities/{{hacktivity._id}}/delete" method="post">
-        <button type="submit">Delete hacktivity  </button>
-    </form>
+  <div class="hack-title">
+   {{#eq currentUser._id  hacktivity.hostId._id}}
+    <h2>Your Hacktivity information</h2>
+    {{else}}
+    <h2>Hacktivity information</h2>
     {{/eq}}
-{{/if}}
+  </div>
+ 
+<div class="hack-info">
+    <p id="hack-name">{{hacktivity.name}}</p>
+    <p id="hack-info">{{hacktivity.description}}</p>
+    <p>Activity start time: {{hacktivity.starthour}}</p>
+    <p id="hack-host">Host name : <a class="username-hack">{{hacktivity.hostId.username}}</a> </p>
 
+</div>
+{{!-- quitarlo del host --}}
+     <div class="buttons-hacktivities"> 
+        <div class="btn-hack" id="book-btn">
+            <form action="/hacktivities/{{hacktivity._id}}/book" method="post">
+            <button type="submit">Book hacktivity</button>
+            </form> 
+        </div>
+        {{#eq currentUser._id  hacktivity.hostId._id}}
+        
+            <div class="btn-hack" id="update-btn">
+                <form action="/hacktivities/{{hacktivity._id}}/update" >
+            <button type="submit">Update hacktivity</button>
+            </form>
+            </div>
+            <div class="btn-hack" id="delete-btn">
+                <form action="/hacktivities/{{hacktivity._id}}/delete" method="post">
+                <button type="submit">Delete hacktivity  </button>
+                </form>
+            </div>
+        {{/eq}} 
+     
+  </div>
+    <div class="atendees-list">
+        The number of participants who have currently booked the activity are: {{atendees.length}} <br>
+        {{#if currentUser}}
+            {{#if atendees }}
+            List of users who will participate in the activity:
+                <ul>
+                {{#each atendees}}
+                    <li>
+                    <p>{{this.username}}</p>
+                    </li>
+                {{/each}}
+                </ul>
+            {{/if}}
+        {{/if}}
+    </div>
+
+
+
+
+    </div>
