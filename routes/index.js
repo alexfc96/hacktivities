@@ -99,11 +99,11 @@ router.post('/login', (req, res, next) => {
 });
 
 router.get('/about-us', (req, res, next) => {
-  res.render('about-us');
+  res.render('about-us', { currentUser: req.session.userLogged });
 });
 
 router.get('/contact', (req, res, next) => {
-  res.render('contact');
+  res.render('contact', { currentUser: req.session.userLogged });
 });
 
 

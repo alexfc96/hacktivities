@@ -1,10 +1,19 @@
-<h1>List of the hacktivities that you created:</h1>
+<div class="hack-list">
 
+<h1 id="my-hack" class="title-list">My Hacktivities</h1>
 {{#if hacktivity}}
   {{#each hacktivity}}
-    <a href="/hacktivities/{{this._id}}">{{this.name}}</a><br>
+  <div id="hack-my" class="each-hack">
+    <a  href="/hacktivities/{{this._id}}">{{this.name}}</a>
+  </div>
   {{/each}}
   {{else}}
+  <div class="no-hack">
     <p>You haven't created any hacktivity yet. For it:</p>
     <a href="/hacktivities/create">Create hacktivities</a>
+
+  </div>
 {{/if}}
+
+</div>
+

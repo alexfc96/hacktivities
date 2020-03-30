@@ -1,15 +1,21 @@
   {{#if info}}
     {{info}}
   {{/if}}
+  <div class="hack-list">
 
-<h1>List all Hacktivities</h1>
+
+<p class="title-list">List of all the Hacktivities</>
 <ul>
   {{#each hacktivities }}
   <li>
+    <div class="each-hack">
+
     <h3><a href="/hacktivities/{{this._id}}">{{ this.name }}</a> </h3>
     <p>{{this.description}}</p>
+    </div>
   </li>
   {{/each}}
 </ul>
+  </div>
 
 

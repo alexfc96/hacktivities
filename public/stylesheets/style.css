@@ -12,6 +12,16 @@
   min-height: 100%;
   flex: 1 0 auto;
 }
+.contact-box{
+  background-color: #5B4E80;
+  text-align: left;
+  height: 100vh;
+  padding: 1.5rem;
+}
+.contact-box h1{
+ margin: 0;
+ text-align: center;
+}
 
 .citylist-all{
   background-color: #5B4E80;
@@ -60,6 +70,105 @@
  font-size: 2.2rem;
  text-decoration: none;
 }
+.ceo-box{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+padding-bottom: 4rem;
+padding-left: 0;
+  margin: 0;
+ 
+}
+#ironpic{
+  width: 100%;
+  display: block;
+  
+  height: auto;
+}
+
+
+.ceo-list{
+ list-style: none;
+  margin: 0;
+  width: 70%;
+}
+.ceo-container{
+  position: relative;
+  display: inline-block;
+  /* margin: 2em; */
+}
+
+.user-profile{
+  padding: 1.5rem;
+  color: #B69CFF;
+  background-color: #2F2842;
+  height: 100%;
+}
+.user-profile h3{
+  text-transform: capitalize;
+  font-size: 2rem;
+  margin: 0;
+  padding-bottom: 1rem;
+  text-align: center;
+}
+.user-profile h2{
+  text-align: center;
+}
+
+.user-links a{
+  text-decoration: none;
+  color: #B69CFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top:0.35rem;
+  padding-bottom: 0.35rem;
+  font-size: 1.3rem;
+}
+
+
+
+.hack-list{
+height: 100%;
+padding: 1.5rem;
+display: flex;
+flex-direction: column;
+color: #2F2842;
+
+}
+.hack-list li{
+  list-style: none;
+}
+.title-list{
+  font-size: 1.9rem;
+}
+.hack-list ul{
+  padding: 0;
+}
+.each-hack a{
+  color: #B69CFF;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.each-hack p{
+  padding-left: 1rem;
+}
+#my-hack{
+  text-align: center;
+}
+#hack-my{
+  padding-top: 1rem;
+  text-align: center;
+}
+.no-hack{
+  text-align: center;
+}
+
+
+
+
 
 
 
