@@ -27,7 +27,8 @@
     <p id="hack-host">Host name : <a class="username-hack">{{hacktivity.hostId.username}}</a> </p>
 
 </div>
-     <div class="buttons-hacktivities">
+{{!-- quitarlo del host --}}
+     <div class="buttons-hacktivities"> 
         <div class="btn-hack" id="book-btn">
             <form action="/hacktivities/{{hacktivity._id}}/book" method="post">
             <button type="submit">Book hacktivity</button>
@@ -60,8 +61,6 @@
                     </li>
                 {{/each}}
                 </ul>
-                {{else}}
-                <p>No user subscribed to the hacktivity yet.</p>
             {{/if}}
         {{/if}}
     </div>
