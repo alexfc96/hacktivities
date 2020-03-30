@@ -10,11 +10,14 @@ function checkIfUserLoggedIn(req, res, next) {
   }
 }
 
-function returnToTheLastPage(req, res, next) { // lo he llamado en el post del login pero este no funciona
+//el flujo es quiere hacer booking. comprobamos si está loggued, si no lo está guardamos su pagina y lo mandamos al login
+//después de que entre hay q reedigirlo
+
+function returnToTheLastPage(req, res, next) { // lohe llamado en el post del login pero no funciona
   // delete req.session.originalUrl;
   if (req.session.userLogged) {
-    console.log(req.originalUrl);
-    res.redirect(req.originalUrl);
+    console.log(req.session.originalUrl);
+    res.redirect(req.session.originalUrl);
   } else {
     next();
   }

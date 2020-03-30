@@ -71,7 +71,7 @@ router.post('/login', (req, res, next) => {
   const { username, password } = req.body;
   if (username === '' || password === '') {
     req.flash('error', 'The fields can not be empty');
-    res.redirect('/user/signup');
+    res.redirect('/login');
   } else {
     User.findOne({ username })
       .then((user) => {
@@ -83,7 +83,8 @@ router.post('/login', (req, res, next) => {
           // eslint-disable-next-line no-lonely-if
           if (bcrypt.compareSync(password, user.userpassword)) {
             req.session.userLogged = user;
-            req.flash('welcomeMessage', 'Thank you for creating your account, now you are authenticated.');
+            //checkuser.returnToTheLastPage(req, res, next);                        peta.....
+            req.flash('info', 'Welcome, now you are authenticated.');
             res.redirect('/');
           } else {
             req.flash('error', 'Incorrect username or password');
@@ -96,6 +97,15 @@ router.post('/login', (req, res, next) => {
       });
   }
 });
+
+router.get('/about-us', (req, res, next) => {
+  res.render('about-us');
+});
+
+router.get('/contact', (req, res, next) => {
+  res.render('contact');
+});
+
 
 router.get('/:id', (req, res, next) => {
   const cityName = req.params;
