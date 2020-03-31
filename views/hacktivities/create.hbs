@@ -4,7 +4,7 @@
  <link rel="stylesheet" href='/stylesheets/form.css'>
  <div class="form-hack">
 
-  <form id="survey-form" action="/hacktivities/create" method="post">
+  <form id="survey-form" action="/hacktivities/create" method="post" onsubmit="return confirm('Are you sure you want to create the hacktivity?');">
     <div class="form-group">
       <label id="name-label" for="name">Name</label>
       <input type="text" name="name" id="name" class="form-control" placeholder="Hacktivity name" required/>
