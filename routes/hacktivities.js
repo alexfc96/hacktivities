@@ -149,7 +149,7 @@ router.post('/:_id/delete', checkuser.checkIfUserLoggedIn, (req, res, next) => {
 });
 
 // BOOK HACKTIVITIES
-router.post('/:_id/book', checkuser.checkIfUserLoggedIn, (req, res, next) => {
+router.get('/:_id/book', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   const hacktivityID = req.params;
   console.log(hacktivityID);
   const user = req.session.userLogged._id;

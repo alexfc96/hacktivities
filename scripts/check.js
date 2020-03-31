@@ -16,8 +16,11 @@ function checkIfUserLoggedIn(req, res, next) {
 function returnToTheLastPage(req, res, next) { // lohe llamado en el post del login pero no funciona
   // delete req.session.originalUrl;
   if (req.session.userLogged) {
-    console.log(req.session.originalUrl);
-    res.redirect(req.session.originalUrl);
+    if (req.session.originalUrl === undefined) {
+      res.redirect('/');
+    } else {
+      res.redirect(req.session.originalUrl);
+    }
   } else {
     next();
   }

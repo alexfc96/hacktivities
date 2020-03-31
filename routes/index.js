@@ -83,9 +83,9 @@ router.post('/login', (req, res, next) => {
           // eslint-disable-next-line no-lonely-if
           if (bcrypt.compareSync(password, user.userpassword)) {
             req.session.userLogged = user;
-            //checkuser.returnToTheLastPage(req, res, next);                        peta.....
-            req.flash('info', 'Welcome, now you are authenticated.');
-            res.redirect('/');
+            checkuser.returnToTheLastPage(req, res, next);
+            // req.flash('info', 'Welcome, now you are authenticated.');
+            // res.redirect('/');
           } else {
             req.flash('error', 'Incorrect username or password');
             res.redirect('/login');

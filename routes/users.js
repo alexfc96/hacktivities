@@ -25,15 +25,15 @@ router.get('/', checkuser.checkIfUserLoggedIn, (req, res, next) => {
 
 router.get('/my-hacktivities', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   const user = req.session.userLogged._id;
-  // const today = moment();
-  // const todayDate = today.format("YYYY-MM-DD");
-  //console.log(todayDate);
+  const today = moment();
+  const todayDate = today.format("YYYY-MM-DD");
+  console.log(todayDate);
   Hacktivity.find({ hostId: user })
     .then((hacktivity) => {
       console.log(hacktivity);
       checkuser.orderByDate(hacktivity);
-      // const hacktivityDate = moment(hacktivity.date).format('YYYY-MM-DD');
-      // console.log(hacktivityDate);
+      const hacktivityDate = moment(hacktivity.date).format('YYYY-MM-DD');
+      console.log(hacktivityDate);
       res.render('user/my-hacktivities', { hacktivity, currentUser: req.session.userLogged });
     })
     .catch(() => {
