@@ -27,7 +27,7 @@ router.get('/my-hacktivities', checkuser.checkIfUserLoggedIn, (req, res, next) =
   const user = req.session.userLogged._id;
   // const today = moment();
   // const todayDate = today.format("YYYY-MM-DD");
-  console.log(todayDate);
+  //console.log(todayDate);
   Hacktivity.find({ hostId: user })
     .then((hacktivity) => {
       console.log(hacktivity);

@@ -31,7 +31,7 @@
 {{!-- quitarlo del host --}}
      <div class="buttons-hacktivities"> 
         <div class="btn-hack" id="book-btn">
-            <form action="/hacktivities/{{hacktivity._id}}/book" method="post" onsubmit="return confirm('Are you sure you want to book the hacktivity?'>
+            <form action="/hacktivities/{{hacktivity._id}}/book" onsubmit="return confirm('Are you sure you want to book the hacktivity?');" method="post">
             <button type="submit">Book hacktivity</button>
             </form> 
         </div>
@@ -43,7 +43,7 @@
             </form>
             </div>
             <div class="btn-hack" id="delete-btn">
-                <form action="/hacktivities/{{hacktivity._id}}/delete" method="post" onsubmit="return confirm('Are you sure you want to delete the hacktivity?'>
+                <form action="/hacktivities/{{hacktivity._id}}/delete" method="post" onsubmit="return confirm('Are you sure you want to delete the hacktivity?');">
                 <button type="submit">Delete hacktivity  </button>
                 </form>
             </div>
