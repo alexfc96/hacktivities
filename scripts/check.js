@@ -10,8 +10,8 @@ function checkIfUserLoggedIn(req, res, next) {
   }
 }
 
-//el flujo es quiere hacer booking. comprobamos si está loggued, si no lo está guardamos su pagina y lo mandamos al login
-//después de que entre hay q reedigirlo
+// el flujo es quiere hacer booking. comprobamos si está loggued, si no lo está guardamos su pagina y lo mandamos al login
+// después de que entre hay q reedigirlo
 
 function returnToTheLastPage(req, res, next) { // lohe llamado en el post del login pero no funciona
   // delete req.session.originalUrl;
@@ -36,6 +36,15 @@ function isValueInvalid(input) {
   return input === '' || input === undefined;
 }
 
+function orderByDate(array) {
+  array.sort((a, b) => {
+    a = new Date(a.date);
+    b = new Date(b.date);
+    return a > b ? 1 : a < b ? -1 : 0;
+  });
+}
+
+
 // cargar aqui mensajes de flash y luego en la ruta
 
 module.exports = {
@@ -43,4 +52,5 @@ module.exports = {
   isValueInvalid,
   returnToTheLastPage,
   annonRoute,
+  orderByDate,
 };

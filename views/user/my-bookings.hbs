@@ -1,15 +1,16 @@
 {{#if info}}
   {{info}}
 {{/if}}
-
-<h1>List of the hacktivities where you have suscribed:</h1>
+<h1 id="my-hack" class="title-list">My Bookings</h1>
 
 {{#if booking}}
+  <h2>List of the hacktivities where you have suscribed:</h2>
   {{#each booking}}
     {{#if this}}
       <a href="/hacktivities/{{this.hacktivityId._id}}">{{this.hacktivityId.name}}</a>
-      <form action="/hacktivities/{{this.hacktivityId._id}}/deletebook" method="post">
-        <button type="submit">Delete booking</button>
+      Date: {{this.hacktivityId.date}}
+      <form action="/hacktivities/{{this.hacktivityId._id}}/deletebook" method="post" onsubmit="return confirm('Are you sure you want to cancel the booking for this hacktivity?');">
+        <button type="submit">Cancel booking?</button>
       </form>
     {{/if}}
   {{/each}}

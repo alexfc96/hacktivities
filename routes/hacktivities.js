@@ -18,6 +18,8 @@ router.get('/', (req, res, next) => {
   const yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
   Hacktivity.find({ date: { $gte: yesterday } })
     .then((hacktivities) => {
+      //console.log(hacktivities);
+      checkuser.orderByDate(hacktivities);
       res.render('hacktivities/list', { hacktivities, currentUser: req.session.userLogged });
     })
     .catch((err) => console.log('Error while rendering Hacktivities: ', err));
@@ -164,7 +166,7 @@ router.post('/:_id/book', checkuser.checkIfUserLoggedIn, (req, res, next) => {
             })
               .then(() => {
                 req.flash('info','You have successfully registered for the hacktivity.');
-                res.redirect('/user');
+                res.redirect('/user/my-bookings');
               });
           });
       } else {
@@ -181,8 +183,8 @@ router.post('/:_id/book', checkuser.checkIfUserLoggedIn, (req, res, next) => {
             } else {
               console.log('Usuario ya suscrito');
               console.log(subscribed);
-              req.flash('error', 'You are already subscribed in this hacktivity.');
-              res.redirect('/user');
+              req.flash('info', 'You are already subscribed in this hacktivity.');
+              res.redirect('/user/my-bookings');
             }
           })
           .catch(() => {

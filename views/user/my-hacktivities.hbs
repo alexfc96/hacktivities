@@ -1,10 +1,13 @@
 <div class="hack-list">
 
 <h1 id="my-hack" class="title-list">My Hacktivities</h1>
+
 {{#if hacktivity}}
+  <h2>List of the hacktivities that you have created:</h2>
   {{#each hacktivity}}
   <div id="hack-my" class="each-hack">
     <a  href="/hacktivities/{{this._id}}">{{this.name}}</a>
+    {{!-- {{this.date}} --}}
   </div>
   {{/each}}
   {{else}}

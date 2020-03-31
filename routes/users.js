@@ -31,6 +31,7 @@ router.get('/my-hacktivities', checkuser.checkIfUserLoggedIn, (req, res, next) =
   Hacktivity.find({ hostId: user })
     .then((hacktivity) => {
       console.log(hacktivity);
+      checkuser.orderByDate(hacktivity);
       // const hacktivityDate = moment(hacktivity.date).format('YYYY-MM-DD');
       // console.log(hacktivityDate);
       res.render('user/my-hacktivities', { hacktivity, currentUser: req.session.userLogged });
@@ -45,7 +46,8 @@ router.get('/my-bookings', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   Booking.find({ atendees: { $in: [user] } })
     .populate('hacktivityId atendees')
     .then((booking) => {
-      // console.log(booking);
+      console.log(booking);
+      checkuser.orderByDate(booking); //no acaba de ordenar ya que no se llegar a la lista hacktityId>date
       res.render('user/my-bookings', { booking, currentUser: req.session.userLogged });
     })
     .catch((booking) => {
