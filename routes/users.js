@@ -1,11 +1,12 @@
 const express = require('express');
+const moment = require('moment');
 const bcrypt = require('bcrypt');
-const User = require('../models/User');
 
 const saltRounds = 10;
 
 const router = express.Router();
 const checkuser = require('../scripts/check');
+const User = require('../models/User');
 const Hacktivity = require('../models/Hacktivity');
 const Booking = require('../models/Booking');
 
@@ -24,9 +25,14 @@ router.get('/', checkuser.checkIfUserLoggedIn, (req, res, next) => {
 
 router.get('/my-hacktivities', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   const user = req.session.userLogged._id;
+  // const today = moment();
+  // const todayDate = today.format("YYYY-MM-DD");
+  console.log(todayDate);
   Hacktivity.find({ hostId: user })
     .then((hacktivity) => {
       console.log(hacktivity);
+      // const hacktivityDate = moment(hacktivity.date).format('YYYY-MM-DD');
+      // console.log(hacktivityDate);
       res.render('user/my-hacktivities', { hacktivity, currentUser: req.session.userLogged });
     })
     .catch(() => {
@@ -34,7 +40,7 @@ router.get('/my-hacktivities', checkuser.checkIfUserLoggedIn, (req, res, next) =
     });
 });
 
-router.get('/my-bookings', checkuser.checkIfUserLoggedIn, (req, res, next) => {
+router.get('/my-bookings', checkuser.checkIfUserLoggedIn, (req, res, next) => { 
   const user = req.session.userLogged._id;
   Booking.find({ atendees: { $in: [user] } })
     .populate('hacktivityId atendees')
