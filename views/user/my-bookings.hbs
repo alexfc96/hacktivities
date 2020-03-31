@@ -1,19 +1,29 @@
 {{#if info}}
   {{info}}
 {{/if}}
+<div class="hack-list">
 
-<h1>List of the hacktivities where you have suscribed:</h1>
+<h1 id="my-hack" class="title-list">List of the Hacktivities you will attend</h1>
 
 {{#if booking}}
   {{#each booking}}
     {{#if this}}
+    <div id="hack-my" class="each-hack">
       <a href="/hacktivities/{{this.hacktivityId._id}}">{{this.hacktivityId.name}}</a>
+      <div class="buttons-hacktivities"> 
+      <div class="btn-hack" id="book-btn">
       <form action="/hacktivities/{{this.hacktivityId._id}}/deletebook" method="post">
         <button type="submit">Delete booking</button>
       </form>
+      </div>
+       </div>
+       </div>
     {{/if}}
   {{/each}}
   {{else}}
+    <div class="no-hack"></div>
     <p>You have not yet subscribed to any hacktivity. For it:</p>
     <a href="/hacktivities">List hacktivities</a>
+     </div>
 {{/if}}
+</div>

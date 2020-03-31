@@ -30,11 +30,7 @@
 </div>
 {{!-- quitarlo del host --}}
      <div class="buttons-hacktivities"> 
-        <div class="btn-hack" id="book-btn">
-            <form action="/hacktivities/{{hacktivity._id}}/book" onsubmit="return confirm('Are you sure you want to book the hacktivity?');" method="post">
-            <button type="submit">Book hacktivity</button>
-            </form> 
-        </div>
+  
         {{#eq currentUser._id  hacktivity.hostId._id}}
         
             <div class="btn-hack" id="update-btn">
@@ -47,6 +43,12 @@
                 <button type="submit">Delete hacktivity  </button>
                 </form>
             </div>
+            {{else}}
+              <div class="btn-hack" id="book-btn">
+            <form action="/hacktivities/{{hacktivity._id}}/book" onsubmit="return confirm('Are you sure you want to book the hacktivity?');" method="post">
+            <button type="submit">Book hacktivity</button>
+            </form> 
+        </div>
         {{/eq}} 
      
   </div>
