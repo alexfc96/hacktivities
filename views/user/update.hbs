@@ -23,11 +23,9 @@
 
 
 <h3>Delete User?</h3>
-<form class='db' action="/user/{{currentUser._id}}/delete" method="post">
+<form class='db' action="/user/{{currentUser._id}}/delete" method="post" onsubmit="return confirm('Are you sure you want to delete your user?');">
   <button type="submit">DELETE!</button>
 </form>
-
-
 
  </div>
 

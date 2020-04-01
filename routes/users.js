@@ -25,18 +25,50 @@ router.get('/', checkuser.checkIfUserLoggedIn, (req, res, next) => {
 
 router.get('/my-hacktivities', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   const user = req.session.userLogged._id;
-  // const today = moment();
-  // const todayDate = today.format("YYYY-MM-DD");
-  //console.log(todayDate);
-  Hacktivity.find({ hostId: user })
-    .then((hacktivity) => {
-      console.log(hacktivity);
-      // const hacktivityDate = moment(hacktivity.date).format('YYYY-MM-DD');
-      // console.log(hacktivityDate);
-      res.render('user/my-hacktivities', { hacktivity, currentUser: req.session.userLogged });
+  const today = new Date(new Date().setDate(new Date().getDate()));
+  Hacktivity.find({ date: { $lte: today }, hostId: user })
+    .then((oldHacktivities) => {
+      if (oldHacktivities && oldHacktivities.length === 0) { // buscamos si no tiene actividades caducadas, entonces:
+        console.log('No tengo hacktivities caducadas');
+        Hacktivity.find({ hostId: user }) // mostrammos todas
+          .then((hacktivity) => {
+            if (hacktivity && hacktivity.length === 0) {
+              const without = 'User wiwthout hacktivities';
+              res.render('user/my-hacktivities', { currentUser: req.session.userLogged, without });
+            } else {
+              console.log(hacktivity);
+              checkuser.orderByDate(hacktivity);
+              const current = checkuser.currentHacktivities(hacktivity);
+              console.log(current);
+              // const expired = checkuser.expiredHacktivities(hacktivity);
+              // console.log(expired);
+              res.render('user/my-hacktivities', {
+                hacktivity, currentUser: req.session.userLogged, current, // no hará falta el expired, no=?
+              });
+            }
+          });
+      } else {
+        Hacktivity.find({ date: { $gte: today }, hostId: user }) // en caso de que tenga también buscaremos las mayores a hoy.
+          .then((currentHacktivities) => { // creo que falta comparar si es hoy para que tmb las muestre
+            console.log('Tengo hacktivities caducadas');
+            console.log(currentHacktivities);
+            checkuser.orderByDate(currentHacktivities);
+            console.log(oldHacktivities);
+            checkuser.orderByDate(oldHacktivities);
+            const current = checkuser.currentHacktivities(currentHacktivities);
+            console.log(current);
+            const expired = checkuser.expiredHacktivities(oldHacktivities);
+            console.log(expired);
+            res.render('user/my-hacktivities', {
+              oldHacktivities, currentHacktivities, currentUser: req.session.userLogged, current, expired,
+            });
+          });
+      }
     })
     .catch(() => {
-      res.render('user/my-hacktivities', { currentUser: req.session.userLogged });
+      console.log('entro');
+      const without = 'User wiwthout hacktivities';
+      res.render('user/my-hacktivities', { currentUser: req.session.userLogged, without });
     });
 });
 
@@ -67,17 +99,16 @@ router.get('/logout', (req, res, next) => {
 router.get('/:_id/public', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   const userId = req.params;
   User.findById(userId)
-  
+
     .then((user) => {
-      Hacktivity.find({hostId: userId})
-      .then((hacktivities) => {
-         
+      Hacktivity.find({ hostId: userId })
+        .then((hacktivities) => {
           res.render('user/public', { user, hacktivities, currentUser: req.session.userLogged });
-      })
-    .catch((error) => {
-      req.flash('info', 'We have not found this user in the database.', error);
-      res.redirect('/hacktivities');
-    });
+        })
+        .catch((error) => {
+          req.flash('info', 'We have not found this user in the database.', error);
+          res.redirect('/hacktivities');
+        });
     });
 });
 
