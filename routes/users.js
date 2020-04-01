@@ -25,32 +25,26 @@ router.get('/', checkuser.checkIfUserLoggedIn, (req, res, next) => {
 
 router.get('/my-hacktivities', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   const user = req.session.userLogged._id;
-  const today = moment();
-  const todayDate = today.format('YYYY-MM-DD');
-  console.log(todayDate);
-  const day = new Date(new Date().setDate(new Date().getDate()));
-  Hacktivity.find({ date: { $lte: day }, hostId: user })
+  const today = new Date(new Date().setDate(new Date().getDate()));
+  Hacktivity.find({ date: { $lte: today }, hostId: user })
     .then((oldHacktivities) => {
-      if (oldHacktivities && oldHacktivities.length === 0) {
+      if (oldHacktivities && oldHacktivities.length === 0) { //buscamos si no tiene actividades caducadas, entonces:
         console.log("No tengo hacktivities caducadas");
-        Hacktivity.find({ hostId: user })
+        Hacktivity.find({ hostId: user })  //mostrammos todas
           .then((hacktivity) => {
             console.log(hacktivity);
             checkuser.orderByDate(hacktivity);
             const current = checkuser.currentHacktivities(hacktivity);
             console.log(current);
-            const expired = checkuser.expiredHacktivities(hacktivity);
-            console.log(expired);
+            // const expired = checkuser.expiredHacktivities(hacktivity);
+            // console.log(expired);
             res.render('user/my-hacktivities', {
-              hacktivity, currentUser: req.session.userLogged, current, expired,
+              hacktivity, currentUser: req.session.userLogged, current, expired,  //no hará falta el expired, no=?
             });
           })
-          // .catch(() => {
-          //   res.render('user/my-hacktivities', { currentUser: req.session.userLogged });
-          // });
       } else {
-        Hacktivity.find({ date: { $gte: day }, hostId: user })
-          .then((currentHacktivities) => {
+        Hacktivity.find({ date: { $gte: today }, hostId: user })  //en caso de que tenga también buscaremos las mayores a hoy.
+          .then((currentHacktivities) => {  //creo que falta comparar si es hoy para que tmb las muestre
             console.log("Tengo hacktivities caducadas");
             console.log(currentHacktivities);
             checkuser.orderByDate(currentHacktivities);
@@ -69,33 +63,16 @@ router.get('/my-hacktivities', checkuser.checkIfUserLoggedIn, (req, res, next) =
           // });
       }
     });
-
-
-  // Hacktivity.find({ hostId: user })
-  //   .then((hacktivity) => {
-  //     console.log(hacktivity);
-  //     checkuser.orderByDate(hacktivity);
-  //     const current = checkuser.currentHacktivities(hacktivity);
-  //     console.log(current);
-  //     const expired = checkuser.expiredHacktivities(hacktivity);
-  //     console.log(expired);
-  //     //console.log(array);
-  //     // const hacktivityDate = moment(hacktivity[2].date).format('YYYY-MM-DD');
-  //     // console.log(hacktivityDate);
-  //     res.render('user/my-hacktivities', { hacktivity, currentUser: req.session.userLogged, current, expired });
-  //   })
-  //   .catch(() => {
-  //     res.render('user/my-hacktivities', { currentUser: req.session.userLogged });
-  //   });
 });
 
 router.get('/my-bookings', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   const user = req.session.userLogged._id;
+  const today = new Date(new Date().setDate(new Date().getDate()));
   Booking.find({ atendees: { $in: [user] } })
     .populate('hacktivityId atendees')
     .then((booking) => {
-      console.log(booking);
-      checkuser.orderByDate(booking); // no acaba de ordenar ya que no se llegar a la lista hacktityId>date
+      // console.log(booking);
+      // checkuser.orderByDate(booking);
       res.render('user/my-bookings', { booking, currentUser: req.session.userLogged });
     })
     .catch((booking) => {

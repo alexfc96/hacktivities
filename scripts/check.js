@@ -41,16 +41,30 @@ function isValueInvalid(input) {
   return input === '' || input === undefined;
 }
 
+function parseOneDate(array) {
+  const date = moment(array.date).format('YYYY-MM-DD');
+  return date;
+}
+
+function parseDate(array) {
+  const date = [];
+  for (let i = 0; i < array.length; i++) {
+    const dates = moment(array[i].date).format('YYYY-MM-DD');
+    date.push(dates);
+  }
+  return date;
+}
+
 function currentHacktivities(array) {
   const dates = [];
   let cont = 0;
   const today = moment();
   const todayDate = today.format('YYYY-MM-DD');
   for (let i = 0; i < array.length; i++) {
-    let date = moment(array[i].date).format('YYYY-MM-DD');
+    const date = moment(array[i].date).format('YYYY-MM-DD');
     dates.push(date);
     if (todayDate > date) {
-      cont = cont+1
+      cont += 1;
     }
   }
   dates.splice(0, cont);
@@ -63,10 +77,10 @@ function expiredHacktivities(array) {
   const today = moment();
   const todayDate = today.format('YYYY-MM-DD');
   for (let i = 0; i < array.length; i++) {
-    let date = moment(array[i].date).format('YYYY-MM-DD');
+    const date = moment(array[i].date).format('YYYY-MM-DD');
     dates.push(date);
     if (todayDate > date) {
-      cont = cont+1
+      cont += 1;
     }
   }
   const expired = dates.splice(0, cont);
@@ -74,8 +88,6 @@ function expiredHacktivities(array) {
   // console.log("La lista final de dates expiradas" + expired);
   return expired;
 }
-
-
 
 function orderByDate(array) {
   array.sort((a, b) => {
@@ -85,12 +97,11 @@ function orderByDate(array) {
   });
 }
 
-
-// cargar aqui mensajes de flash y luego en la ruta
-
 module.exports = {
   checkIfUserLoggedIn,
   isValueInvalid,
+  parseOneDate,
+  parseDate,
   currentHacktivities,
   expiredHacktivities,
   returnToTheLastPage,
