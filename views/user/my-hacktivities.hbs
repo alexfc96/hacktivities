@@ -1,19 +1,43 @@
 <div class="hack-list">
 
 <h1 id="my-hack" class="title-list">My Hacktivities</h1>
-{{#if hacktivity}}
-  {{#each hacktivity}}
-  <div id="hack-my" class="each-hack">
-    <a  href="/hacktivities/{{this._id}}">{{this.name}}</a>
-  </div>
-  {{/each}}
-  {{else}}
-  <div class="no-hack">
-    <p>You haven't created any hacktivity yet. For it:</p>
-    <a href="/hacktivities/create">Create hacktivities</a>
+{{current.[0]}}  
 
-  </div>
+<h2>List of the hacktivities that you have created:</h2>
+{{#if currentHacktivities}}
+    Current hacktivities:
+      {{#each currentHacktivities}}
+      {{!-- {{#each item in hacktivity}}  --}}
+      {{@index}}
+        <div id="hack-my" class="each-hack">
+          <a  href="/hacktivities/{{this._id}}">{{this.name}}</a>
+          {{!-- Date:{{../current.[0]}}   --}}
+          {{!-- Date:{{../current.[0]}} --}}
+          {{!-- En esta de arriba me haría falta unicamente controlar el index  --}}
+        </div>
+      {{/each}}
 {{/if}}
+
+<hr>
+{{#if oldHacktivities}}
+    Expired hacktivities:
+    {{#each expired}}
+      {{#each ../oldHacktivities}}
+        <div id="hack-my" class="each-hack">
+          <a  href="/hacktivities/{{this._id}}">{{this.name}}</a>
+          Date:{{../this}}
+        </div>
+      {{/each}}
+    {{/each}}
+{{/if}}
+
+<hr>
+
+  <div class="no-hack">
+    <p>You can always create new activities directly by accessing:</p>
+    <a href="/hacktivities/create">Create hacktivities</a>
+  </div>
+
 
 </div>
 

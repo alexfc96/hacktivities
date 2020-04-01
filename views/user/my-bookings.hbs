@@ -6,13 +6,15 @@
 <h1 id="my-hack" class="title-list">List of the Hacktivities you will attend</h1>
 
 {{#if booking}}
+  <h2>List of the hacktivities where you have suscribed:</h2>
   {{#each booking}}
     {{#if this}}
     <div id="hack-my" class="each-hack">
       <a href="/hacktivities/{{this.hacktivityId._id}}">{{this.hacktivityId.name}}</a>
       <div class="buttons-hacktivities"> 
       <div class="btn-hack" id="book-btn">
-      <form action="/hacktivities/{{this.hacktivityId._id}}/deletebook" method="post">
+         {{!-- Date: {{this.hacktivityId.date}} --}}
+      <form action="/hacktivities/{{this.hacktivityId._id}}/deletebook" method="post" onsubmit="return confirm('Are you sure you want to cancel the booking for this hacktivity?');">
         <button type="submit">Delete booking</button>
       </form>
       </div>

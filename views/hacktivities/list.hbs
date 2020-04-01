@@ -9,8 +9,9 @@
   {{#each hacktivities }}
   <li>
     <div class="each-hack">
-
+      {{this.date}}
     <h3><a href="/hacktivities/{{this._id}}">{{ this.name }}</a> </h3>
+    {{!-- {{date.[{{@index}}]}} --}}
     <p>{{this.description}}</p>
     </div>
   </li>

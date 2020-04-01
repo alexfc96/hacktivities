@@ -20,6 +20,7 @@ router.get('/:_id', (req, res, next) => {
   Hacktivity.find({ location: cityID })
     //.populate('location')    no hace falta!
     .then((hacktivities) => {
+      checkuser.orderByDate(hacktivities);
       City.findById(cityID)
         .then((city)=>{
           res.render('cities/city', { hacktivities, city, currentUser: req.session.userLogged });
