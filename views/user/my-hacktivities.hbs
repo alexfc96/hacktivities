@@ -4,12 +4,27 @@
 
 {{#if hacktivity}}
   <h2>List of the hacktivities that you have created:</h2>
-  {{#each hacktivity}}
-  <div id="hack-my" class="each-hack">
-    <a  href="/hacktivities/{{this._id}}">{{this.name}}</a>
-    {{!-- {{this.date}} --}}
-  </div>
-  {{/each}}
+    {{#each current}}
+      {{#each ../hacktivity}}
+      {{!-- {{#each item in hacktivity}}  --}}
+        <div id="hack-my" class="each-hack">
+          <a  href="/hacktivities/{{this._id}}">{{this.name}}</a>
+          Date:{{../this}}
+        </div>
+      {{/each}}
+
+    {{/each}}
+<hr>
+    {{#each expired}}
+    Expired hacktivities:
+      {{#each ../hacktivity}}
+        <div id="hack-my" class="each-hack">
+          <a  href="/hacktivities/{{this._id}}">{{this.name}}</a>
+          Date:{{../this}}
+        </div>
+      {{/each}}
+
+    {{/each}}
   {{else}}
   <div class="no-hack">
     <p>You haven't created any hacktivity yet. For it:</p>

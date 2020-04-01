@@ -1,3 +1,5 @@
+const moment = require('moment');
+
 function checkIfUserLoggedIn(req, res, next) {
   delete req.session.originalUrl;
   if (req.session.userLogged) {
@@ -39,6 +41,42 @@ function isValueInvalid(input) {
   return input === '' || input === undefined;
 }
 
+function currentHacktivities(array) {
+  const dates = [];
+  let cont = 0;
+  const today = moment();
+  const todayDate = today.format('YYYY-MM-DD');
+  for (let i = 0; i < array.length; i++) {
+    let date = moment(array[i].date).format('YYYY-MM-DD');
+    dates.push(date);
+    if (todayDate > date) {
+      cont = cont+1
+    }
+  }
+  dates.splice(0, cont);
+  return dates;
+}
+
+function expiredHacktivities(array) {
+  const dates = [];
+  let cont = 0;
+  const today = moment();
+  const todayDate = today.format('YYYY-MM-DD');
+  for (let i = 0; i < array.length; i++) {
+    let date = moment(array[i].date).format('YYYY-MM-DD');
+    dates.push(date);
+    if (todayDate > date) {
+      cont = cont+1
+    }
+  }
+  const expired = dates.splice(0, cont);
+  // console.log("La lista final de dates correctas" + dates);
+  // console.log("La lista final de dates expiradas" + expired);
+  return expired;
+}
+
+
+
 function orderByDate(array) {
   array.sort((a, b) => {
     a = new Date(a.date);
@@ -53,6 +91,8 @@ function orderByDate(array) {
 module.exports = {
   checkIfUserLoggedIn,
   isValueInvalid,
+  currentHacktivities,
+  expiredHacktivities,
   returnToTheLastPage,
   annonRoute,
   orderByDate,

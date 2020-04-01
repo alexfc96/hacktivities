@@ -32,9 +32,14 @@ router.get('/my-hacktivities', checkuser.checkIfUserLoggedIn, (req, res, next) =
     .then((hacktivity) => {
       console.log(hacktivity);
       checkuser.orderByDate(hacktivity);
-      const hacktivityDate = moment(hacktivity.date).format('YYYY-MM-DD');
-      console.log(hacktivityDate);
-      res.render('user/my-hacktivities', { hacktivity, currentUser: req.session.userLogged });
+      const current = checkuser.currentHacktivities(hacktivity);
+      console.log(current);
+      const expired = checkuser.expiredHacktivities(hacktivity);
+      console.log(expired);
+      //console.log(array);
+      // const hacktivityDate = moment(hacktivity[2].date).format('YYYY-MM-DD');
+      // console.log(hacktivityDate);
+      res.render('user/my-hacktivities', { hacktivity, currentUser: req.session.userLogged, current, expired });
     })
     .catch(() => {
       res.render('user/my-hacktivities', { currentUser: req.session.userLogged });
