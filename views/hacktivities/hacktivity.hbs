@@ -25,8 +25,11 @@
     <p id="hack-name">{{hacktivity.name}}</p>
     <p id="hack-info">{{hacktivity.description}}</p>
     <p id="hack-info">Start time: {{hacktivity.starthour}}</p>
-    <p id="hack-host">Host name : <a class="username-hack">{{hacktivity.hostId.username}}</a> </p>
-
+    {{#eq currentUser._id  hacktivity.hostId._id}}
+        <p id="hack-host">Host name : <a href="/user" class="username-hack">{{hacktivity.hostId.username}}</a> </p>
+    {{else}}
+    <p id="hack-host">Host name : <a href="/user/{{hacktivity.hostId._id}}/public" class="username-hack">{{hacktivity.hostId.username}}</a> </p>
+    {{/eq}}
 </div>
 {{!-- quitarlo del host --}}
      <div class="buttons-hacktivities"> 

@@ -105,6 +105,10 @@ padding-left: 0;
   color: #B69CFF;
   background-color: #2F2842;
   height: 100vh;
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .user-profile h3{
   text-transform: capitalize;
@@ -112,6 +116,8 @@ padding-left: 0;
   margin: 0;
   padding-bottom: 1rem;
   text-align: center;
+  padding-top: 1.5rem;
+
 }
 .user-profile h2{
   text-align: center;
@@ -128,7 +134,20 @@ padding-left: 0;
   font-size: 1.3rem;
 }
 
+.avatar{
+height: 5rem;
+width: 5rem;
 
+}
+.username{
+  display: flex;
+  flex-direction: row;
+
+}
+#ai{
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
 
 .hack-list{
 height: 100%;

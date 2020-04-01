@@ -61,6 +61,23 @@ router.get('/logout', (req, res, next) => {
     res.redirect('/login');
   });
 });
+// GET user BY ID
+router.get('/:_id/public', checkuser.checkIfUserLoggedIn, (req, res, next) => {
+  const userId = req.params;
+  User.findById(userId)
+  
+    .then((user) => {
+      Hacktivity.find({hostId: userId})
+      .then((hacktivities) => {
+         
+          res.render('user/public', { user, hacktivities, currentUser: req.session.userLogged });
+      })
+    .catch((error) => {
+      req.flash('info', 'We have not found this user in the database.', error);
+      res.redirect('/hacktivities');
+    });
+    });
+});
 
 router.get('/:id/update', checkuser.checkIfUserLoggedIn, (req, res, next) => { // actualizar datos del user
   const user = req.session.userLogged._id;

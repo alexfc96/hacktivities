@@ -1,0 +1,24 @@
+{{#if error}}
+  {{error}}
+{{/if}}
+{{#if info}}
+  {{info}}
+{{/if}}
+<div class="user-profile">
+
+<h2>Profile information</h2>
+<div class="username">
+
+<h3 id="ai">{{user.username}}</h3>
+<img id="ai" class="avatar" src="/images/user.png" alt="">
+</div>
+
+
+<div class="user-links">
+    <h3><u>Hacktivities</u></h3>
+{{#each hacktivities}}
+<a href="/hacktivities/{{this._id}}">{{this.name}}</p>
+{{/each}}
+</div>
+
+</div>
