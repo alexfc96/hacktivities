@@ -1,13 +1,15 @@
 
+<div class="info-error">
 
     {{#if info}}
         {{info}}
     {{/if}}
+</div>
 
     <div class="city-banner3">
-         <img class="city-banner-image3" src="{{hacktivity.location.image}}" alt=""> 
+         <a href="/cities/{{hacktivity.location._id}}/"><img class="city-banner-image3" src="{{hacktivity.location.image}}" alt=""> </a>
             <div class="city-banner-text3">
-            <a href="">{{hacktivity.location.name}}</a>
+            <a href="/cities/{{hacktivity.location._id}}/">{{hacktivity.location.name}}</a>
         </div>
     </div>
 

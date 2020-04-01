@@ -1,4 +1,8 @@
-
+.info-error{
+  color: #2F2842;
+  background-color: #B69CFF;
+  text-align: center;
+}
 
 
 .container {
@@ -151,7 +155,7 @@ width: 5rem;
 
 .hack-list{
 height: 100%;
-padding: 1.5rem;
+margin: 1.5rem;
 display: flex;
 flex-direction: column;
 color: #2F2842;
