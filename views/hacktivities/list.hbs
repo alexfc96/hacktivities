@@ -1,6 +1,9 @@
-  {{#if info}}
-    {{info}}
-  {{/if}}
+
+{{#if info}}
+  {{info}}
+{{/if}}
+
+ 
   <div class="hack-list">
 
 
@@ -9,8 +12,9 @@
   {{#each hacktivities }}
   <li>
     <div class="each-hack">
-
+      
     <h3><a href="/hacktivities/{{this._id}}">{{ this.name }}</a> </h3>
+    {{!-- {{date.[{{@index}}]}} --}}
     <p>{{this.description}}</p>
     </div>
   </li>

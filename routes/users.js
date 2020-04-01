@@ -15,7 +15,7 @@ const Booking = require('../models/Booking');
 /* GET users listing. */
 router.get('/', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   const user = req.session.userLogged._id;
-  // console.log(user);
+  // console.log(user)
   User.findById(user)
     .then((currentUser) => {
       res.render('user/profile', { currentUser });
@@ -40,12 +40,14 @@ router.get('/my-hacktivities', checkuser.checkIfUserLoggedIn, (req, res, next) =
     });
 });
 
-router.get('/my-bookings', checkuser.checkIfUserLoggedIn, (req, res, next) => { 
+router.get('/my-bookings', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   const user = req.session.userLogged._id;
+  const today = new Date(new Date().setDate(new Date().getDate()));
   Booking.find({ atendees: { $in: [user] } })
     .populate('hacktivityId atendees')
     .then((booking) => {
       // console.log(booking);
+      // checkuser.orderByDate(booking);
       res.render('user/my-bookings', { booking, currentUser: req.session.userLogged });
     })
     .catch((booking) => {

@@ -18,7 +18,11 @@ router.get('/', (req, res, next) => {
   const yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
   Hacktivity.find({ date: { $gte: yesterday } })
     .then((hacktivities) => {
-      res.render('hacktivities/list', { hacktivities, currentUser: req.session.userLogged });
+      //console.log(hacktivities);
+      checkuser.orderByDate(hacktivities);
+      const date = checkuser.parseDate(hacktivities);
+      console.log(date)
+      res.render('hacktivities/list', { date, hacktivities, currentUser: req.session.userLogged });
     })
     .catch((err) => console.log('Error while rendering Hacktivities: ', err));
 });
@@ -72,11 +76,9 @@ router.post('/create', (req, res, next) => {
 });
 
 // GET HACKTIVITY BY ID
-router.get('/:_id', (req, res, next) => {  //hacerla publica y habrá que tener en cuenta el _id del user
+router.get('/:_id', (req, res, next) => {
   const hacktivityId = req.params;
   //const userId = req.session.userLogged._id;
-
-  // revisar que el user no registrado entonces solo nos diga el length de numeros de atendees
   Hacktivity.findById(hacktivityId)
     .populate('location hostId')
     .then((hacktivity) => {
@@ -85,13 +87,14 @@ router.get('/:_id', (req, res, next) => {  //hacerla publica y habrá que tener 
       Booking.findOne({ hacktivityId })
         .populate('atendees')
         .then((booking) => {
+          const date = checkuser.parseOneDate(hacktivity);
           if (booking == null) {
-            res.render('hacktivities/hacktivity', { hacktivity, atendees, currentUser: req.session.userLogged });
+            res.render('hacktivities/hacktivity', { date, hacktivity, atendees, currentUser: req.session.userLogged });
           } else {
           // console.log(booking);
             atendees = booking.atendees;
             console.log(atendees);
-            res.render('hacktivities/hacktivity', { hacktivity, atendees, currentUser: req.session.userLogged });
+            res.render('hacktivities/hacktivity', { date, hacktivity, atendees, currentUser: req.session.userLogged });
           }
         });
       // res.render('hacktivities/hacktivity', { hacktivity, userId, atendees });
@@ -147,7 +150,7 @@ router.post('/:_id/delete', checkuser.checkIfUserLoggedIn, (req, res, next) => {
 });
 
 // BOOK HACKTIVITIES
-router.post('/:_id/book', checkuser.checkIfUserLoggedIn, (req, res, next) => {
+router.get('/:_id/book', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   const hacktivityID = req.params;
   console.log(hacktivityID);
   const user = req.session.userLogged._id;
@@ -161,10 +164,11 @@ router.post('/:_id/book', checkuser.checkIfUserLoggedIn, (req, res, next) => {
               hacktivityId: hacktivityID,
               hostId: hacktivity.hostId,
               atendees: user,
+              date: hacktivity.date,
             })
               .then(() => {
                 req.flash('info','You have successfully registered for the hacktivity.');
-                res.redirect('/user');
+                res.redirect('/user/my-bookings');
               });
           });
       } else {
@@ -181,8 +185,8 @@ router.post('/:_id/book', checkuser.checkIfUserLoggedIn, (req, res, next) => {
             } else {
               console.log('Usuario ya suscrito');
               console.log(subscribed);
-              req.flash('error', 'You are already subscribed in this hacktivity.');
-              res.redirect('/user');
+              req.flash('info', 'You are already subscribed in this hacktivity.');
+              res.redirect('/user/my-bookings');
             }
           })
           .catch(() => {
