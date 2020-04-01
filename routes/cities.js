@@ -4,6 +4,7 @@ const City = require('../models/City');
 const Hacktivity = require('../models/Hacktivity');
 
 const checkuser = require('../scripts/check');
+const moment = require('moment');
 
 const router = express.Router();
 
@@ -17,7 +18,8 @@ router.get('/', (req, res, next) => {
 
 router.get('/:_id', (req, res, next) => {
   const cityID = req.params;
-  Hacktivity.find({ location: cityID })
+  const yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
+  Hacktivity.find({ date: { $gte: yesterday }, location: cityID })
     //.populate('location')    no hace falta!
     .then((hacktivities) => {
       checkuser.orderByDate(hacktivities);

@@ -1,14 +1,14 @@
 <div class="hack-list">
 
 <h1 id="my-hack" class="title-list">My Hacktivities</h1>
-{{current.[0]}}  
+{{!-- {{current.[0]}}   --}}
 
 <h2>List of the hacktivities that you have created:</h2>
 {{#if currentHacktivities}}
     Current hacktivities:
       {{#each currentHacktivities}}
       {{!-- {{#each item in hacktivity}}  --}}
-      {{@index}}
+      {{!-- {{@index}} --}}
         <div id="hack-my" class="each-hack">
           <a  href="/hacktivities/{{this._id}}">{{this.name}}</a>
           {{!-- Date:{{../current.[0]}}   --}}
@@ -25,7 +25,7 @@
       {{#each ../oldHacktivities}}
         <div id="hack-my" class="each-hack">
           <a  href="/hacktivities/{{this._id}}">{{this.name}}</a>
-          Date:{{../this}}
+          {{!-- Date:{{../this}} --}}
         </div>
       {{/each}}
     {{/each}}
