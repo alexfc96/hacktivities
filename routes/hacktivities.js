@@ -18,10 +18,10 @@ router.get('/', (req, res, next) => {
   const yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
   Hacktivity.find({ date: { $gte: yesterday } })
     .then((hacktivities) => {
-      //console.log(hacktivities);
+      // console.log(hacktivities);
       checkuser.orderByDate(hacktivities);
       const date = checkuser.parseDate(hacktivities);
-      console.log(date)
+      console.log(date);
       res.render('hacktivities/list', { date, hacktivities, currentUser: req.session.userLogged });
     })
     .catch((err) => console.log('Error while rendering Hacktivities: ', err));
@@ -43,16 +43,16 @@ router.post('/create', (req, res, next) => {
     name, description, date, starthour, location, duration, created,
   } = req.body;
   const today = moment();
-  const todayDate = today.format("YYYY-MM-DD");
+  const todayDate = today.format('YYYY-MM-DD');
   console.log(todayDate);
   const checkDate = moment(date).format('YYYY-MM-DD');
   console.log(checkDate);
 
   if (checkDate < todayDate) {
-    req.flash('error','Specified date prior to today.');
+    req.flash('error', 'Specified date prior to today.');
     res.redirect('/hacktivities/create');
   } else if (duration > 10 && duration > 480) {
-    req.flash('error','The maximum duration of the hacktivity is 480 minutes.');
+    req.flash('error', 'The maximum duration of the hacktivity is 480 minutes.');
     res.redirect('/hacktivities/create');
   } else {
     // const hactivityDate = new Date(checkDate);
@@ -61,14 +61,14 @@ router.post('/create', (req, res, next) => {
       hostId,
       name,
       description,
-      date: checkDate, //se pasa con toooooooooodos los demas 0 en vez de conservar el moment format
+      date: checkDate, // se pasa con toooooooooodos los demas 0 en vez de conservar el moment format
       starthour,
       location,
       duration,
       created,
     })
       .then(() => {
-        req.flash('info','The activity was created successfully');
+        req.flash('info', 'The activity was created successfully');
         res.redirect('/hacktivities');
       })
       .catch(next);
@@ -78,7 +78,7 @@ router.post('/create', (req, res, next) => {
 // GET HACKTIVITY BY ID
 router.get('/:_id', (req, res, next) => {
   const hacktivityId = req.params;
-  //const userId = req.session.userLogged._id;
+  // const userId = req.session.userLogged._id;
   Hacktivity.findById(hacktivityId)
     .populate('location hostId')
     .then((hacktivity) => {
@@ -89,12 +89,16 @@ router.get('/:_id', (req, res, next) => {
         .then((booking) => {
           const date = checkuser.parseOneDate(hacktivity);
           if (booking == null) {
-            res.render('hacktivities/hacktivity', { date, hacktivity, atendees, currentUser: req.session.userLogged });
+            res.render('hacktivities/hacktivity', {
+              date, hacktivity, atendees, currentUser: req.session.userLogged,
+            });
           } else {
           // console.log(booking);
             atendees = booking.atendees;
             console.log(atendees);
-            res.render('hacktivities/hacktivity', { date, hacktivity, atendees, currentUser: req.session.userLogged });
+            res.render('hacktivities/hacktivity', {
+              date, hacktivity, atendees, currentUser: req.session.userLogged,
+            });
           }
         });
       // res.render('hacktivities/hacktivity', { hacktivity, userId, atendees });
@@ -141,7 +145,7 @@ router.post('/:_id/delete', checkuser.checkIfUserLoggedIn, (req, res, next) => {
     .then(() => {
       Booking.findOneAndDelete({ hacktivityId: hacktivityID })
         .then(() => {
-          req.flash('info','Successfully deleted.');
+          req.flash('info', 'Successfully deleted.');
           res.redirect('/hacktivities');
         })
         .catch(next);
@@ -158,7 +162,7 @@ router.get('/:_id/book', checkuser.checkIfUserLoggedIn, (req, res, next) => {
 
   Booking.find({ hacktivityId: hacktivityID })
     .then((booking) => {
-      if (booking.length === 0) {
+      if (booking && booking.length === 0) {
         Hacktivity.findById(hacktivityID)
           .then((hacktivity) => {
             Booking.create({
@@ -168,7 +172,7 @@ router.get('/:_id/book', checkuser.checkIfUserLoggedIn, (req, res, next) => {
               date: hacktivity.date,
             })
               .then(() => {
-                req.flash('info','You have successfully registered for the hacktivity.');
+                req.flash('info', 'You have successfully registered for the hacktivity.');
                 res.redirect('/user/my-bookings');
               });
           });
@@ -196,7 +200,7 @@ router.get('/:_id/book', checkuser.checkIfUserLoggedIn, (req, res, next) => {
 
           });
       }
-      //res.redirect('/user');  //no poner porque si no salta el primero(asincrono)
+      // res.redirect('/user');  //no poner porque si no salta el primero(asincrono)
     })
     .catch(next);
 });
@@ -211,11 +215,23 @@ router.post('/:_id/deletebook', (req, res, next) => {
   Booking.findOneAndUpdate({ hacktivityId },
     { $pull: { atendees: user } })
     .then((booking) => {
-      console.log(booking.atendees);
-      req.flash('info','You have successfully unsubscribed from the hacktivity.');
-      res.redirect('/user');
+      Booking.findOne({ hacktivityId })
+        .then((book) => {
+          console.log(book.atendees.length);
+          if (book.atendees.length === 0) {
+            Booking.findOneAndRemove({ hacktivityId })
+              .then(() => {
+                req.flash('info', 'You have successfully unsubscribed from the hacktivity.');
+                res.redirect('/user');
+              });
+          } else {
+            console.log(booking.atendees);
+            req.flash('info', 'You have successfully unsubscribed from the hacktivity.');
+            res.redirect('/user');
+          }
+        })
     })
-    .catch(next);
+    //.catch(next);
 });
 
 module.exports = router;
