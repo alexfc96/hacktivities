@@ -36,7 +36,7 @@ function isValueInvalid(input) {
 }
 
 function parseOneDate(array) {
-  const date = moment(array.date).format('YYYY-MM-DD');
+  const date = moment(array.date).format('LL');
   return date;
 }
 
