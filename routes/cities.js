@@ -20,7 +20,6 @@ router.get('/:_id', (req, res, next) => {
   const cityID = req.params;
   const yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
   Hacktivity.find({ date: { $gte: yesterday }, location: cityID })
-    //.populate('location')    no hace falta!
     .then((hacktivities) => {
       checkuser.orderByDate(hacktivities);
       City.findById(cityID)

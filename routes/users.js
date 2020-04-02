@@ -10,12 +10,9 @@ const User = require('../models/User');
 const Hacktivity = require('../models/Hacktivity');
 const Booking = require('../models/Booking');
 
-// router.use(checkuser.checkIfUserLoggedIn); // limita a visualizar las rutas a los no logueados
-
 /* GET users listing. */
 router.get('/', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   const user = req.session.userLogged._id;
-  // console.log(user)
   User.findById(user)
     .then((currentUser) => {
       res.render('user/profile', { currentUser });
@@ -28,34 +25,27 @@ router.get('/my-hacktivities', checkuser.checkIfUserLoggedIn, (req, res, next) =
   const today = new Date(new Date().setDate(new Date().getDate()));
   Hacktivity.find({ date: { $lte: today }, hostId: user })
     .then((oldHacktivities) => {
-      if (oldHacktivities && oldHacktivities.length === 0) { // buscamos si no tiene actividades caducadas, entonces:
-        Hacktivity.find({ hostId: user }) // mostramos todas
+      if (oldHacktivities && oldHacktivities.length === 0) {
+        Hacktivity.find({ hostId: user })
           .then((currentHacktivities) => {
-            console.log(currentHacktivities);
             if (currentHacktivities && currentHacktivities.length === 0) {
               const without = 'User wiwthout hacktivities';
               res.render('user/my-hacktivities', { currentUser: req.session.userLogged, without });
             } else {
               checkuser.orderByDate(currentHacktivities);
               const current = checkuser.currentHacktivities(currentHacktivities);
-              console.log(current);
               res.render('user/my-hacktivities', {
                 currentHacktivities, currentUser: req.session.userLogged, current,
               });
             }
           });
       } else {
-        Hacktivity.find({ date: { $gte: today }, hostId: user }) // en caso de que tenga también buscaremos las mayores a hoy.
-          .then((currentHacktivities) => { // creo que falta comparar si es hoy para que tmb las muestre
-            console.log('Tengo hacktivities caducadas');
-            console.log(currentHacktivities);
+        Hacktivity.find({ date: { $gte: today }, hostId: user })
+          .then((currentHacktivities) => {
             checkuser.orderByDate(currentHacktivities);
-            console.log(oldHacktivities);
             checkuser.orderByDate(oldHacktivities);
             const current = checkuser.currentHacktivities(currentHacktivities);
-            console.log(current);
             const expired = checkuser.expiredHacktivities(oldHacktivities);
-            console.log(expired);
             res.render('user/my-hacktivities', {
               oldHacktivities, currentHacktivities, currentUser: req.session.userLogged, current, expired,
             });
@@ -63,7 +53,6 @@ router.get('/my-hacktivities', checkuser.checkIfUserLoggedIn, (req, res, next) =
       }
     })
     .catch(() => {
-      console.log('entro');
       const without = 'User wiwthout hacktivities';
       res.render('user/my-hacktivities', { currentUser: req.session.userLogged, without });
     });
@@ -75,8 +64,6 @@ router.get('/my-bookings', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   Booking.find({ atendees: { $in: [user] } })
     .populate('hacktivityId atendees')
     .then((booking) => {
-      console.log(booking);
-      // checkuser.orderByDate(booking);
       res.render('user/my-bookings', { booking, currentUser: req.session.userLogged });
     })
     .catch((booking) => {
@@ -92,6 +79,7 @@ router.get('/logout', (req, res, next) => {
     res.redirect('/login');
   });
 });
+
 // GET user BY ID
 router.get('/:_id/public', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   const userId = req.params;
@@ -109,12 +97,10 @@ router.get('/:_id/public', checkuser.checkIfUserLoggedIn, (req, res, next) => {
     });
 });
 
-router.get('/:id/update', checkuser.checkIfUserLoggedIn, (req, res, next) => { // actualizar datos del user
+router.get('/:id/update', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   const user = req.session.userLogged._id;
-  // console.log(user);
   User.findById(user)
     .then((currentUser) => {
-      // console.log(currentUser);
       res.render('user/update', { currentUser });
     })
     .catch(next);
@@ -132,16 +118,14 @@ router.post('/:id/update', checkuser.checkIfUserLoggedIn, (req, res, next) => {
         // eslint-disable-next-line no-lonely-if
         if (newuserpassword.length < 6) {
           req.flash('error', 'The password requires at least 6 characters');
-          res.redirect(`/user/${user}/update`); // comprobacion back para que no pueda cambiar desde el front
+          res.redirect(`/user/${user}/update`);
         }
         if (bcrypt.compareSync(currentpassword, userInfo.userpassword)) {
-          console.log('La contraseña es la correcta');
           const salt = bcrypt.genSaltSync(saltRounds);
           const userpassword = bcrypt.hashSync(newuserpassword, salt);
           User.findByIdAndUpdate({ _id: user }, { userpassword })
             .then(() => {
-              console.log('Contraseña cambiada');
-              req.flash('info', 'Password updated'); // Falta saber indicar al usuario que se ha cambiado correctamente ya que pasa por 2 rutas diferentes(tmb username)
+              req.flash('info', 'Password updated');
               res.redirect('/user/logout');
             });
         } else {
@@ -157,13 +141,11 @@ router.post('/:id/delete', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   const user = req.session.userLogged._id;
   User.findByIdAndDelete({ _id: user })
     .then(() => {
-      console.log('User deleted');
       req.flash('info', 'User deleted');
       res.redirect('/signup');
       req.session.destroy();
     })
     .catch(next);
 });
-// done
 
 module.exports = router;

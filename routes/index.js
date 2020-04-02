@@ -11,7 +11,7 @@ const checkuser = require('../scripts/check');
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-  const userId = req.session.userLogged;  //nos da el objeto con toda la info del user/session
+  const userId = req.session.userLogged;
   User.findById(userId) 
     .then((currentUser) => {
       res.render('index', { currentUser, userId, City });
@@ -21,7 +21,7 @@ router.get('/', (req, res, next) => {
     });
 });
 
-router.get('/signup', (req, res, next) => { // darse de alta
+router.get('/signup', (req, res, next) => {
   res.render('user/signup');
 });
 
@@ -32,7 +32,7 @@ router.post('/signup', (req, res, next) => {
     res.redirect('/user/signup');
   } else if (password.length < 6) {
     req.flash('error', 'The password requires at least 6 characters');
-    res.redirect('/user/signup'); // comprobacion back para que no pueda cambiar desde el front
+    res.redirect('/user/signup');
   } else {
     User.findOne({ username })
       .then((user) => {
@@ -62,12 +62,11 @@ router.post('/signup', (req, res, next) => {
   }
 });
 
-router.get('/login', (req, res, next) => { // darse de alta
+router.get('/login', (req, res, next) => {
   res.render('user/login');
 });
 
 router.post('/login', (req, res, next) => {
-  // console.log(req.body);
   const { username, password } = req.body;
   if (username === '' || password === '') {
     req.flash('error', 'The fields can not be empty');
@@ -75,7 +74,6 @@ router.post('/login', (req, res, next) => {
   } else {
     User.findOne({ username })
       .then((user) => {
-        console.log(username);
         if (!user) {
           res.render('user/signup', { error: 'This user is not registered', username });
         } else {
@@ -103,21 +101,6 @@ router.get('/about-us', (req, res, next) => {
 
 router.get('/contact', (req, res, next) => {
   res.render('contact', { currentUser: req.session.userLogged });
-});
-
-
-router.get('/:id', (req, res, next) => {
-  const cityName = req.params;
-  City.find()
-    .then((city) => {
-    // console.log(city);
-      if (cityName === city.name) {
-        console.log('coincide');
-      } else {
-        next();
-      }
-    })
-    .catch(next);
 });
 
 module.exports = router;

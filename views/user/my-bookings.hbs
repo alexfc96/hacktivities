@@ -12,23 +12,23 @@
   <h2>List of the hacktivities where you have suscribed:</h2>
   {{#each booking}}
     {{#if this}}
-    <div id="hack-my" class="each-hack">
+      <div id="hack-my" class="each-hack">
       <a href="/hacktivities/{{this.hacktivityId._id}}">{{this.hacktivityId.name}}</a>
-      <div class="buttons-hacktivities"> 
-      <div class="btn-hack" id="book-btn">
-         {{!-- Date: {{this.hacktivityId.date}} --}}
-      <form action="/hacktivities/{{this.hacktivityId._id}}/deletebook" method="post" onsubmit="return confirm('Are you sure you want to cancel the booking for this hacktivity?');">
-        <button type="submit">Delete booking</button>
-      </form>
-      </div>
-       </div>
+        <div class="buttons-hacktivities"> 
+          <div class="btn-hack" id="book-btn">
+              {{!-- Date: {{this.hacktivityId.date}} --}}
+            <form action="/hacktivities/{{this.hacktivityId._id}}/deletebook" method="post" onsubmit="return confirm('Are you sure you want to cancel the booking for this hacktivity?');">
+              <button type="submit">Delete booking</button>
+            </form>
+          </div>
+        </div>
        </div>
     {{/if}}
   {{/each}}
   {{else}}
     <div class="no-hack"></div>
-    <p>You have not yet subscribed to any hacktivity. For it:</p>
-    <a href="/hacktivities">List hacktivities</a>
+      <p>You have not yet subscribed to any hacktivity. For it:</p>
+      <a href="/hacktivities">List hacktivities</a>
      </div>
 {{/if}}
 </div>

@@ -11,7 +11,6 @@ function checkIfUserLoggedIn(req, res, next) {
 }
 
 function returnToTheLastPage(req, res, next) { 
-  // delete req.session.originalUrl;
   if (req.session.userLogged) {
     if (req.session.originalUrl === undefined) {
       res.redirect('/');
