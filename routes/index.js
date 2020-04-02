@@ -79,7 +79,6 @@ router.post('/login', (req, res, next) => {
         if (!user) {
           res.render('user/signup', { error: 'This user is not registered', username });
         } else {
-          // console.log(bcrypt.compareSync(password, user.userpassword));
           // eslint-disable-next-line no-lonely-if
           if (bcrypt.compareSync(password, user.userpassword)) {
             req.session.userLogged = user;

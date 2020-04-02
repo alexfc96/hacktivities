@@ -154,6 +154,7 @@ router.get('/:_id/book', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   const hacktivityID = req.params;
   console.log(hacktivityID);
   const user = req.session.userLogged._id;
+  console.log(user);
 
   Booking.find({ hacktivityId: hacktivityID })
     .then((booking) => {
@@ -173,7 +174,9 @@ router.get('/:_id/book', checkuser.checkIfUserLoggedIn, (req, res, next) => {
           });
       } else {
         Booking.findOne({ atendees: user })
+          // .populate('atendees')
           .then((subscribed) => {
+            console.log(subscribed);
             if (subscribed === null) {
               Booking.findOneAndUpdate({ hacktivityId: hacktivityID },
                 { $push: { atendees: user } })

@@ -29,21 +29,18 @@ router.get('/my-hacktivities', checkuser.checkIfUserLoggedIn, (req, res, next) =
   Hacktivity.find({ date: { $lte: today }, hostId: user })
     .then((oldHacktivities) => {
       if (oldHacktivities && oldHacktivities.length === 0) { // buscamos si no tiene actividades caducadas, entonces:
-        console.log('No tengo hacktivities caducadas');
-        Hacktivity.find({ hostId: user }) // mostrammos todas
-          .then((hacktivity) => {
-            if (hacktivity && hacktivity.length === 0) {
+        Hacktivity.find({ hostId: user }) // mostramos todas
+          .then((currentHacktivities) => {
+            console.log(currentHacktivities);
+            if (currentHacktivities && currentHacktivities.length === 0) {
               const without = 'User wiwthout hacktivities';
               res.render('user/my-hacktivities', { currentUser: req.session.userLogged, without });
             } else {
-              console.log(hacktivity);
-              checkuser.orderByDate(hacktivity);
-              const current = checkuser.currentHacktivities(hacktivity);
+              checkuser.orderByDate(currentHacktivities);
+              const current = checkuser.currentHacktivities(currentHacktivities);
               console.log(current);
-              // const expired = checkuser.expiredHacktivities(hacktivity);
-              // console.log(expired);
               res.render('user/my-hacktivities', {
-                hacktivity, currentUser: req.session.userLogged, current, // no hará falta el expired, no=?
+                currentHacktivities, currentUser: req.session.userLogged, current,
               });
             }
           });
@@ -78,7 +75,7 @@ router.get('/my-bookings', checkuser.checkIfUserLoggedIn, (req, res, next) => {
   Booking.find({ atendees: { $in: [user] } })
     .populate('hacktivityId atendees')
     .then((booking) => {
-      // console.log(booking);
+      console.log(booking);
       // checkuser.orderByDate(booking);
       res.render('user/my-bookings', { booking, currentUser: req.session.userLogged });
     })
