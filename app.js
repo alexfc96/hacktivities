@@ -21,23 +21,12 @@ hbs.registerHelper('eq', function (arg1, arg2, options) {
 const City = require('./models/City');
 const seeds = require('./bin/seeds');
 mongoose
-  // .connect('mongodb://localhost/starter-code', {useNewUrlParser: true})
   .connect(dbPath, {
     useNewUrlParser: true, useFindAndModify: false, useCreateIndex: true, useUnifiedTopology: true,
   })
   .then((x) => {
     console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`);
   })
-   //   .then(() =>{
-  //   return City.deleteMany();
-  // })
-  // .then(() => {
-  //   return City.create(seeds);
-  // })
-  // .then(() => {
-  //   console.log('succesfully added all the data');
-  //   mongoose.connection.close();
-  // })
   .catch((err) => {
     console.error('Error connecting to mongo', err);
   });
@@ -98,7 +87,6 @@ app.use((req, res, next) => {
 
 // error handler
 app.use((err, req, res, next) => {
-  // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
