@@ -1,10 +1,11 @@
-.log-sign{
-  color: #2F2842;
-  font-size: 1.5rem;
+.flash {
+  font-size: 1.2rem;
   text-align: center;
-  padding-top: 1rem;
+  color: #2F2842;
+  margin: 0;
+  padding: 0;
+  background-color: #B69CFF;
 }
-
 
 .container {
   display: flex;

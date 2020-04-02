@@ -2,12 +2,12 @@
 <div class="log-sign"> 
  
 
-  {{#if error}}
-  {{error}}
-  {{/if}}
-  {{#if info}}
-  {{info}}
-  {{/if}}
+{{#if error}}
+  <p class="flash">{{error}}</p>
+{{/if}}
+{{#if info}}
+  <p class="flash">{{info}}</p>
+{{/if}}
   
 <div class="wrapper fadeInDown">
   <div id="formContent">

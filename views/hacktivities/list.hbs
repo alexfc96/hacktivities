@@ -1,25 +1,22 @@
-
 {{#if info}}
-  {{info}}
+  <p class="flash">{{info}}</p>
 {{/if}}
-
  
   <div class="hack-list">
 
-
-<p class="title-list">List of all the Hacktivities</>
-<ul>
-  {{#each hacktivities }}
-  <li>
-    <div class="each-hack">
-      
-    <h3><a href="/hacktivities/{{this._id}}">{{ this.name }}</a> </h3>
-    {{!-- {{date.[{{@index}}]}} --}}
-    <p>{{this.description}}</p>
-    </div>
-  </li>
-  {{/each}}
-</ul>
+    <p class="title-list">List of all the Hacktivities</>
+    <ul>
+      {{#each hacktivities }}
+      <li>
+        <div class="each-hack">
+          
+        <h3><a href="/hacktivities/{{this._id}}">{{ this.name }}</a> </h3>
+        {{!-- {{date.[{{@index}}]}} --}}
+        <p>{{this.description}}</p>
+        </div>
+      </li>
+      {{/each}}
+    </ul>
   </div>
 
 

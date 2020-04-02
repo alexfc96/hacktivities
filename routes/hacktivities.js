@@ -168,7 +168,7 @@ router.get('/:_id/book', checkuser.checkIfUserLoggedIn, (req, res, next) => {
                 { $push: { atendees: user } })
                 .then(() => {
                   req.flash('info', 'You have successfully registered for the hacktivity.');
-                  res.redirect('/user');
+                  res.redirect('/user/my-bookings');
                 })
                 .catch(next);
             } else {
