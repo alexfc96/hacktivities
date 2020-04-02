@@ -203,11 +203,12 @@ router.get('/:_id/book', checkuser.checkIfUserLoggedIn, (req, res, next) => {
 
 // DELETE BOOKING HACKTIVITIES
 router.post('/:_id/deletebook', (req, res, next) => {
-  const hacktivityID = req.params;
-  console.log(hacktivityID);
+  const hacktivityId = req.params;
+  console.log(hacktivityId);
   const user = req.session.userLogged._id;
 
-  Booking.findOneAndUpdate({ atendees: user },
+  // Booking.findOneAndUpdate({ atendees: user },
+  Booking.findOneAndUpdate({ hacktivityId },
     { $pull: { atendees: user } })
     .then((booking) => {
       console.log(booking.atendees);
