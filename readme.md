@@ -65,7 +65,7 @@ Geo Location: - add geolocation to events when creating - show event in a map in
 /partners (backlog)
 | GET  | /my-ads or /my-activity  | List of the excursions that the partner offers and where he can see the number of normal users will assist to the event |
 ​
-## Models REVISAR
+## Models 
 ​
 User model
 ​
@@ -102,26 +102,13 @@ Cities model
 		image: image
     }
     
-Reviews model  //backlog
-
-    {}
-
-
 
 ## Links
-​
 ### Trello
-​
 https://trello.com/b/wXY0knUE/hacktivities
-​
 ### Git
-​
-The url to your repository and to your deployed project
-​
 [Repository Link](https://github.com/alexfc96/hacktivities)
-​
+### Deploy
 [Deploy Link](https://hacktivities.herokuapp.com/)
-​
 ### Slides
-​
 [Slides Link](https://slides.com/alexfernandez-1/hacktivities)
